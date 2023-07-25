@@ -8,6 +8,15 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Trang chủ | Sbay Việt Nam',
   description: 'Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam',
+  authors: [{ name: 'Chung Le Ba', url: 'https://www.facebook.com/chung.leba' },{ name: 'Sang', url: 'https://www.facebook.com/vansang153' }],
+  creator: 'Chung Le Ba',
+  publisher: 'Chung Le Ba',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    images: 'img/sbay-w-r.png',
+  },
 }
 export default function Home() {
   return (
