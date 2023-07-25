@@ -1,113 +1,153 @@
 import Image from 'next/image'
+import React from 'react';
+import * as Icon from 'react-feather';
+import Footer from './components/footer';
+import Link from 'next/link';
+import { Metadata } from 'next'
 
+export const metadata: Metadata = {
+  title: 'Trang chủ | Sbay Việt Nam',
+  description: 'Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam',
+}
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
+    <>
+      <div className='sticky shadow-sm top-0 z-10 text-white px-5 py-3'>
+        <div className=' grid grid-cols-12'>
+          <div className=' col-span-8'>
+            <Image src={'/img/sbay-w-r.png'} width={50} height={30} alt={'Sbay group logo'} className=' rounded-full'></Image>
+          </div>
+          <a href={`tel:02363616616`} className=' col-span-4 justify-end flex flex-row'>
+            <Icon.PhoneCall className='w-4 h-4 mr-2 mt-1' /> Hotline 
+            <div className='text-sm text-end mt-1 hidden lg:block'><strong className='ml-2'>0967 041 900</strong></div>
           </a>
         </div>
       </div>
+      <div className="hero h-screen bg-cyan-50 -mt-10">
+        <div className="hero-content text-center flex flex-col">
+          <div className="video-docker absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+            <video className="min-w-full min-h-full absolute object-cover" src="/img/bg-video.mp4" autoPlay muted loop></video>
+          </div>
+          <div className="max-w-md z-10">
+            <h1 className="text-5xl font-bold text-cyan-50 mb-0">Sbay Việt Nam</h1>
+            <p className="py-3 text-cyan-50">Kiến tạo sự nghiệp.</p>
+          </div>
+          <div className='grid grid-cols-3 gap-6 z-10'>
+
+            <Link href={'https://sbaygroup.com/flight'}>
+              <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
+                <div>
+                  <div className="avatar">
+                    <div className="w-16 mask mask-squircle">
+                      <Image width={256} height={256} src="/img/air.png" alt='ve-may-bay' style={{ 'objectFit': 'contain' }} />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h2 className='  font-bold text-cyan-50'>Vé máy bay</h2>
+                </div>
+              </div>
+            </Link>
+            <Link href={'https://www.sbayhoteldanang.com/'}>
+              <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
+                <div>
+                  <div className="avatar">
+                    <div className="w-16 mask mask-squircle">
+                      <Image width={256} height={256} alt='Phòng khách sạn Đà Nẵng' src="/img/hotel.png" />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h2 className='  font-bold text-cyan-50'>Khách sạn</h2>
+                </div>
+              </div>
+            </Link>
+
+            <Link href={'https://datxe.sbayvietnam.com/'}>
+              <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
+                <div>
+                  <div className="avatar">
+                    <div className="w-16 mask mask-squircle">
+                      <Image width={256} height={256} alt='xe cho thuê' src="/img/thue-xe.png" />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h2 className='  font-bold text-cyan-50'>Xe cho thuê</h2>
+
+                </div>
+              </div>
+            </Link>
+            <Link href={'https://datve.sbayvietnam.com/'}>
+              <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
+                <div>
+                  <div className="avatar">
+                    <div className="w-16 mask mask-squircle">
+                      <Image width={256} height={256} alt='vé Bà Nà' src="/img/ticket.png" />
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <h2 className='  font-bold text-cyan-50'>Vé Bà Nà</h2>
+
+                </div>
+              </div>
+            </Link>
+
+            <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
+              <div>
+                <div className="avatar">
+                  <div className="w-16 mask mask-squircle">
+                    <Image width={256} height={256} alt='tuor du lịch' src="/img/du-lich.png" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h2 className='  font-bold text-cyan-50'>Tour Du lịch</h2>
+
+              </div>
+            </div>
+            <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
+              <div>
+                <div className="avatar">
+                  <div className="w-16 mask mask-squircle">
+                    <Image width={256} height={256} alt='vé xe khách' src="/img/xe-khach.png" />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <h2 className='  font-bold text-cyan-50'>Xe khách</h2>
+
+              </div>
+            </div>
+          </div>
+          <div className="max-w-md z-10">
+            <p className="py-3 text-cyan-50 mt-5">Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam</p>
+          </div>
+          <div className=" grid grid-cols-2 max-w-md z-10 mb-5">
+
+            <Link href={'https://apps.apple.com/vn/app/sbaygroup/id64462563480?l=vi'}>
+              <Image src={'/img/ios.png'} width={120} height={30} alt={'Sbay iso'} className=' rounded-sm mr-2'></Image>
+            </Link>
+            <Link href={'https://play.google.com/store/apps/details?id=com.sbgroup.booking_android&hl=vi-VN'}>
+              <Image src={'/img/gg-play.png'} width={120} height={30} alt={'Sbay iso'} className=' rounded-sm ml-2'></Image>
+            </Link>
+
+          </div>
+          <div className='grid grid-cols-2 gap-10 z-10'>
+            <Link href={'https://sbaygroup.com/?dang-nhap=1'} className='text-white text-sm flex flex-row'>
+              Đăng nhập Đại lý <Icon.ExternalLink className='w-4 h-4 ml-2' />
+            </Link>
+            <Link href={'https://work.sbayvietnam.com'} className='text-white text-sm flex flex-row'>
+              Đăng nhập WorkPlace <Icon.ExternalLink className='w-4 h-4 ml-2' />
+            </Link>
+          </div>
+        </div>
       </div>
+      <Footer></Footer>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+    </>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
   )
 }
