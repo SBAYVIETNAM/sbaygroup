@@ -12,10 +12,10 @@ export const metadata: Metadata = {
   creator: 'Chung Le Ba',
   publisher: 'Chung Le Ba',
   alternates: {
-    canonical: '/',
+    canonical: 'https://sbaygroup.com/',
   },
   openGraph: {
-    images: 'img/sbay-w-r.png',
+    images: 'https://sbaygroup.com/img/sbay-w-r.png',
   },
 }
 export default function Home() {
