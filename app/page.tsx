@@ -15,7 +15,25 @@ export const metadata: Metadata = {
     canonical: 'https://sbaygroup.com/',
   },
   openGraph: {
-    images: 'https://sbaygroup.com/img/sbay-w-r.png',
+    title: 'Trang chủ | Sbay Việt Nam',
+    description: 'Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam',
+    url: 'https://sbaygroup.com',
+    siteName: 'Sbay Việt Nam',
+    images: [
+      {
+        url: 'https://sbaygroup.com/img/sbay-w-r.png',
+        width: 800,
+        height: 600,
+      }/* ,
+      {
+        url: 'https://nextjs.org/og-alt.png',
+        width: 1800,
+        height: 1600,
+        alt: 'My custom alt',
+      }, */
+    ],
+    locale: 'vi_VN',
+    type: 'website',
   },
 }
 export default function Home() {
@@ -26,10 +44,10 @@ export default function Home() {
           <div className=' col-span-8'>
             <Image src={'/img/sbay-w-r.png'} width={50} height={30} alt={'Sbay group logo'} className=' rounded-full'></Image>
           </div>
-          <a href={`tel:02363616616`} className=' col-span-4 justify-end flex flex-row'>
+          <Link href={`tel:02363616616`} className=' col-span-4 justify-end flex flex-row'>
             <Icon.PhoneCall className='w-4 h-4 mr-2 mt-1' /> Hotline 
             <div className='text-sm text-end mt-1 hidden lg:block'><strong className='ml-2'>0967 041 900</strong></div>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="hero h-screen bg-cyan-50 -mt-10">
