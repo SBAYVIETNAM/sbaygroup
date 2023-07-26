@@ -7,12 +7,12 @@ export default function Footer() {
         <>
             {/* DV CHÍNH */}
             <footer className="footer grid-rows-1 pl-10 bg-cyan-50 text-xl">
-                <span className="footer-title">DỊCH VỤ VÉ MÁY BAY</span>
+                <span className="footer-title text-gray-900">DỊCH VỤ VÉ MÁY BAY</span>
             </footer>
 
             <footer className="footer grid-rows-1 px-10 pb-10 mt--10 bg-cyan-50">
                 <div>
-                    <span className="footer-title">Văn Phòng chính thức</span>
+                    <span className="footer-title text-gray-900 opacity-90">Văn Phòng chính thức</span>
                     <div>
                         <p className='font-bold'>Văn phòng Hà Nội</p>
                         <p className='text-xs'>Số A3012, Tòa nhà Tứ Hiệp Plaza - KĐT Pháp Vân - Tp Hà Nội (Cổng bệnh viện Nội Tiết Trung Ương)</p>
@@ -28,7 +28,7 @@ export default function Footer() {
 
                 </div>
                 <div>
-                    <span className="footer-title">Đại lý/chi nhánh miền Bắc</span>
+                    <span className="footer-title text-gray-900 opacity-90">Đại lý/chi nhánh miền Bắc</span>
                     <div>
                         <p className='font-bold'>Bắc Giang</p>
                         <p className='text-xs'>Tam Tầng - Quang Châu - Việt Yên - Bắc Giang</p>
@@ -66,7 +66,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div>
-                    <span className="footer-title">Đại lý/chi nhánh miền Nam</span>
+                    <span className="footer-title text-gray-700 opacity-90">Đại lý/chi nhánh miền Nam</span>
                     <div>
                         <p className='font-bold'>Thủ Đức</p>
                         <p className='text-xs'>Số 42/112 đường Tây Hoà - Tp Thủ Đức - Hồ Chí Minh</p>
@@ -89,7 +89,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div>
-                    <span className="footer-title">Đại lý/chi nhánh miền Trung</span>
+                    <span className="footer-title text-gray-900 opacity-90">Đại lý/chi nhánh miền Trung</span>
                     <div>
                         <p className='font-bold'>Nghệ An</p>
                         <p className='text-xs'>Quốc lộ 48A - Diễn Yên - Diễn Châu - Nghệ An</p>
@@ -102,12 +102,12 @@ export default function Footer() {
             </footer>
             {/* DV KHAC */}
             <footer className="footer grid-rows-1 pl-10 pt-10 bg-sky-500 text-cyan-50 text-xl">
-                <span className="footer-title">DỊCH VỤ KHÁC</span>
+                <span className="footer-title text-slate-50">DỊCH VỤ KHÁC</span>
             </footer>
 
             <footer className="footer grid-rows-1 px-10 pb-10 mt--10  bg-sky-500 text-cyan-50 justify-between ...">
                 <div>
-                    <span className="footer-title">Khách sạn Đà Nẵng</span>
+                    <span className="footer-title text-slate-50">Khách sạn Đà Nẵng</span>
                     <div>
                         <p className=''>Standard Double</p>
                     </div>
@@ -128,7 +128,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div>
-                    <span className="footer-title">Xe cho thuê</span>
+                    <span className="footer-title text-slate-50">Xe cho thuê</span>
                     <div>
                         <p className=''>Xe 5 chỗ</p>
                     </div>
@@ -140,7 +140,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div>
-                    <span className="footer-title">Vé Bà Nà</span>
+                    <span className="footer-title text-slate-50">Vé Bà Nà</span>
 
                     <div>
                         <p className=''>Vé cáp treo</p>
@@ -159,7 +159,7 @@ export default function Footer() {
                     </div>
                 </div>
                 <div>
-                    <span className="footer-title">Khác</span>
+                    <span className="footer-title text-slate-50">Khác</span>
                     <div>
                         <p className=''>Đặt Tuor Du Lịch</p>
                     </div>
@@ -177,21 +177,21 @@ export default function Footer() {
                         Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi <br />
                         hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, <br />
                         phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam.</p>
-                    <span className="footer-title">Liên hệ</span>
+                    <span className="footer-title text-slate-50">Liên hệ</span>
                     <p className='flex flex-row text-slate-200'><Icon.Phone className='w-4 h-4 mr-2' />Hotline (24h): 0967 041 900</p>
                     <p className='flex flex-row text-slate-200'><Icon.MapPin className='w-4 h-4 mr-2' />Địa chỉ trụ sở chính: Số 3 Đinh Thị Hòa, Sơn Trà, Đà Nẵng</p>
                     <p className='flex flex-row text-slate-200'><Icon.Mail className='w-4 h-4 mr-2' />Email: hanhchinh.sbay@gmail.com</p>
 
                 </div>
                 <div>
-                    <span className="footer-title">Về chúng tôi</span>
+                    <span className="footer-title text-slate-50">Về chúng tôi</span>
 
                     <p className="link link-hover">Giới thiệu</p>
                     <p className="link link-hover">Tin tức</p>
                     <p className="link link-hover">Tuyển dụng</p>
                 </div>
                 <div>
-                    <span className="footer-title">Hỗ trợ</span>
+                    <span className="footer-title text-slate-50">Hỗ trợ</span>
                     <p className="link link-hover">Hướng dẫn đặt vé</p>
                     <p className="link link-hover">Hướng dẫn thanh toán</p>
                     <p className="link link-hover">Hướng dẫn giao vé</p>
@@ -199,11 +199,11 @@ export default function Footer() {
                     <p className="link link-hover">Điều khoản điều kiện</p>
                 </div>
                 <div>
-                    <span className="footer-title">Social</span>
+                    <span className="footer-title text-slate-50">Social</span>
 
                     <div className="grid grid-flow-col gap-4">
-                        <Link href='https://www.facebook.com/sbaygroup247/'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current" ><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg></Link>
-                        <Link href='https://www.youtube.com/channel/UCenzcf6Qq0v4SZb2Eex2PKw'><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg></Link>
+                        <Link href='https://www.facebook.com/sbaygroup247/' aria-label="Fanpage chính thức của Sbay Việt Nam"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current" ><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path></svg></Link>
+                        <Link href='https://www.youtube.com/channel/UCenzcf6Qq0v4SZb2Eex2PKw' aria-label="Kênh Youtube chính thức của Sbay Việt Nam"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="fill-current"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path></svg></Link>
                     </div>
                 </div>
             </footer>
