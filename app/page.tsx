@@ -172,7 +172,7 @@ export default function Home() {
             <Link href={'https://meet.google.com/coo-epfp-fnz'} className='text-white text-sm flex flex-row justify-end'>
               Meet hàng ngày <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
-            <Link href={'http://thu7.sbayvietnam.net/'} className='text-white text-sm flex flex-row justify-start'>
+            <Link href={'https://docs.google.com/forms/d/e/1FAIpQLSfZTbkywT2B4VD-2DhEZ3_SHdBRgHHH309pY8w8Dyj04-ToFg/viewform'} className='text-white text-sm flex flex-row justify-start'>
               Gặp mặt thứ 7 <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
           </div>
