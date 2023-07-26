@@ -44,7 +44,7 @@ export default function Home() {
           </div>
           <div className='grid grid-cols-3 gap-6 z-10'>
 
-            <Link href={'https://sbaygroup.com/flight'}>
+            <Link href={'https://flight.sbaygroup.com'}>
               <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
                 <div>
                   <div className="avatar">
@@ -146,10 +146,10 @@ export default function Home() {
           </div>
           <div className='grid grid-cols-2 gap-10 z-10'>
             <Link href={'https://sbaygroup.com/?dang-nhap=1'} className='text-white text-sm flex flex-row'>
-              Đăng nhập Đại lý <Icon.ExternalLink className='w-4 h-4 ml-2' />
+              Trang Thành viên <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
             <Link href={'https://work.sbayvietnam.com'} className='text-white text-sm flex flex-row'>
-              Đăng nhập WorkPlace <Icon.ExternalLink className='w-4 h-4 ml-2' />
+              Trang WorkPlace <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
           </div>
         </div>

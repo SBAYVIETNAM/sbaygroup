@@ -105,7 +105,7 @@ export default function Footer() {
                 <span className="footer-title">DỊCH VỤ KHÁC</span>
             </footer>
 
-            <footer className="footer grid-rows-1 px-10 pb-10 mt--10  bg-sky-500 text-cyan-50">
+            <footer className="footer grid-rows-1 px-10 pb-10 mt--10  bg-sky-500 text-cyan-50 flex justify-between ...">
                 <div>
                     <span className="footer-title">Khách sạn Đà Nẵng</span>
                     <div>
@@ -140,8 +140,8 @@ export default function Footer() {
                     </div>
                 </div>
                 <div>
-                    <span className="footer-title">Vé tham quan Bà Nà</span>
-                    
+                    <span className="footer-title">Vé Bà Nà</span>
+
                     <div>
                         <p className=''>Vé cáp treo</p>
                     </div>
@@ -169,7 +169,7 @@ export default function Footer() {
                 </div>
             </footer>
             {/* LIEN HE */}
-            <footer className="footer p-10 bg-sky-700 text-cyan-50">
+            <footer className="footer grid-rows-1 p-10 bg-sky-700 text-cyan-50 justify-between ...">
                 <div>
                     <Image src={'/img/sbay-w-r.png'} width={100} height={30} alt={'Sbay group logo'} className=' rounded-md'></Image>
                     <p className='font-bold'>CÔNG TY CỔ PHẦN SBAY VIỆT NAM</p>
@@ -208,10 +208,17 @@ export default function Footer() {
             </footer>
             {/* BAN QUYEN */}
             <footer className="footer px-10 py-4 border-t bg-sky-900 text-cyan-50">
-                <div className="flex flex-col">
-                    <p className='text-xs'>Bản quyền của SBAY VIETNAM ® 2007. Bảo lưu mọi quyền.</p>
-                    <p className='text-xs'>Ghi rõ nguồn <strong>SBAY VIETNAM</strong> khi sử dụng lại thông tin từ website này.</p>
-                    <p className='text-xs'>Số ĐKKD: 0102249980</p>
+                <div className=' w-full flex justify-between ...'>
+                    <div className="flex flex-col">
+                        <p className='text-xs'>Bản quyền của SBAY VIETNAM ® 2007. Bảo lưu mọi quyền.</p>
+                        <p className='text-xs'>Ghi rõ nguồn <strong>SBAY VIETNAM</strong> khi sử dụng lại thông tin từ website này.</p>
+                        <p className='text-xs'>Số ĐKKD: 0102249980</p>
+                    </div>
+                    <div className='flex flex-row space-x-5'>
+                        <Image src={'/img/visa.png'} width={50} height={50} alt={'Sbay group logo'} className=' rounded-md'></Image>
+                        <Image src={'/img/mastercard.png'} width={50} height={50} alt={'Sbay group logo'} className=' rounded-md'></Image>
+                    </div>
+
                 </div>
 
             </footer>
