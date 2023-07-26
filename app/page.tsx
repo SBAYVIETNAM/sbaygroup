@@ -1,14 +1,14 @@
 import Image from 'next/image'
 import React from 'react';
 import * as Icon from 'react-feather';
-import Footer from './components/footer';
+import Footer from './_components/footer';
 import Link from 'next/link';
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Trang chủ | Sbay Việt Nam',
   description: 'Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam',
-  authors: [{ name: 'Chung Le Ba', url: 'https://www.facebook.com/chung.leba' },{ name: 'Sang', url: 'https://www.facebook.com/vansang153' }],
+  authors: [{ name: 'Chung Le Ba', url: 'https://www.facebook.com/chung.leba' }, { name: 'Sang', url: 'https://www.facebook.com/vansang153' }],
   creator: 'Chung Le Ba',
   publisher: 'Chung Le Ba',
   alternates: {
@@ -45,7 +45,7 @@ export default function Home() {
             <Image src={'/img/sbay-w-r.png'} width={50} height={30} alt={'Sbay group logo'} className=' rounded-full'></Image>
           </div>
           <Link href={`tel:02363616616`} className=' col-span-4 justify-end flex flex-row'>
-            <Icon.PhoneCall className='w-4 h-4 mr-2 mt-1' /> Hotline 
+            <Icon.PhoneCall className='w-4 h-4 mr-2 mt-1' /> Hotline
             <div className='text-sm text-end mt-1 hidden lg:block'><strong className='ml-2'>0967 041 900</strong></div>
           </Link>
         </div>
@@ -150,7 +150,8 @@ export default function Home() {
             </div>
           </div>
           <div className="max-w-md z-10">
-            <p className="py-3 text-cyan-50 mt-5">Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam</p>
+{/*           <p className="py-3 text-cyan-50 mt-5">Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam</p>
+ */}          <p className="py-3 text-cyan-50 mt-5">Ứng dụng Sbay hiện có sẵn trên cửa hàng ứng dụng, hãy cài đặt để trải ngiệm</p>
           </div>
           <div className=" grid grid-cols-2 max-w-md z-10 mb-5">
 
@@ -162,6 +163,7 @@ export default function Home() {
             </Link>
 
           </div>
+          
           <div className='grid grid-cols-2 gap-5 z-10'>
             <Link href={'https://sbaygroup.com/?dang-nhap=1'} className='text-white text-sm flex flex-row justify-end'>
               Trang Thành viên <Icon.ExternalLink className='w-4 h-4 ml-2' />
@@ -175,6 +177,29 @@ export default function Home() {
             <Link href={'https://docs.google.com/forms/d/e/1FAIpQLSfZTbkywT2B4VD-2DhEZ3_SHdBRgHHH309pY8w8Dyj04-ToFg/viewform'} className='text-white text-sm flex flex-row justify-start'>
               Gặp mặt thứ 7 <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
+          </div>
+          <div className='z-10'>
+            {/* The button to open modal */}
+            <label htmlFor="my_modal_6" className=" link text-white text-sm">Hơn nữa</label>
+
+            {/* Put this part before </body> tag */}
+            <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+            <div className="modal">
+              <div className="modal-box bg-sky-800 opacity-90">
+                <h2 className='text-xl mb-10 text-white font-black'>Link khác</h2>
+                <div className='grid grid-cols-2 gap-5 z-10'>
+                  <Link href={'https://drive.google.com/drive/folders/1NXWqYwyMdHB7yM4FM6aX5NNpy24oB2Nl'} className='text-white text-sm flex flex-row justify-center'>
+                    Kho video <Icon.ExternalLink className='w-4 h-4 ml-2' />
+                  </Link>
+                  <Link href={'https://drive.google.com/drive/folders/1f54vXS92z13Hjjg9BGHwU1Rnp0rYjTdb'} className='text-white text-sm flex flex-row justify-center'>
+                    Kho hình ảnh <Icon.ExternalLink className='w-4 h-4 ml-2' />
+                  </Link>
+                </div>
+                <div className="modal-action">
+                  <label htmlFor="my_modal_6" className="btn bg-blue-300">Đóng</label>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
