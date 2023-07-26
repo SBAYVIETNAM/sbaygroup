@@ -105,7 +105,7 @@ export default function Footer() {
                 <span className="footer-title">DỊCH VỤ KHÁC</span>
             </footer>
 
-            <footer className="footer grid-rows-1 px-10 pb-10 mt--10  bg-sky-500 text-cyan-50 flex justify-between ...">
+            <footer className="footer grid-rows-1 px-10 pb-10 mt--10  bg-sky-500 text-cyan-50 justify-between ...">
                 <div>
                     <span className="footer-title">Khách sạn Đà Nẵng</span>
                     <div>
@@ -172,14 +172,15 @@ export default function Footer() {
             <footer className="footer grid-rows-1 p-10 bg-sky-700 text-cyan-50 justify-between ...">
                 <div>
                     <Image src={'/img/sbay-w-r.png'} width={100} height={30} alt={'Sbay group logo'} className=' rounded-md'></Image>
-                    <p className='font-bold'>CÔNG TY CỔ PHẦN SBAY VIỆT NAM</p>
-                    <p className="py-3">
+                    <p className='font-bold text-lg'>CÔNG TY CỔ PHẦN SBAY VIỆT NAM</p>
+                    <p className="py-3 text-sm">
                         Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi <br />
                         hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, <br />
                         phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam.</p>
-                    <p className='flex flex-row'><Icon.MapPin className='w-4 h-4 mr-2' />Địa chỉ trụ sở chính: Số 3 Đinh Thị Hòa, Sơn Trà, Đà Nẵng</p>
-                    <p className='flex flex-row'><Icon.Phone className='w-4 h-4 mr-2' />Hotline (24h): 0967 041 900</p>
-                    <p className='flex flex-row'><Icon.Mail className='w-4 h-4 mr-2' />Email: hanhchinh.sbay@gmail.com</p>
+                    <span className="footer-title">Liên hệ</span>
+                    <p className='flex flex-row text-slate-200'><Icon.Phone className='w-4 h-4 mr-2' />Hotline (24h): 0967 041 900</p>
+                    <p className='flex flex-row text-slate-200'><Icon.MapPin className='w-4 h-4 mr-2' />Địa chỉ trụ sở chính: Số 3 Đinh Thị Hòa, Sơn Trà, Đà Nẵng</p>
+                    <p className='flex flex-row text-slate-200'><Icon.Mail className='w-4 h-4 mr-2' />Email: hanhchinh.sbay@gmail.com</p>
 
                 </div>
                 <div>
@@ -214,9 +215,9 @@ export default function Footer() {
                         <p className='text-xs'>Ghi rõ nguồn <strong>SBAY VIETNAM</strong> khi sử dụng lại thông tin từ website này.</p>
                         <p className='text-xs'>Số ĐKKD: 0102249980</p>
                     </div>
-                    <div className='flex flex-row space-x-5'>
-                        <Image src={'/img/visa.png'} width={50} height={50} alt={'Sbay group logo'} className=' rounded-md'></Image>
-                        <Image src={'/img/mastercard.png'} width={50} height={50} alt={'Sbay group logo'} className=' rounded-md'></Image>
+                    <div className='flex flex-row space-x-3 mr-5'>
+                        <Image src={'/img/visa.png'} width={50} height={50} alt={'Thanh toán trả góp thẻ Visa'} className=' rounded-md'></Image>
+                        <Image src={'/img/mastercard.png'} width={50} height={50} alt={'Thanh toán trả góp thẻ MasterCard'} className=' rounded-md'></Image>
                     </div>
 
                 </div>
