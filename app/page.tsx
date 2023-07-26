@@ -162,12 +162,18 @@ export default function Home() {
             </Link>
 
           </div>
-          <div className='grid grid-cols-2 gap-10 z-10'>
-            <Link href={'https://sbaygroup.com/?dang-nhap=1'} className='text-white text-sm flex flex-row'>
+          <div className='grid grid-cols-2 gap-5 z-10'>
+            <Link href={'https://sbaygroup.com/?dang-nhap=1'} className='text-white text-sm flex flex-row justify-end'>
               Trang Thành viên <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
-            <Link href={'https://work.sbayvietnam.com'} className='text-white text-sm flex flex-row'>
+            <Link href={'https://work.sbayvietnam.com'} className='text-white text-sm flex flex-row justify-start'>
               Trang WorkPlace <Icon.ExternalLink className='w-4 h-4 ml-2' />
+            </Link>
+            <Link href={'https://meet.google.com/coo-epfp-fnz'} className='text-white text-sm flex flex-row justify-end'>
+              Meet hàng ngày <Icon.ExternalLink className='w-4 h-4 ml-2' />
+            </Link>
+            <Link href={'http://thu7.sbayvietnam.net/'} className='text-white text-sm flex flex-row justify-start'>
+              Gặp mặt thứ 7 <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
           </div>
         </div>
