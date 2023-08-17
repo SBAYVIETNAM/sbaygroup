@@ -194,6 +194,9 @@ export default function Home() {
                   <Link href={'https://drive.google.com/drive/folders/1f54vXS92z13Hjjg9BGHwU1Rnp0rYjTdb'} className='text-white text-sm flex flex-row justify-center'>
                     Kho hình ảnh <Icon.ExternalLink className='w-4 h-4 ml-2' />
                   </Link>
+                  <Link href={'https://docs.google.com/forms/d/1tOdLDHozf8vuLNTWHJV5cNVt1vXHFFtunl_Uy7FGFOA'} className='text-white text-sm flex flex-row justify-center'>
+                    Đăng kí hội thảo <br /> kết nối kinh doanh Sbay<Icon.ExternalLink className='w-4 h-4 ml-2' />
+                  </Link>
                 </div>
                 <div className="modal-action">
                   <label htmlFor="my_modal_6" className="btn bg-blue-300">Đóng</label>
