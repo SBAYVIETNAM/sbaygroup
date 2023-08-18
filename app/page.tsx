@@ -126,7 +126,7 @@ export default function Home() {
               <div>
                 <div className="avatar">
                   <div className="w-16 mask mask-squircle">
-                    <Image width={256} height={256} alt='tuor du lịch' src="/img/du-lich.png" />
+                    <Image width={256} height={256} alt='tour du lịch' src="/img/du-lich.png" />
                   </div>
                 </div>
               </div>

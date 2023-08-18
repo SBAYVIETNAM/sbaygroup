@@ -161,7 +161,7 @@ export default function Footer() {
                 <div>
                     <span className="footer-title text-slate-50">Khác</span>
                     <div>
-                        <p className=''>Đặt Tuor Du Lịch</p>
+                        <p className=''>Đặt tour Du Lịch</p>
                     </div>
                     <div>
                         <p className=''>Đặt xe khách</p>
