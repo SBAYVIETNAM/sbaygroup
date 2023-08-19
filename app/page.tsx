@@ -60,7 +60,7 @@ export default function Home() {
             <h1 className="text-5xl font-bold text-cyan-50 mb-0">Sbay Việt Nam</h1>
             <p className="py-3 text-cyan-50">Kiến tạo sự nghiệp.</p>
           </div>
-          <div className='grid grid-cols-3 gap-6 z-10'>
+          <div className='grid grid-cols-2 gap-6 z-10'>
 
             <Link href={'https://flight.sbaygroup.com'}>
               <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
@@ -122,7 +122,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
+            {/* <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
               <div>
                 <div className="avatar">
                   <div className="w-16 mask mask-squircle">
@@ -147,7 +147,7 @@ export default function Home() {
                 <h2 className='  font-bold text-cyan-50'>Xe khách</h2>
 
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="max-w-md z-10">
 {/*           <p className="py-3 text-cyan-50 mt-5">Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam</p>
