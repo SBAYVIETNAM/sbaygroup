@@ -62,7 +62,7 @@ export default function Home() {
           </div>
           <div className='grid grid-cols-2 gap-6 z-10'>
 
-            <Link href={'https://flight.sbaygroup.com'}>
+            <Link href={'https://flight.sbaygroup.com'} target="_blank">
               <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
                 <div>
                   <div className="avatar">
@@ -76,7 +76,7 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-            <Link href={'https://www.sbayhoteldanang.com/'}>
+            <Link href={'https://www.sbayhoteldanang.com/'} target="_blank">
               <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
                 <div>
                   <div className="avatar">
@@ -91,7 +91,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <Link href={'https://datxe.sbayvietnam.com/'}>
+            <Link href={'https://datxe.sbayvietnam.com/'} target="_blank">
               <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
                 <div>
                   <div className="avatar">
@@ -106,7 +106,7 @@ export default function Home() {
                 </div>
               </div>
             </Link>
-            <Link href={'https://datve.sbayvietnam.com/'}>
+            <Link href={'https://datve.sbayvietnam.com/'} target="_blank">
               <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
                 <div>
                   <div className="avatar">
@@ -165,16 +165,16 @@ export default function Home() {
           </div>
           
           <div className='grid grid-cols-2 gap-5 z-10'>
-            <Link href={'https://sbaygroup.com/?dang-nhap=1'} className='text-white text-sm flex flex-row justify-end'>
+            <Link href={'https://sbaygroup.com/?dang-nhap=1'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
               Trang Thành viên <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
-            <Link href={'https://work.sbayvietnam.com'} className='text-white text-sm flex flex-row justify-start'>
+            <Link href={'https://work.sbayvietnam.com'} target="_blank" className='text-white text-sm flex flex-row justify-start'>
               Trang WorkPlace <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
-            <Link href={'https://meet.google.com/coo-epfp-fnz'} className='text-white text-sm flex flex-row justify-end'>
+            <Link href={'https://meet.google.com/coo-epfp-fnz'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
               Meet hàng ngày <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
-            <Link href={'https://docs.google.com/forms/d/1tOdLDHozf8vuLNTWHJV5cNVt1vXHFFtunl_Uy7FGFOA'} className='text-white text-sm flex flex-row justify-start'>
+            <Link href={'https://docs.google.com/forms/d/1tOdLDHozf8vuLNTWHJV5cNVt1vXHFFtunl_Uy7FGFOA'} target="_blank" className='text-white text-sm flex flex-row justify-start'>
               Hội thảo thứ 7 <Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
           </div>
@@ -188,10 +188,10 @@ export default function Home() {
               <div className="modal-box bg-sky-800 opacity-90">
                 <h2 className='text-xl mb-10 text-white font-black'>Link khác</h2>
                 <div className='grid grid-cols-2 gap-5 z-10'>
-                  <Link href={'https://drive.google.com/drive/folders/1NXWqYwyMdHB7yM4FM6aX5NNpy24oB2Nl'} className='text-white text-sm flex flex-row justify-center'>
+                  <Link href={'https://drive.google.com/drive/folders/1NXWqYwyMdHB7yM4FM6aX5NNpy24oB2Nl'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
                     Kho video <Icon.ExternalLink className='w-4 h-4 ml-2' />
                   </Link>
-                  <Link href={'https://drive.google.com/drive/folders/1f54vXS92z13Hjjg9BGHwU1Rnp0rYjTdb'} className='text-white text-sm flex flex-row justify-center'>
+                  <Link href={'https://drive.google.com/drive/folders/1f54vXS92z13Hjjg9BGHwU1Rnp0rYjTdb'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
                     Kho hình ảnh <Icon.ExternalLink className='w-4 h-4 ml-2' />
                   </Link>
                   {/* <Link href={'https://docs.google.com/forms/d/1tOdLDHozf8vuLNTWHJV5cNVt1vXHFFtunl_Uy7FGFOA'} className='text-white text-sm flex flex-row justify-center'>
