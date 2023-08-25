@@ -186,9 +186,9 @@ export default function Footer() {
                 <div>
                     <span className="footer-title text-slate-50">Về chúng tôi</span>
 
-                    <a href='https://flight.sbaygroup.com/gioi-thieu' className="link link-hover">Giới thiệu</a>
+                    <a href='https://sbay.com.vn/gioi-thieu' className="link link-hover">Giới thiệu</a>
                     <p className="link link-hover">Tin tức</p>
-                    <a href='https://flight.sbaygroup.com/lien-he' className="link link-hover">Liên hệ</a>
+                    <a href='https://sbay.com.vn/lien-he' className="link link-hover">Liên hệ</a>
                 </div>
                 <div>
                     <span className="footer-title text-slate-50">Hỗ trợ</span>
