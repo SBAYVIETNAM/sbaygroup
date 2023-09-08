@@ -165,7 +165,7 @@ export default function Home() {
           </div>
 
           <div className='grid grid-cols-2 gap-5 z-10'>
-            <Link href={'https://flight.sbaygroup.com/?dang-nhap=1'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
+            <Link href={'https://sbay.com.vn/gioi-thieu'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
               Giới thiệu về Sbay<Icon.ExternalLink className='w-4 h-4 ml-2' />
             </Link>
             <Link href={'https://sbay.com.vn/tin-tuc/chinh-sach-hop-tac-dai-ly-doi-tac/chuong-trinh-hop-tac-dai-ly-ve-may-bay-sbay-viet-nam-n4136'} target="_blank" className='text-white text-sm flex flex-row justify-start'>
