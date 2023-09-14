@@ -194,7 +194,7 @@ export default function Home() {
               <div className="modal-box bg-sky-800 opacity-90">
                 <h2 className='text-xl mb-10 text-white font-black'>Link khác</h2>
                 <div className='grid grid-cols-2 gap-5 z-10'>
-                  <Link href={'https://drive.google.com/drive/folders/1NXWqYwyMdHB7yM4FM6aX5NNpy24oB2Nl'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
+                  <Link href={'https://drive.google.com/drive/folders/1iqikemTZTth-Lrg1C4yq-7ujmjqwTyUT'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
                     Kho video <Icon.ExternalLink className='w-4 h-4 ml-2' />
                   </Link>
                   <Link href={'https://drive.google.com/drive/folders/1f54vXS92z13Hjjg9BGHwU1Rnp0rYjTdb'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
