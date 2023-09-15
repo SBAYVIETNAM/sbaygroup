@@ -50,7 +50,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <div className="hero h-screen bg-cyan-50 -mt-10">
+      <div className="hero h-full bg-cyan-50 -mt-10">
         <div className="hero-content text-center flex flex-col">
           <div className="video-docker absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
 
@@ -151,9 +151,9 @@ export default function Home() {
           </div>
           <div className="max-w-md z-10">
             {/*           <p className="py-3 text-cyan-50 mt-5">Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam</p>
- */}          <p className="py-3 text-cyan-50 mt-5">Ứng dụng Sbay hiện có sẵn trên cửa hàng ứng dụng, hãy cài đặt để trải ngiệm</p>
+ */}          <p className="text-cyan-50 mt-5">Ứng dụng Sbay hiện có sẵn trên cửa hàng ứng dụng, hãy cài đặt để trải ngiệm</p>
           </div>
-          <div className=" grid grid-cols-2 max-w-md z-10 mb-5">
+          <div className=" grid grid-cols-2 max-w-md z-10">
 
             <Link href={'https://apps.apple.com/vn/app/sbaygroup/id64462563480?l=vi'}>
               <Image src={'/img/ios.png'} width={120} height={30} alt={'Sbay iso'} className=' rounded-sm mr-2'></Image>
