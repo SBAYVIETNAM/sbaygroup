@@ -6,7 +6,7 @@ export default function Footer() {
     return (
         <>
             {/* DV CHÍNH */}
-            <footer className="footer grid-rows-1 pl-10 bg-cyan-50 text-xl">
+            <footer className="footer grid-rows-1 pl-10 bg-cyan-50 text-xl mt-4">
                 <span className="footer-title text-gray-900">DỊCH VỤ VÉ MÁY BAY</span>
             </footer>
 
