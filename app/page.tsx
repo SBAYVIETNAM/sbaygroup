@@ -50,7 +50,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <div className="hero h-full bg-cyan-50 -mt-10">
+      <div className="hero h-screen bg-cyan-50">
         <div className="hero-content text-center flex flex-col">
           <div className="video-docker absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
 
