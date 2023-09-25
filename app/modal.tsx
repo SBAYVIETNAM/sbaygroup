@@ -1,4 +1,3 @@
-import Modal from 'react-modal';
 import Image from 'next/image'
 import Link from 'next/link';
 

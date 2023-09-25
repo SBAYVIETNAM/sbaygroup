@@ -4,40 +4,8 @@ import React, { useEffect, useState } from 'react';
 import * as Icon from 'react-feather';
 import Footer from './_components/footer';
 import Link from 'next/link';
-import { Metadata } from 'next'
 import Popup from "./modal";
 
-export const metadata: Metadata = {
-  title: 'Trang chủ | Sbay Việt Nam',
-  description: 'Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam',
-  authors: [{ name: 'Chung Le Ba', url: 'https://www.facebook.com/chung.leba' }, { name: 'Sang', url: 'https://www.facebook.com/vansang153' }],
-  creator: 'Chung Le Ba',
-  publisher: 'Chung Le Ba',
-  alternates: {
-    canonical: 'https://sbaygroup.com/',
-  },
-  openGraph: {
-    title: 'Trang chủ | Sbay Việt Nam',
-    description: 'Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam',
-    url: 'https://sbaygroup.com',
-    siteName: 'Sbay Việt Nam',
-    images: [
-      {
-        url: 'https://sbaygroup.com/img/sbay-w-r.png',
-        width: 800,
-        height: 600,
-      }/* ,
-      {
-        url: 'https://nextjs.org/og-alt.png',
-        width: 1800,
-        height: 1600,
-        alt: 'My custom alt',
-      }, */
-    ],
-    locale: 'vi_VN',
-    type: 'website',
-  },
-}
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,22 +14,6 @@ export default function Home() {
       setIsOpen(true);
     }, 500);
   }, []);
-  // const [isOpen, setIsOpen] = useState(true);
-
-  // useEffect(() => {
-  //   const hasVisited = localStorage.getItem('hasVisitedNexts');
-  //   if (!hasVisited) {
-  //     setIsOpen(true);
-  //     localStorage.setItem('hasVisitedNexts', true);
-  //     console.log("SangMai");
-      
-  //   }
-  // }, []);
-
-  // const onClose = () => setIsOpen(false);
-  // function handleClick() {
-  //   alert("Clicked me!");
-  // }
   return (
     <>
       {isOpen && <Popup isOpen={isOpen} />}
