@@ -5,7 +5,7 @@ const Popup = ({ isOpen }: any) => {
   return (
     <dialog id="my_modal_1" className="modal" open={isOpen}>
       <div className="modal-box" style={{padding: '0.5rem' }}>
-        <Link href={'https://verenhat.sbay.com.vn/'} target="_blank">
+        <Link href={'https://giarenhat.sbaygroup.com/'} target="_blank">
           <Image width={0}
                     height={0}
                     sizes="100vw"
