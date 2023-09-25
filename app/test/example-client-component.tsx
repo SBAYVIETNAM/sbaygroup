@@ -12,7 +12,6 @@ export default function ExampleClientComponent({
   return (
     <>
       <button onClick={() => setCount(count + 1)}>{count}</button>
- 
       {children}
     </>
   )
