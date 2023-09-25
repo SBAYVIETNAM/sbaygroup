@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link';
 
-const Popup = ({ isOpen }) => {
+const Popup = ({ isOpen }: any) => {
   return (
     <dialog id="my_modal_1" className="modal" open={isOpen}>
       <div className="modal-box" style={{padding: '0.5rem' }}>
