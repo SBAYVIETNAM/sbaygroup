@@ -1,45 +1,23 @@
+'use client';
 import Image from 'next/image'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Icon from 'react-feather';
 import Footer from './_components/footer';
 import Link from 'next/link';
-import { Metadata } from 'next'
+import Popup from "./modal";
 
-export const metadata: Metadata = {
-  title: 'Trang chủ | Sbay Việt Nam',
-  description: 'Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam',
-  authors: [{ name: 'Chung Le Ba', url: 'https://www.facebook.com/chung.leba' }, { name: 'Sang', url: 'https://www.facebook.com/vansang153' }],
-  creator: 'Chung Le Ba',
-  publisher: 'Chung Le Ba',
-  alternates: {
-    canonical: 'https://sbaygroup.com/',
-  },
-  openGraph: {
-    title: 'Trang chủ | Sbay Việt Nam',
-    description: 'Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam',
-    url: 'https://sbaygroup.com',
-    siteName: 'Sbay Việt Nam',
-    images: [
-      {
-        url: 'https://sbaygroup.com/img/sbay-w-r.png',
-        width: 800,
-        height: 600,
-      }/* ,
-      {
-        url: 'https://nextjs.org/og-alt.png',
-        width: 1800,
-        height: 1600,
-        alt: 'My custom alt',
-      }, */
-    ],
-    locale: 'vi_VN',
-    type: 'website',
-  },
-}
 export default function Home() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsOpen(true);
+    }, 500);
+  }, []);
   return (
     <>
-      <div className='sticky shadow-sm top-0 z-10 text-white px-5 py-3'>
+      {isOpen && <Popup isOpen={isOpen} />}
+      <div className='sticky shadow-sm top-0 z-10 text-white px-5 py-3'>  
         <div className=' grid grid-cols-12'>
           <div className=' col-span-8'>
             <Image src={'/img/sbay-w-r.png'} width={50} height={30} alt={'Sbay group logo'} className=' rounded-full'></Image>
@@ -50,7 +28,7 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <div className="hero h-screen bg-cyan-50">
+      <div className="hero max-h-screen bg-cyan-50">
         <div className="hero-content text-center flex flex-col">
           <div className="video-docker absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
 
@@ -60,7 +38,7 @@ export default function Home() {
             <h1 className="text-5xl font-bold text-cyan-50 mb-0">Sbay Việt Nam</h1>
             <p className="py-3 text-cyan-50">Kiến tạo sự nghiệp.</p>
           </div>
-          <div className='grid grid-cols-2 gap-6 z-10'>
+          <div className='grid grid-cols-2 gap-3 z-10'>
 
             <Link href={'https://flight.sbaygroup.com'} target="_blank">
               <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
@@ -151,7 +129,7 @@ export default function Home() {
           </div>
           <div className="max-w-md z-10">
             {/*           <p className="py-3 text-cyan-50 mt-5">Sbay Việt Nam hiện đang sở hữu hệ thống chuỗi hơn 500 văn phòng trực thuộc đồng bộ thương hiệu, hơn 8.000 đại lý, phòng vé liên kết phủ khắp 64 tỉnh thành tại Việt Nam</p>
- */}          <p className="text-cyan-50 mt-5">Ứng dụng Sbay hiện có sẵn trên cửa hàng ứng dụng, hãy cài đặt để trải ngiệm</p>
+ */}          <p className="text-cyan-50 mt-2">Ứng dụng Sbay hiện có sẵn trên cửa hàng ứng dụng, hãy cài đặt để trải ngiệm</p>
           </div>
           <div className=" grid grid-cols-2 max-w-md z-10">
 
