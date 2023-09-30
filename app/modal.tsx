@@ -11,11 +11,17 @@ const Popup = ({ isOpen }: any) => {
                     sizes="100vw"
                     style={{ width: '100%', height: 'auto', borderRadius: '10px' }} alt='vé máy bay giá rẻ' src="/img/Popup.jpg" />
         </Link>
-        <div className="modal-action">
+        
           <form method="dialog">
-            <button className="btn">Close</button>
+            <div className="grid grid-cols-2">
+              <div className='modal-action'>
+                <h2 className='text-red-600 text-lg font-bold'>Đăng ký hợp tác kinh doanh</h2>
+              </div>
+              <div className='modal-action'>
+                <button className="btn">Close</button>
+              </div>
+            </div>            
           </form>
-        </div>
       </div>
     </dialog>
   );
