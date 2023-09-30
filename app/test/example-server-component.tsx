@@ -1,9 +1,10 @@
  
-export default function ExampleClientComponent() {
+export default function ExampleClientComponent(props:any) {
+  
   return (
     <>
       <div>
-        <h1>Helen</h1>
+        <h1>Xin chào </h1>
       </div>
     </>
   )

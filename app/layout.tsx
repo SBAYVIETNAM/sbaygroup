@@ -14,6 +14,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  
   return (
     <html lang="vi" data-theme="light">
       <Script src="https://www.googletagmanager.com/gtag/js?id=G-4FYG8CZ5SC" />
