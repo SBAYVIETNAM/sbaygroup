@@ -13,7 +13,7 @@ export default function Cu() {
   return (
     <>
       <div >
-        <h1>Tao là Cụ</h1>
+        <h1>Tao là {cuDatChoChau}</h1>
         <div className=' space-x-2'>
           <button className='btn btn-sm btn-primary' onClick={() => setcuDatChoChau('Cụ Bà')}>Cụ Bà</button>
           <button className='btn btn-sm btn-secondary' onClick={() => setcuDatChoChau('Cụ Ông')}>Cụ Ông</button>
@@ -21,7 +21,6 @@ export default function Cu() {
 
         <Context.Provider value={value}>
           <Ong name={"Cụ"}></Ong>
-
         </Context.Provider>
       </div>
     </>
