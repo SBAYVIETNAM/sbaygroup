@@ -175,7 +175,7 @@ export default function Home() {
                     <Link href={'https://drive.google.com/drive/folders/1iqikemTZTth-Lrg1C4yq-7ujmjqwTyUT'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
                       Kho video <Icon.ExternalLink className='w-4 h-4 ml-2' />
                     </Link>
-                    <Link href={'https://drive.google.com/drive/folders/1f54vXS92z13Hjjg9BGHwU1Rnp0rYjTdb'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
+                    <Link href={'https://drive.google.com/drive/folders/18lFUsC76o11mxfAuAQ9PFkZAS0z-a4J9'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
                       Kho hình ảnh <Icon.ExternalLink className='w-4 h-4 ml-2' />
                     </Link>
                     {/* <Link href={'https://docs.google.com/forms/d/1tOdLDHozf8vuLNTWHJV5cNVt1vXHFFtunl_Uy7FGFOA'} className='text-white text-sm flex flex-row justify-center'>
