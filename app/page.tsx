@@ -6,17 +6,10 @@ import Footer from './_components/footer';
 import Link from 'next/link';
 import Popup from "./modal";
 
-export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsOpen(true);
-    }, 500);
-  }, []);
+export default function Home() {  
   return (
     <>
-      {isOpen && <Popup isOpen={isOpen} />}
+      {<Popup />}
       <div className='sticky shadow-sm top-0 z-10 text-white px-5 py-3'>
         <div className=' grid grid-cols-12'>
           <div className=' col-span-8'>

@@ -1,9 +1,15 @@
 import Image from 'next/image'
 import Link from 'next/link';
 
-const Popup = ({ isOpen }: any) => {
+const Popup = () => {
+  setTimeout(() => {
+    const modal = document.getElementById('my_modal_1') as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    }
+  }, 500);
   return (
-    <dialog id="my_modal_1" className="modal" open={isOpen}>
+    <dialog id="my_modal_1" className="modal">
       <div className="modal-box" style={{padding: '0.5rem' }}>
         <Link href={'https://giarenhat.sbaygroup.com/'} target="_blank">
           <Image width={0}
