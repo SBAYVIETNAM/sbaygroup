@@ -30,7 +30,7 @@ const Popup = ({handleClose}: any) => {
             className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
           >
              <div className="p-2 rounded-lg bg-white" style={{padding: '0.5rem' }}>
-             <Link href={'https:giarenhat.sbaygroup.com/'} target="_blank">
+             <Link href={'https:giarenhat.sbaygroup.com'} target="_blank">
                <Image width={0}
                          height={0}
                          sizes="100vw"
