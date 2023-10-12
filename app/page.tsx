@@ -7,9 +7,19 @@ import Link from 'next/link';
 import Popup from "./modal";
 
 export default function Home() {  
+  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setShowModal(true);
+    }, 500);
+  }, [])
+
+  const handleClose = () => {
+    setShowModal(false)
+  }
   return (
     <>
-      {<Popup />}
+      {showModal && <Popup handleClose={handleClose} />}
       <div className='sticky shadow-sm top-0 z-10 text-white px-5 py-3'>
         <div className=' grid grid-cols-12'>
           <div className=' col-span-8'>
