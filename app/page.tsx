@@ -132,7 +132,6 @@ export default function Home() {
               </div>
             </div> */}
               </div>
-              <a href='https://cskh.sbayvietnam.com' className="btn btn-wide mx-auto my-5">Chăm sóc khách hàng</a>
               <div className="max-w-md z-10">
               <p className="text-cyan-50 mt-2">Ứng dụng Sbay hiện có sẵn trên cửa hàng ứng dụng, hãy cài đặt để trải ngiệm</p>
             </div>
@@ -196,6 +195,7 @@ export default function Home() {
             </div>
 
           </div>
+          <a href='https://cskh.sbayvietnam.com' className=" fixed bottom-5 right-5 btn rounded-full bg-red-500 text-white mx-auto my-5"><Icon.MessageCircle className='w-4 h-4 animate-bounce' />CSKH</a>
         </div>
         {/* <Footer></Footer> */}
       </div>
