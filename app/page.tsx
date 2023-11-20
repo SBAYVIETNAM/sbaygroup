@@ -2,18 +2,17 @@
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import * as Icon from "react-feather";
-
-import Footer from "./_components/footer";
 import Link from "next/link";
 import Popup from "./modal";
+import Slider from "./_components/slider";
 
 export default function Home() {
   const [showModal, setShowModal] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setShowModal(true);
-    }, 500);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setShowModal(true);
+  //   }, 500);
+  // }, []);
 
   const handleClose = () => {
     setShowModal(false);
@@ -21,33 +20,11 @@ export default function Home() {
   return (
     <>
       {showModal && <Popup handleClose={handleClose} />}
-      <div className="sticky shadow-sm bg-white  top-0 z-10 text-white px-5 py-3">
-        <div className=" grid grid-cols-12">
-          <div className=" col-span-8">
-            <Image
-              src={"/img/sbay-w-r.png"}
-              width={50}
-              height={30}
-              alt={"Sbay group logo"}
-              className=" rounded-full"
-            ></Image>
-          </div>
-          <Link
-            href={`tel:02363616616`}
-            className=" col-span-4 justify-end items-center flex text text-slate-900 flex-row"
-          >
-            <Icon.PhoneCall className="w-4 h-4 mr-2 mt-1" /> Hotline
-            <div className="text-sm text-end mt-1 hidden lg:block">
-              <strong className="ml-2">0967 041 900</strong>
-            </div>
-          </Link>
-        </div>
-      </div>
-      <div className=" flex flex-col">
+      <div className="flex flex-col">
         <div className="hero max-h-screen bg-[url('/img/maybay.jpeg')] bg-cyan-50">
           <div className="hero-content text-center flex flex-col">
             <div className="video-docker absolute top-0 left-0 w-full h-screen overflow-hidden z-0"></div>
-            <div className="z-10 ">
+            <div className="">
               <div className="grid grid-cols-2 border rounded-lg gap-2 p-8 m-20 bg-slate-50/20 w-80 mx-auto">
                 <Link href={"https://flight.sbaygroup.com"} target="_blank">
                   <div className="flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2">
@@ -141,7 +118,7 @@ export default function Home() {
       </div>
       <div className="container mx-auto">
         <div className="w-full border-b-2 border-amber-300 ">
-          <p className="my-5 text-2xl font-semibold text-center">
+          <p className="my-5 text-2xl font-semibold text-red-600 text-center">
             CẬP NHẬT VÉ KHUYẾN MÃI
           </p>
         </div>
@@ -226,7 +203,7 @@ export default function Home() {
           </div>
         </div>
         <div className="w-full mt-10">
-          <p className="my-3 text-2xl font-semibold text-center">
+          <p className="my-3 text-2xl  text-red-600 font-semibold text-center">
             ĐIỂM ĐẾN NỔI BẬT
           </p>
           <p className="my-2 text-md font-semibold text-center">
@@ -234,7 +211,7 @@ export default function Home() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 py-8 p-4 ">
-          <div className="w-full">
+          <div className="w-full transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-500">
             <Image
               priority
               width={300}
@@ -247,8 +224,11 @@ export default function Home() {
                 objectFit: "cover",
               }}
             />
+            <p className="absolute bottom-1 left-3 font-semibold text-lg text-white">
+              LONDON
+            </p>
           </div>
-          <div className="">
+          <div className="w-full transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-500">
             <Image
               priority
               width={300}
@@ -261,8 +241,11 @@ export default function Home() {
                 objectFit: "cover",
               }}
             />
+            <p className="absolute bottom-1 left-3 font-semibold text-lg text-white">
+              PARIS
+            </p>
           </div>
-          <div className="">
+          <div className="w-full transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-500">
             <Image
               priority
               width={300}
@@ -275,8 +258,11 @@ export default function Home() {
                 objectFit: "cover",
               }}
             />
+            <p className="absolute bottom-1 left-3 font-semibold text-lg text-white">
+              KOREA
+            </p>
           </div>
-          <div className="">
+          <div className="w-full transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-500">
             <Image
               priority
               width={300}
@@ -289,11 +275,28 @@ export default function Home() {
                 objectFit: "cover",
               }}
             />
+            <p className="absolute bottom-1 left-3 font-semibold text-lg text-white">
+              TOKIO
+            </p>
           </div>
         </div>
+        <div className="w-full mt-10 flex flex-row  items-center justify-center border-b-2 border-amber-300 ">
+          <p className="my-5 text-2xl font-semibold text-center flex  items-center justify-center flex-row">
+            ĐỐI TÁC HÀNG KHÔNG
+            <Image
+              src={"/img/moreariplane.png"}
+              width={80}
+              height={30}
+              alt={"Sbay iso"}
+              className=" rounded-sm ml-2 mx-auto"
+            ></Image>
+          </p>
+        </div>
+        <Slider />
       </div>
+
       {/* <Footer></Footer> */}
-      <div className="bg-[url('/img/footer.jpeg')] hero py-10">
+      {/* <div className="bg-[url('/img/footer.jpeg')] hero py-10">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row">
             <div className="md:w-2/3 w-full  mr-40">
@@ -315,7 +318,7 @@ export default function Home() {
                     </p>
                     <p className="text-white text-sm  items-center flex flex-row justify-start">
                       <Icon.ChevronRight className="w-4 h-4 mr-2" /> Email:
-                      Sbay@gmail.com.vn
+                      ota.sbayvietnam@gmail.com
                     </p>
                   </div>
                 </div>
@@ -358,7 +361,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="mt-10">
-                <div className="grid grid-cols-2 gap-5 ">
+                <div className="grid grid-cols-2 gap-5 ml-2 md:ml-0">
                   <Link
                     href={"https://sbay.com.vn/gioi-thieu"}
                     target="_blank"
@@ -425,7 +428,7 @@ export default function Home() {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
