@@ -16,8 +16,6 @@ module.exports = {
       },
     },
   },
-  plugins: [require("daisyui"), require('flowbite/plugin')],
-  daisyui: {
-    themes: ["light", "dark", "cupcake"],
-  },
+  plugins: [require('flowbite/plugin')],
+  
 }

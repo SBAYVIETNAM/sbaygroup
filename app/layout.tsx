@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Nav />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
