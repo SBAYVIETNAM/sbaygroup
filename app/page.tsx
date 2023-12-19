@@ -159,8 +159,11 @@ export default function Home() {
                 <Link href={'https://work.sbayvietnam.com'} target="_blank" className='text-white text-sm flex flex-row justify-start'>
                   Trang WorkPlace <Icon.ExternalLink className='w-4 h-4 ml-2' />
                 </Link>
-                <Link href={'https://meet.google.com/coo-epfp-fnz'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
+                {/* <Link href={'https://meet.google.com/coo-epfp-fnz'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
                   Meet hàng ngày <Icon.ExternalLink className='w-4 h-4 ml-2' />
+                </Link> */}
+                <Link href={'/tool-marketing'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
+                  Tool Marketing <Icon.ExternalLink className='w-4 h-4 ml-2' />
                 </Link>
                 <Link href={'https://docs.google.com/forms/d/1tOdLDHozf8vuLNTWHJV5cNVt1vXHFFtunl_Uy7FGFOA'} target="_blank" className='text-white text-sm flex flex-row justify-start'>
                   Hội thảo thứ 7 <Icon.ExternalLink className='w-4 h-4 ml-2' />
