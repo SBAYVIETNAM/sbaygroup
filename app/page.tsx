@@ -128,7 +128,12 @@ export default function Home() {
         </div>
       </div>
       <div className=" -mt-14 h-screen bg-white mx-auto rounded-3xl p-5">
-        
+        <div className="flex flex-row max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" mt-48 text-4xl text-white font-bold text-center"> Hợp tác đại lý</h2>
+          <div className=" grid grid-cols-4">
+            
+          </div>
+        </div>
       </div>
     </>
   );
