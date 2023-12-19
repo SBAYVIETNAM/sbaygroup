@@ -20,7 +20,7 @@ export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <nav className=" fixed w-full shadow-sm top-0 z-50 text-white font-medium py-2 backdrop-blur-sm divide-y">
+      <nav className=" fixed w-full shadow-sm top-0 z-50 bg-white font-medium py-2 backdrop-blur-sm divide-y">
         <div className=" w-screen">
           <div className="flex flex-row max-w-7xl mx-auto  justify-between py-2">
             <div>
@@ -29,7 +29,7 @@ export default function Nav() {
                 width={512}
                 height={288}
                 alt={"Sbay group logo"}
-                className=" w-16 rounded-full"
+                className=" w-14 rounded-full"
               ></Image>
               <Link
                 href={`tel:02363616616`}
