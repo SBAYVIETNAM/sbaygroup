@@ -42,17 +42,17 @@ export default function Home() {
               <h1 className=' text-4xl font-bold mt-28 text-red-600'>Tool Marketing</h1>
               <p>Tiếp cận hàng triệu người với tool Marketing phát triển bởi Sbay</p>
               <div className=' grid grid-cols-3 p-5'>
-                <Link href={'https://www.facebook.com/?auto-sbay=1'} className=' hover:bg-slate-400 p-5 rounded-xl'>
+                <Link href={'https://www.facebook.com/?auto-sbay=1'} className=' hover:bg-slate-400 p-5 rounded-xl' title='Click để chạy facebook marketing'>
                   <Image src={'/img/facebook.png'} width={300} height={500} alt={'Sbay facebook marketing'} className=' w-10 rounded-full mx-auto'></Image>
-                  <p className=' text-sm mt-3'>Facebook Extension</p>
+                  <p className=' text-sm mt-3 whitespace-nowrap'>Facebook Extension</p>
                 </Link>
-                <Link href={'https://chat.zalo.me/?auto-zalo=1'} className=' hover:bg-slate-400 p-5 rounded-xl'>
+                <Link href={'https://chat.zalo.me/?auto-zalo=1'} className=' hover:bg-slate-400 p-5 rounded-xl' title='Click để chạy zalo marketing'>
                   <Image src={'/img/zalo.png'} width={300} height={500} alt={'Sbay zalo marketing'} className=' w-10 rounded-full mx-auto'></Image>
-                  <p className=' text-sm mt-3'>Zalo Extension</p>
+                  <p className=' text-sm mt-3 whitespace-nowrap'>Zalo Extension</p>
                 </Link>
-                <Link href={'https://tiktok.com/?autotiktok=1'} className=' hover:bg-slate-400 p-5 rounded-xl'>
+                <Link href={'https://tiktok.com/?autotiktok=1'} className=' hover:bg-slate-400 p-5 rounded-xl' title='Click để chạy tiktok marketing'>
                   <Image src={'/img/tiktok.png'} width={300} height={500} alt={'Sbay tiktok marketing'} className=' w-10 rounded-full mx-auto'></Image>
-                  <p className=' text-sm mt-3'>Tiktok Extension</p>
+                  <p className=' text-sm mt-3 whitespace-nowrap'>Tiktok Extension</p>
                 </Link>
 
 
@@ -66,12 +66,13 @@ export default function Home() {
           </div>
         </div>
         <div className=" w-full text-center flex flex-col mx-auto bg-zinc-400 pb-10">
-          <h1 className=' text-2xl font-bold my-5'>Một số Extension hỗ trợ khác</h1>
+          <h1 className=' text-2xl font-bold mt-5'>Một số Extension hỗ trợ khác</h1>
+          <p className=' text-sm mb-5'>Tải về, thêm extension vào chrome và chạy</p>
           <div className=' grid grid-cols-2 max-w-7xl mx-auto'>
 
             <Link href={'/files/auto-zaloGroup-v1.6.rar'} className=' hover:bg-slate-400 p-5 rounded-xl'>
               <Image src={'/img/zalo.png'} width={300} height={500} alt={'Sbay zalo marketing'} className=' w-10 rounded-full mx-auto'></Image>
-              <p className=' font-bold mt-3'>ZaloGroup Extension</p>
+              <p className=' font-bold mt-3 whi'>ZaloGroup Extension</p>
               <p className=' text-sm'>Gửi tin nhắn cho người dùng cùng nhóm</p>
 
             </Link>
