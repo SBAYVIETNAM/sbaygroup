@@ -58,7 +58,7 @@ export default function Home() {
 
               </div>
               <div className='px-10'>
-                <a href='/files/auto-login.sbay.com.vn-files.zip' className="flex flex-row btn rounded-full bg-blue-500 text-white mx-auto mt-5"><Icon.Download className='w-4 h-4' />Tải về</a>
+                <a href='/files/auto-login.sbay.com.vn-files.zip' className="flex flex-row btn rounded-full bg-red-600 text-white mx-auto mt-5"><Icon.Download className='w-4 h-4' />Tải về</a>
                 <p className=' text-sm opacity-75 mt-3'>Tải về, thêm Extension và nhấn chạy <a href='https://www.youtube.com/watch?v=D5BJr0jCkJY&embeds_referring_euri=https%3A%2F%2Fsbaygroup.net%2F&source_ve_path=MjM4NTE&feature=emb_title&ab_channel=SbayVi%E1%BB%87tNam' className=' text-red-600'>Xem video hướng dẫn</a></p>
               </div>
             </div>
@@ -82,6 +82,25 @@ export default function Home() {
               <p className=' text-sm'>Gửi tin nhắn qua danh sách số điện thoại</p>
 
             </Link>
+          </div>
+        </div>
+        <div className=" w-full text-center flex flex-col mx-auto bg-white pb-10">
+          <h1 className=' text-2xl font-bold mt-5'>Chạy marketing tùy chỉnh</h1>
+          <div className=' grid max-w-7xl mx-auto py-5'>
+
+            <Link href={'/tool-marketing/run-facebook-group'} className='flex flex-row space-x-2 bg-blue-600 p-2 text-white rounded-xl'>
+              <Icon.Facebook className='w-4 h-4 mt-1 mr-2'/>
+              Facebook Group Marketing
+            </Link>{/* 
+            <Link href={'/files/auto-zaloGroup-v1.6.rar'} className=' hover:bg-slate-400 p-5 rounded-xl'>
+              Facebook Group Marketing
+            </Link>
+            <Link href={'/files/auto-zaloGroup-v1.6.rar'} className=' hover:bg-slate-400 p-5 rounded-xl'>
+              Facebook Group Marketing
+            </Link>
+            <Link href={'/files/auto-zaloGroup-v1.6.rar'} className=' hover:bg-slate-400 p-5 rounded-xl'>
+              Facebook Group Marketing
+            </Link> */}
           </div>
         </div>
         {/* <Footer></Footer> */}
