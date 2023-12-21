@@ -35,6 +35,25 @@ export default function Home() {
     { value: 'Nội Bài', label: 'Nội Bài' },
     { value: 'Đà Nẵng', label: 'Đà Nẵng' }
   ]
+  const popularPack = [
+    {
+      img: 'm-3.jpg'
+    },
+    {
+      img: 'm-12.jpg'
+    },
+    {
+      img: 'm-36.jpg'
+    },
+    {
+      img: 'm-doc-quyen.jpg'
+    }]
+  const popularFly = [1, 2, 3, 4]
+  const popularRoom = [1, 2, 3, 4]
+  const popularCar = [1, 2, 3]
+  const popularBana = [1, 2, 3, 4, 5, 6]
+  const popularTool = [1, 2, 3]
+
 
   return (
     <>
@@ -89,13 +108,17 @@ export default function Home() {
             <input className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31" />
 
           </div>
-          <div className="flex flex-row mb-5 ...">
+          <div className="flex flex-row mb-32 ...">
             <button type="button" className="text-white bg-red-500 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Tìm kiếm</button>
           </div>
 
         </div>
-        <div className=" max-w-7xl mx-auto" >
-          <div className=" flex flex-row space-x-5">
+
+      </div>
+      <div className=" -mt-16 bg-white mx-auto rounded-3xl p-5">
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-sm font-bold text-center"> Đối tác tin cậy</h2>
+          <div className="  max-w-7xl flex flex-row space-x-5 mx-auto">
             <Image
               src={"/img/vietnam-airline.png"}
               width={512}
@@ -126,12 +149,160 @@ export default function Home() {
             />
           </div>
         </div>
-      </div>
-      <div className=" -mt-14 h-screen bg-white mx-auto rounded-3xl p-5">
-        <div className="flex flex-row max-w-7xl mx-auto  justify-between py-2">
-          <h2 className=" mt-48 text-4xl text-white font-bold text-center"> Hợp tác đại lý</h2>
-          <div className=" grid grid-cols-4">
-            
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center mt-14"> Hợp tác đại lý</h2>
+          <div className="grid grid-cols-2 xl:grid-cols-4  justify-center ...">
+            {popularPack.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-red-100 rounded-lg p-5 drop-shadow-md ...">
+                  <Image
+                    src={"/img/" + e.img}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className=" w-32 h-32 m-5 rounded-md mx-auto drop-shadow-md ..."
+                  />
+                  <h3 className="text-center font-bold">Gói M3</h3>
+                  <p className="text-center text-sm">Cung cấp VÉ MÁY BAY của 5 hãng hàng không Nội địa</p>
+                  <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Liên hệ tư vấn</button>
+                </div>
+              )
+            })}
+
+
+          </div>
+        </div>
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Các chuyến bay thông dụng</h2>
+          <div className="grid grid-cols-2 xl:grid-cols-4  justify-center ...">
+            {popularFly.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-red-100 rounded-lg p-5">
+                  <Image
+                    src={"/img/mangjet.jpg"}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className=" w-36 rounded-full mx-auto"
+                  />
+                  <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-red-500 text-end">720.000VND*</p>
+                  <p className=" text-sm text-end">Một chiều/Phổ thông</p>
+                  <h3 className="text-start font-bold">Hà Nội (HAN) đến TP. Hồ Chí Minh (SGN)</h3>
+                  <p className="text-start text-sm">Cung cấp VÉ MÁY BAY của 5 hãng hàng không Nội địa</p>
+                  <button type="button" className="text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-full max-w-sm my-5">Đặt vé ngay</button>
+                </div>
+              )
+            })}
+
+
+          </div>
+        </div>
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Phòng khách sạn</h2>
+          <div className="grid grid-cols-2 xl:grid-cols-4  justify-center ...">
+            {popularRoom.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-yellow-100 rounded-lg p-5">
+                  <Image
+                    src={"/img/standard-douple.webp"}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className=" w-full rounded-lg mx-auto"
+                  />
+                  <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-red-500 text-end">150.000VND*</p>
+                  <p className=" text-sm text-end">Một giường đôi</p>
+                  <h3 className="text-start font-bold">Standard Double</h3>
+                  <p className="text-start text-sm">Phù hợp với nghỉ đêm một mình</p>
+                  <button type="button" className="text-white bg-yellow-700 hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-full max-w-sm my-5">Đặt phòng ngay</button>
+                </div>
+              )
+            })}
+
+
+          </div>
+        </div>
+
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Dịch vụ xe</h2>
+          <div className="grid grid-cols-1 xl:grid-cols-3  justify-center ...">
+            {popularCar.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-yellow-100 rounded-lg p-5">
+                  <Image
+                    src={"/img/xe-5-cho.png"}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className=" w-full rounded-lg mx-auto"
+                  />
+                  <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-red-500 text-end">12.000VND*</p>
+                  <p className=" text-sm text-end">km</p>
+                  <h3 className="text-start font-bold">Xe 7 chỗ</h3>
+                  <p className="text-start text-sm">Phù hợp với gia đình có con nhỏ</p>
+                  <button type="button" className="text-white bg-yellow-700 hover:bg-yellow-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-full max-w-sm my-5">Đặt xe ngay</button>
+                </div>
+              )
+            })}
+
+
+          </div>
+        </div>
+
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Dịch vụ vé Bà Nà</h2>
+          <div className="grid grid-cols-3 xl:grid-cols-6  justify-center ...">
+            {popularBana.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-blue-100 rounded-lg p-5">
+                  <Image
+                    src={"/img/cap-treo-bana.jpg"}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className="m-5 w-32 h-32 rounded-full mx-auto"
+                  />
+                  <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-red-500 text-end">550.000VND*</p>
+                  <p className=" text-sm text-end">Vé</p>
+                  <h3 className="text-start font-bold">Cáp treo Bà Nà</h3>
+                  <p className="text-start text-sm">Phù hợp với gia đình có con nhỏ</p>
+                  <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 w-full max-w-sm my-5">Đặt vé ngay</button>
+                </div>
+              )
+            })}
+
+
+          </div>
+        </div>
+
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Tool marketing</h2>
+          <div className="grid grid-cols-1 xl:grid-cols-3  justify-center ...">
+            {popularTool.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-blue-100 rounded-lg p-5">
+                  <Image
+                    src={"/img/facebook.png"}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className="m-10 w-36 h-36 rounded-full mx-auto"
+                  />
+                  <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-green-500 text-end">550.000VND*</p>
+                  <p className=" text-sm text-end">Vé</p>
+                  <h3 className="text-start font-bold">Facebook Marketing</h3>
+                  <p className="text-start text-sm">Tiếp cận người dùng trong nhóm</p>
+                  <button type="button" className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-red-900 w-full max-w-sm my-5">Dùng thử ngay</button>
+                </div>
+              )
+            })}
+
+
           </div>
         </div>
       </div>
