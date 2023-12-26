@@ -13,7 +13,7 @@ export default function Footer() {
               </p>
             </div>
             <div className="flex flex-col md:flex-row text-sm">
-              <div className="flex flex-col my-5">
+              <div className="flex flex-col my-2">
                 <p className="mb-5 font-bold text-white uppercase">Khu vực miền Trung - Trụ sở chính</p>
                 <div className="grid grid-cols-1 gap-2 ">
                   <p className=" text-sm items-center text-white flex flex-row justify-start">
@@ -33,7 +33,7 @@ export default function Footer() {
 
             </div>
             <div className="flex flex-col md:flex-row text-sm">
-              <div className="flex flex-col my-5">
+              <div className="flex flex-col my-2">
                 <p className="mb-5 font-bold text-white uppercase">Khu vực miền Bắc</p>
                 <div className="grid grid-cols-1 gap-2 ">
                   <p className=" text-sm items-center text-white flex flex-row justify-start">
@@ -47,7 +47,7 @@ export default function Footer() {
 
             </div>
             <div className="flex flex-col md:flex-row text-sm">
-              <div className="flex flex-col my-5">
+              <div className="flex flex-col my-2">
                 <p className="font-bold text-white uppercase">Khu vực miền Nam</p>
                 <p className="my-5 font-bold text-white">Phòng vé Trương Gia - Vé may bay - Tour du lịch - Chi Nhánh Quận 12</p>
                 <div className="grid grid-cols-1 gap-2 ">
@@ -138,7 +138,7 @@ export default function Footer() {
             </div> */}
           </div>
         </div>
-        <div className="flex my-5 flex-col">
+        <div className="flex my-2 flex-col">
           <div className=" grid grid-cols-2 max-w-md z-1 mx-auto">
             <Link
               href={
