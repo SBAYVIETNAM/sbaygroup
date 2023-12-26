@@ -75,13 +75,13 @@ export default function Home() {
                 </a>
               </li>
               <li className="me-2">
-                <a href="#" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
+                <a href="https://datxe.sbayvietnam.com" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
                   <FaCar className="mr-1 w-4 mt-0.5" />
                   Đặt xe
                 </a>
               </li>
               <li className="me-2">
-                <a href="#" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
+                <a href="https://datve.sbayvietnam.com" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
                   <ImLocation className="mr-1 w-4 mt-0.5" />
                   Vé Bà Nà
                 </a>
