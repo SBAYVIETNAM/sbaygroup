@@ -20,7 +20,7 @@ export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <nav className=" fixed w-full shadow-sm top-0 z-50 bg-white font-medium py-2 backdrop-blur-sm divide-y">
+      <nav className=" invisible lg:visible fixed w-full shadow-sm top-0 z-50 bg-white font-medium py-2 backdrop-blur-sm divide-y">
         <div className=" w-screen">
           <div className="flex flex-row max-w-7xl mx-auto  justify-between py-2">
             <div>

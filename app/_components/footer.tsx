@@ -3,78 +3,99 @@ import * as Icon from "react-feather";
 import Link from "next/link";
 export default function Footer() {
   return (
-    <div className=" w-full bg-red-700">
+    <div className=" w-full bg-red-800 p-5">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row">
           <div className="md:w-2/3 w-full  mr-40">
-            <div className="w-full border-b-2">
-              <p className="my-5 text-lg font-black text-white">
+            <div className="w-full">
+              <p className="my-5 text-lg text-white font-bold">
                 CÔNG TY CỔ PHẦN SBAY VIỆT NAM
               </p>
             </div>
-            <div className="flex flex-col md:flex-row text-sm">
-              <div className="flex flex-col my-2">
-                <p className="mb-5 font-bold text-white uppercase">Khu vực miền Trung - Trụ sở chính</p>
-                <div className="grid grid-cols-1 gap-2 ">
-                  <p className=" text-sm items-center text-white flex flex-row justify-start">
-                    <Icon.MapPin className="w-4 h-4 mr-2" /> Địa chỉ: 03
-                    Đinh Thị Hoà, Sơn Trà, Đà Nẵng
-                  </p>
-                  <p className=" text-sm items-center text-white flex flex-row justify-start">
-                    <Icon.PhoneCall className="w-4 h-4 mr-2 " /> Hotline:
-                    0967 041 900
-                  </p>
-                  <p className=" text-sm  items-center text-white flex flex-row justify-start">
-                    <Icon.Mail className="w-4 h-4 mr-2" /> Email:
-                    ota.sbayvietnam@gmail.com
-                  </p>
+            <div className=" grid grid-cols-2 gap-3">
+              <div className="flex flex-col md:flex-row text-sm">
+                <div className="flex flex-col my-2">
+                  <p className="mb-3 text-white uppercase font-bold">Trụ sở chính (miền Trung)</p>
+                  <div className=" col-span-1">
+                    <div className=" flex flex-row my-2">
+                      <Icon.MapPin className="w-4 h-4 mr-2 min-w-max text-white" />
+                      <p className=" text-xs items-center text-white flex flex-row justify-start">
+                        Địa chỉ: 03 Đinh Thị Hoà, Sơn Trà, Đà Nẵng
+                      </p>
+                    </div>
+                    <div className=" flex flex-row my-2">
+                      <Icon.PhoneCall className="w-4 h-4 mr-2 min-w-max text-white" />
+                      <p className=" text-xs items-center text-white flex flex-row justify-start">
+                        Hotline: 0967 041 900
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
+              </div>
+              <div className="flex flex-col md:flex-row text-sm">
+                <div className="flex flex-col my-2">
+                  <p className="mb-3 text-white uppercase font-bold">Khu vực miền Bắc</p>
+                  <div className=" col-span-1">
+                    <div className=" flex flex-row my-2">
+                      <Icon.MapPin className="w-4 h-4 mr-2 min-w-max text-white" />
+                      <p className=" text-xs items-center text-white flex flex-row justify-start">
+                        Địa chỉ: 30-12 Tứ Hiệp Plaza, Pháp Vân, Hà Nội
+                      </p>
+                    </div>
+                    <div className=" flex flex-row my-2">
+                      <Icon.PhoneCall className="w-4 h-4 mr-2 min-w-max text-white" />
+                      <p className=" text-xs items-center text-white flex flex-row justify-start">
+                        Hotline: 0988 928 121
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
-            <div className="flex flex-col md:flex-row text-sm">
-              <div className="flex flex-col my-2">
-                <p className="mb-5 font-bold text-white uppercase">Khu vực miền Bắc</p>
-                <div className="grid grid-cols-1 gap-2 ">
-                  <p className=" text-sm items-center text-white flex flex-row justify-start">
-                    <Icon.MapPin className="w-4 h-4 mr-2" /> Địa chỉ: 30-12 Tứ Hiệp Plaza, Pháp Vân, Hà Nội
-                  </p>
-                  <p className=" text-sm items-center text-white flex flex-row justify-start">
-                    <Icon.PhoneCall className="w-4 h-4 mr-2 " /> Hotline: 0988 928 121
-                  </p>
+            <p className=" text-white uppercase mt-10 font-bold">Khu vực miền Nam</p>
+            <div className=" grid grid-cols-2 gap-3 mb-10">
+              <div>
+                <p className="my-3 text-white">Phòng vé Trương Gia</p>
+                <div className=" col-span-1">
+                  <div className=" flex flex-row my-2">
+                    <Icon.MapPin className="w-4 h-4 mr-2 min-w-max text-white" />
+                    <p className=" text-xs items-center text-white flex flex-row justify-start">
+                      Địa chỉ: 75/11 Đường Hiệp Thành 45, Phường Hiệp Thành, Quận 12, Thành phố Hồ Chí Minh
+                    </p>
+                  </div>
+                  <div className=" flex flex-row my-2">
+                    <Icon.PhoneCall className="w-4 h-4 mr-2 min-w-max text-white" />
+                    <p className=" text-xs items-center text-white flex flex-row justify-start">
+                      Hotline: 0766 091 267
+                    </p>
+                  </div>
                 </div>
               </div>
-
-            </div>
-            <div className="flex flex-col md:flex-row text-sm">
-              <div className="flex flex-col my-2">
-                <p className="font-bold text-white uppercase">Khu vực miền Nam</p>
-                <p className="my-5 font-bold text-white">Phòng vé Trương Gia - Vé may bay - Tour du lịch - Chi Nhánh Quận 12</p>
-                <div className="grid grid-cols-1 gap-2 ">
-                  <p className=" text-sm items-center text-white flex flex-row justify-start">
-                    <Icon.MapPin className="w-4 h-4 mr-2" /> Địa chỉ: 75/11 Đường Hiệp Thành 45, Phường Hiệp Thành, Quận 12, Thành phố Hồ Chí Minh 
-                  </p>
-                  <p className=" text-sm items-center text-white flex flex-row justify-start">
-                    <Icon.PhoneCall className="w-4 h-4 mr-2 " /> Hotline: 0766 091 267
-                  </p>
-                </div>
-                <p className="my-5 font-bold text-white">Phòng vé Bình Dương</p>
-                <div className="grid grid-cols-1 gap-2 ">
-                  <p className=" text-sm items-center text-white flex flex-row justify-start">
-                    <Icon.MapPin className="w-4 h-4 mr-2" /> Địa chỉ: số 86 khu dân cư Cửu Long, Bình Đức 3, Bình Hòa, Thuận An, Bình Dương 
-                  </p>
-                  <p className=" text-sm items-center text-white flex flex-row justify-start">
-                    <Icon.PhoneCall className="w-4 h-4 mr-2 " /> Hotline: 0983 236 294
-                  </p>
+              <div>
+                <p className="my-3 text-white">Phòng vé Bình Dương</p>
+                <div className=" col-span-1">
+                  <div className=" flex flex-row my-2">
+                    <Icon.MapPin className="w-4 h-4 mr-2 min-w-max text-white" />
+                    <p className=" text-xs items-center text-white flex flex-row justify-start">
+                      Địa chỉ: số 86 khu dân cư Cửu Long, Bình Đức 3, Bình Hòa, Thuận An, Bình Dương
+                    </p>
+                  </div>
+                  <div className=" flex flex-row my-2">
+                    <Icon.PhoneCall className="w-4 h-4 mr-2 min-w-max text-white" />
+                    <p className=" text-xs items-center text-white flex flex-row justify-start">
+                      Hotline: 0983 236 294
+                    </p>
+                  </div>
                 </div>
               </div>
-
             </div>
 
           </div>
           <div className="md:w-1/3 w-full  flex flex-col">
-            <div className="w-full border-b-2">
-              <p className="my-5 text-xl text-white font-bold">Liên kết</p>
+            <div className="w-full">
+              <p className="my-5 text-sm text-white font-bold">Liên kết</p>
             </div>
             <div className="my-5">
 
@@ -136,48 +157,49 @@ export default function Footer() {
             <div className="my-5">
               Chăm sóc khách hàng
             </div> */}
+            <div className="flex my-2 flex-col">
+              <div className=" grid grid-cols-2 max-w-md z-1">
+                <Link
+                  href={
+                    "#"
+                  }
+                >
+                  <Image
+                    src={"/img/ios.png"}
+                    width={120}
+                    height={30}
+                    alt={"Sbay iso"}
+                    className=" rounded-sm"
+                  ></Image>
+                </Link>
+                <Link
+                  href={
+                    "#"
+                  }
+                >
+                  <Image
+                    src={"/img/gg-play.png"}
+                    width={120}
+                    height={30}
+                    alt={"Sbay iso"}
+                    className=" rounded-sm"
+                  ></Image>
+                </Link>
+              </div>
+            </div>
+            <div className="flex">
+              <Image
+                className="my-10"
+                width={300}
+                height={256}
+                src="/img/paypal.png"
+                alt="ve-may-bay"
+                style={{ objectFit: "contain" }}
+              />
+            </div>
           </div>
         </div>
-        <div className="flex my-2 flex-col">
-          <div className=" grid grid-cols-2 max-w-md z-1 mx-auto">
-            <Link
-              href={
-                "#"
-              }
-            >
-              <Image
-                src={"/img/ios.png"}
-                width={120}
-                height={30}
-                alt={"Sbay iso"}
-                className=" rounded-sm mr-2 mx-auto"
-              ></Image>
-            </Link>
-            <Link
-              href={
-                "#"
-              }
-            >
-              <Image
-                src={"/img/gg-play.png"}
-                width={120}
-                height={30}
-                alt={"Sbay iso"}
-                className=" rounded-sm ml-2 mx-auto"
-              ></Image>
-            </Link>
-          </div>
-        </div>
-        <div className="flex justify-center items-center">
-          <Image
-            className="my-10"
-            width={300}
-            height={256}
-            src="/img/paypal.png"
-            alt="ve-may-bay"
-            style={{ objectFit: "contain" }}
-          />
-        </div>
+
       </div>
 
     </div>
