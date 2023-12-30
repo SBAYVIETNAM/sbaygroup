@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import { FaPlaneDeparture, FaPlaneArrival, FaRegCalendar, FaRegCalendarCheck } from "react-icons/fa";
 import Select from 'react-select'
 import { format, addDays } from "date-fns";
-
+import Link from "next/link";
 export default function AirLineTicket() {
   const airportOptions = [
     { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' },
@@ -339,10 +339,10 @@ export default function AirLineTicket() {
 
                     </div>
                     <div className="grid col-span-4 xl:col-span-3">
-                      <div className="flex flex-col px-5 space-y-1">
+                      <Link href="/order" className="flex flex-col px-5 space-y-1">
                         <h4 className="text-red-600 text-lg font-bold text-center">1,584,800</h4>
                         <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </>
