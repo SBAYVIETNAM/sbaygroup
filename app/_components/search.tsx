@@ -66,13 +66,34 @@ const airportOptions = [
     { value: 'YVR', label: 'Vancouver', type: 'Châu Úc' },
 ]
 
+const defaultDepart = [
+    { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' },
+]
+const defaultReturn = [
+    { value: 'SGN', label: 'Hồ Chí Minh', type: 'Miền Nam' },
+]
+
 
 export default function Search() {
+    const [searchData, setSearchData] = useState({
+        action: 'DOMSearchFlights',
+        ItineraryType: 2,
+        StartPoint: 'HAN',
+        EndPoint: 'SGN',
+        DepartureDate: format(new Date(), "dd/MM/yyyy"),
+        ReturnDate: format(addDays(new Date(), 1), "dd/MM/yyyy"),
+        Adult: 1,
+        Children: 0,
+        Infant: 0
+    })
 
-    const [today, setToday] = useState(format(new Date(), 'yyyy-MM-dd'))
+    const [defaultDepartTime, setDefaultDepartTime] = useState(format(new Date(), 'yyyy-MM-dd'))
+    const [defaultReturnTime, setDefaultReturnTime] = useState(format(addDays(new Date(), 2), 'yyyy-MM-dd'))
     const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd'))
     const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd'))
-
+    
+    
+    
 
     return (
         <>
@@ -137,6 +158,7 @@ export default function Search() {
                                 id="from"
                                 placeholder="Nơi đi"
                                 options={airportOptions}
+                                defaultValue={defaultDepart}
                                 formatOptionLabel={(airportOptions: any) => {
                                     return (
                                         <>
@@ -158,6 +180,7 @@ export default function Search() {
                                 id="to"
                                 placeholder="Nơi đến"
                                 options={airportOptions}
+                                defaultValue={defaultReturn}
                                 formatOptionLabel={(airportOptions: any) => {
                                     return (
                                         <>
@@ -178,14 +201,14 @@ export default function Search() {
                                 <FaRegCalendar className="mr-1 w-3 mt-0.5 opacity-70" />
                                 <label htmlFor="fromDate" className="block text-sm font-medium text-gray-900 dark:text-white">Ngày đi</label>
                             </div>
-                            <input id="fromDate" className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" name="trip-start" value={today} min={minDate} max={maxDate} />
+                            <input id="fromDate" className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" name="trip-start" value={defaultDepartTime} min={minDate} max={maxDate} />
                         </div>
                         <div className=" flex flex-col space-y-1 w-full">
                             <div className=' flex flex-row'>
                                 <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 opacity-70" />
                                 <label htmlFor="toDate" className="block text-sm font-medium text-gray-900 dark:text-white">Ngày đến</label>
                             </div>
-                            <input id="toDate" className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" name="trip-start" value={today} min={minDate} max={maxDate} />
+                            <input id="toDate" className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" name="trip-start" value={defaultReturnTime} min={minDate} max={maxDate} />
 
                         </div>
                     </div>
