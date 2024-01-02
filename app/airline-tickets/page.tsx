@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BsAirplaneEngines } from "react-icons/bs";
 import { FiChevronDown } from "react-icons/fi";
 import {
@@ -13,7 +13,343 @@ import { FaPlaneDeparture, FaPlaneArrival, FaRegCalendar, FaRegCalendarCheck } f
 import Select from 'react-select'
 import { format, addDays } from "date-fns";
 import Link from "next/link";
-export default function AirLineTicket() {
+import { useRouter, useSearchParams } from 'next/navigation';
+import { da, vi } from 'date-fns/locale';
+
+export default function AirLineTicket({ params }: { params: { slug: string } }) {
+
+  let searchParams = useSearchParams()
+  // console.log('searchParams', searchParams.get('a'));
+
+  const data = {
+    action: searchParams.get('a'),
+    ItineraryType: searchParams.get('t'),
+    StartPoint: searchParams.get('sp'),
+    EndPoint: searchParams.get('ep'),
+    DepartureDate: format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi }),
+    ReturnDate: format(new Date(searchParams.get('rd') || Date.now()), "dd/MM/yyyy", { locale: vi }),
+    Adult: searchParams.get('ad'),
+    Children: searchParams.get('ch'),
+    Infant: searchParams.get('ba')
+  };
+  // console.log('searchParams', data);
+
+  // const searchValue =
+  // {
+  //   "DepartureFlights": {
+  //     "0757eeb44dc042d8baf048331359123a": {
+  //       "StartPoint": "HAN",
+  //       "EndPoint": "SGN",
+  //       "FlightSession": "0757eeb44dc042d8baf048331359123a",
+  //       "FlightNumber": "VN7227",
+  //       "AirlineCode": "VN",
+  //       "StartDate": "2024-02-01T00:20:00",
+  //       "EndDate": "2024-02-01T02:35:00",
+  //       "Stops": 0,
+  //       "Duration": 135,
+  //       "PriceAdult": 1219000,
+  //       "PriceChild": 0,
+  //       "PriceInfant": 0,
+  //       "FeeAdult": 569000,
+  //       "FeeChild": 0,
+  //       "FeeInfant": 0,
+  //       "TaxAdult": 98000,
+  //       "TaxChild": 0,
+  //       "TaxInfant": 0,
+  //       "TotalPrice": 1886000,
+  //       "ServiceFee": 0,
+  //       "IssueFee": 0,
+  //       "SeatRemaining": 5,
+  //       "ListSegment": [
+  //         {
+  //           "AirlineCode": "VN",
+  //           "StartDate": "2024-02-01T00:20:00",
+  //           "EndDate": "2024-02-01T02:35:00",
+  //           "StartPoint": "HAN",
+  //           "EndPoint": "SGN",
+  //           "FlightNumber": "VN7227",
+  //           "Plane": "321",
+  //           "FlightTime": 135,
+  //           "Class": "T"
+  //         }
+  //       ],
+  //       "LastTkDate": "2024-01-03T00:58:26.5330863+07:00",
+  //       "Class": "T"
+  //     },
+  //   },
+  //   "ReturnFlights": {
+  //     "370f6fd7541b476996514403e4672957": {
+  //       "StartPoint": "SGN",
+  //       "EndPoint": "HAN",
+  //       "FlightSession": "370f6fd7541b476996514403e4672957",
+  //       "FlightNumber": "VN204",
+  //       "AirlineCode": "VN",
+  //       "StartDate": "2024-05-01T05:00:00",
+  //       "EndDate": "2024-05-01T07:15:00",
+  //       "Stops": 0,
+  //       "Duration": 135,
+  //       "PriceAdult": 1219000,
+  //       "PriceChild": 0,
+  //       "PriceInfant": 0,
+  //       "FeeAdult": 569000,
+  //       "FeeChild": 0,
+  //       "FeeInfant": 0,
+  //       "TaxAdult": 98000,
+  //       "TaxChild": 0,
+  //       "TaxInfant": 0,
+  //       "TotalPrice": 1886000,
+  //       "ServiceFee": 0,
+  //       "IssueFee": 0,
+  //       "SeatRemaining": 7,
+  //       "ListSegment": [
+  //         {
+  //           "AirlineCode": "VN",
+  //           "StartDate": "2024-05-01T05:00:00",
+  //           "EndDate": "2024-05-01T07:15:00",
+  //           "StartPoint": "SGN",
+  //           "EndPoint": "HAN",
+  //           "FlightNumber": "VN204",
+  //           "Plane": "321",
+  //           "FlightTime": 135,
+  //           "Class": "T"
+  //         }
+  //       ],
+  //       "LastTkDate": "2024-01-03T00:58:26.534087+07:00",
+  //       "Class": "T"
+  //     },
+  //   },
+  //   "ItineraryType": 2,
+  //   "DepartureDate": "01/02/2024",
+  //   "ReturnDate": "01/05/2024",
+  //   "StartPoint": "HAN",
+  //   "EndPoint": "SGN",
+  //   "Adult": 1,
+  //   "Children": 0,
+  //   "Infant": 0,
+  //   "DataSession": "6a41bc900798413b8e6a3301e3329fb9"
+  // }
+
+  // const ReturnFlights: any = {
+  //   "0757eeb44dc042d8baf048331359123a": {
+  //     "StartPoint": "HAN",
+  //     "EndPoint": "SGN",
+  //     "FlightSession": "0757eeb44dc042d8baf048331359123a",
+  //     "FlightNumber": "VN7227",
+  //     "AirlineCode": "VN",
+  //     "StartDate": "2024-02-01T00:20:00",
+  //     "EndDate": "2024-02-01T02:35:00",
+  //     "Stops": 0,
+  //     "Duration": 135,
+  //     "PriceAdult": 1219000,
+  //     "PriceChild": 0,
+  //     "PriceInfant": 0,
+  //     "FeeAdult": 569000,
+  //     "FeeChild": 0,
+  //     "FeeInfant": 0,
+  //     "TaxAdult": 98000,
+  //     "TaxChild": 0,
+  //     "TaxInfant": 0,
+  //     "TotalPrice": 1886000,
+  //     "ServiceFee": 0,
+  //     "IssueFee": 0,
+  //     "SeatRemaining": 5,
+  //     "ListSegment": [
+  //       {
+  //         "AirlineCode": "VN",
+  //         "StartDate": "2024-02-01T00:20:00",
+  //         "EndDate": "2024-02-01T02:35:00",
+  //         "StartPoint": "HAN",
+  //         "EndPoint": "SGN",
+  //         "FlightNumber": "VN7227",
+  //         "Plane": "321",
+  //         "FlightTime": 135,
+  //         "Class": "T"
+  //       }
+  //     ],
+  //     "LastTkDate": "2024-01-03T00:58:26.5330863+07:00",
+  //     "Class": "T"
+  //   },
+  //   "0757eeb44dc042d8baf048331359123b": {
+  //     "StartPoint": "HAN",
+  //     "EndPoint": "SGN",
+  //     "FlightSession": "0757eeb44dc042d8baf048331359123a",
+  //     "FlightNumber": "VN7227",
+  //     "AirlineCode": "VN",
+  //     "StartDate": "2024-02-01T00:20:00",
+  //     "EndDate": "2024-02-01T02:35:00",
+  //     "Stops": 0,
+  //     "Duration": 135,
+  //     "PriceAdult": 1219000,
+  //     "PriceChild": 0,
+  //     "PriceInfant": 0,
+  //     "FeeAdult": 569000,
+  //     "FeeChild": 0,
+  //     "FeeInfant": 0,
+  //     "TaxAdult": 98000,
+  //     "TaxChild": 0,
+  //     "TaxInfant": 0,
+  //     "TotalPrice": 1886000,
+  //     "ServiceFee": 0,
+  //     "IssueFee": 0,
+  //     "SeatRemaining": 5,
+  //     "ListSegment": [
+  //       {
+  //         "AirlineCode": "VN",
+  //         "StartDate": "2024-02-01T00:20:00",
+  //         "EndDate": "2024-02-01T02:35:00",
+  //         "StartPoint": "HAN",
+  //         "EndPoint": "SGN",
+  //         "FlightNumber": "VN7227",
+  //         "Plane": "321",
+  //         "FlightTime": 135,
+  //         "Class": "T"
+  //       }
+  //     ],
+  //     "LastTkDate": "2024-01-03T00:58:26.5330863+07:00",
+  //     "Class": "T"
+  //   },
+  //   "0757eeb44dc042d8baf048331359123e": {
+  //     "StartPoint": "HAN",
+  //     "EndPoint": "SGN",
+  //     "FlightSession": "0757eeb44dc042d8baf048331359123a",
+  //     "FlightNumber": "VN7227",
+  //     "AirlineCode": "VN",
+  //     "StartDate": "2024-02-01T00:20:00",
+  //     "EndDate": "2024-02-01T02:35:00",
+  //     "Stops": 0,
+  //     "Duration": 135,
+  //     "PriceAdult": 1219000,
+  //     "PriceChild": 0,
+  //     "PriceInfant": 0,
+  //     "FeeAdult": 569000,
+  //     "FeeChild": 0,
+  //     "FeeInfant": 0,
+  //     "TaxAdult": 98000,
+  //     "TaxChild": 0,
+  //     "TaxInfant": 0,
+  //     "TotalPrice": 1886000,
+  //     "ServiceFee": 0,
+  //     "IssueFee": 0,
+  //     "SeatRemaining": 5,
+  //     "ListSegment": [
+  //       {
+  //         "AirlineCode": "VN",
+  //         "StartDate": "2024-02-01T00:20:00",
+  //         "EndDate": "2024-02-01T02:35:00",
+  //         "StartPoint": "HAN",
+  //         "EndPoint": "SGN",
+  //         "FlightNumber": "VN7227",
+  //         "Plane": "321",
+  //         "FlightTime": 135,
+  //         "Class": "T"
+  //       }
+  //     ],
+  //     "LastTkDate": "2024-01-03T00:58:26.5330863+07:00",
+  //     "Class": "T"
+  //   },
+  // }
+  // const DepartureFlights:any = {
+  //   "370f6fd7541b476996514403e4672957": {
+  //     "StartPoint": "SGN",
+  //     "EndPoint": "HAN",
+  //     "FlightSession": "370f6fd7541b476996514403e4672957",
+  //     "FlightNumber": "VN204",
+  //     "AirlineCode": "VN",
+  //     "StartDate": "2024-05-01T05:00:00",
+  //     "EndDate": "2024-05-01T07:15:00",
+  //     "Stops": 0,
+  //     "Duration": 135,
+  //     "PriceAdult": 1219000,
+  //     "PriceChild": 0,
+  //     "PriceInfant": 0,
+  //     "FeeAdult": 569000,
+  //     "FeeChild": 0,
+  //     "FeeInfant": 0,
+  //     "TaxAdult": 98000,
+  //     "TaxChild": 0,
+  //     "TaxInfant": 0,
+  //     "TotalPrice": 1886000,
+  //     "ServiceFee": 0,
+  //     "IssueFee": 0,
+  //     "SeatRemaining": 7,
+  //     "ListSegment": [
+  //       {
+  //         "AirlineCode": "VN",
+  //         "StartDate": "2024-05-01T05:00:00",
+  //         "EndDate": "2024-05-01T07:15:00",
+  //         "StartPoint": "SGN",
+  //         "EndPoint": "HAN",
+  //         "FlightNumber": "VN204",
+  //         "Plane": "321",
+  //         "FlightTime": 135,
+  //         "Class": "T"
+  //       }
+  //     ],
+  //     "LastTkDate": "2024-01-03T00:58:26.534087+07:00",
+  //     "Class": "T"
+  //   },
+  // }
+  // var returnData = []
+  // for (const key in ReturnFlights) {
+  //   // console.log('key', key, ReturnFlights[key]);
+  //   returnData.push(ReturnFlights[key])
+  // }
+
+  // var departData = []
+  // for (const key in DepartureFlights) {
+  //   // console.log('key', key, ReturnFlights[key]);
+  //   departData.push(DepartureFlights[key])
+  // }
+  const [departData, setDepartData] = useState<any>([])
+  const [returnData, setReturnData] = useState<any>([])
+
+
+  const [passenger, setPassenger] = useState({
+    Adult: searchParams.get('ad'),
+    Children: searchParams.get('ch'),
+    Infant: searchParams.get('ba')
+  })
+  useEffect(() => {
+    const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
+
+    var rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
+    console.log('data', data);
+    const search = async () => {
+      const res = await fetch(url, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "text/plain",
+        },
+        body: rawData,
+      });
+      if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error("Failed to fetch data");
+      } else {
+        const data = await res.json();
+        console.log("flight", data);
+        if (data.Data) {
+          var departData = []
+          for (const key in data.Data.DepartureFlights) {
+            // console.log('key', key, ReturnFlights[key]);
+            departData.push(data.Data.DepartureFlights[key])
+          }
+          var returnData = []
+          for (const key in data.Data.ReturnFlights) {
+            // console.log('key', key, ReturnFlights[key]);
+            returnData.push(data.Data.ReturnFlights[key])
+          }
+          setDepartData(departData)
+          setReturnData(returnData)
+
+
+        }
+      }
+    }
+    search()
+
+  }, [])
+
   const airportOptions = [
     { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' },
     { value: 'HPH', label: 'Hải Phòng', type: 'Miền Bắc' },
@@ -64,10 +400,23 @@ export default function AirLineTicket() {
     { value: 'YTO', label: 'Toronto', type: 'Châu Úc' },
     { value: 'YVR', label: 'Vancouver', type: 'Châu Úc' },
   ]
+
+  const findFrom = airportOptions.find(({ value }) => value === searchParams.get('sp'))
+  // console.log('findFrom', findFrom);
+  const findTo = airportOptions.find(({ value }) => value === searchParams.get('ep'))
+  // console.log('findFrom', findFrom);
+  // console.log({
+  //   from: findFrom?.label,
+  //   to: findTo?.label
+  // });
+  const [trip, setTrip] = useState<any>({
+    from: findFrom?.label + ', ' + findFrom?.label + ' (' + findFrom?.value + ')',
+    to: findTo?.label + ', ' + findTo?.label + ' (' + findTo?.value + ')'
+  })
   const [today, setToday] = useState(format(new Date(), 'yyyy-MM-dd'))
   const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd'))
   const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd'))
-  const m = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
   return (
     <div className=" mt-32 bg-white mx-auto rounded-3xl p-5">
       <div className="flex bg-amber-500 rounded-xl min-h-max flex-col max-w-7xl mx-auto justify-between">
@@ -268,88 +617,205 @@ export default function AirLineTicket() {
           </div>
         </div>
         <div className="grid col-span-12 xl:col-span-9">
-          <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-            <div className=" text-start pt-2 bg-red-100">
-              <h1 className="text-black mx-3 text-xl font-bold">Hà Nội, Việt Nam (HAN)- Hồ Chí Minh, Việt Nam (SGN)</h1>
-              <p className=" mx-3">01 Khách - 01/01</p>
+
+
+          <div>
+            <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+              <div className=" text-start pt-2 bg-red-100">
+                <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
+                <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+              </div>
+              <ul className="flex flex-row justify-between ...">
+                <li className="mx-auto border-b-2 border-red-600">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+              </ul>
             </div>
-            <ul className="flex flex-row justify-between ...">
-              <li className="mx-auto border-b-2 border-red-600">
-                <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-              </li>
-              <li className="mx-auto">
-                <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-              </li>
-              <li className="mx-auto">
-                <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-              </li>
-              <li className="mx-auto">
-                <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-              </li>
-              <li className="mx-auto">
-                <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-              </li>
-              <li className="mx-auto">
-                <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-              </li>
-              <li className="mx-auto">
-                <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-              </li>
-            </ul>
+            <div className="flex flex-col space-y-5 mt-5">
+              {departData.map((e: any, i: number) => {
+                return (
+                  <>
+                    <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                      <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                        <div className="flex items-center gap-4">
+                          {e.AirlineCode == 'VJ' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                          }
+                          {e.AirlineCode == 'VN' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                          }
+                          {e.AirlineCode == 'QH' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                          }
+                          {e.AirlineCode == 'VU' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                          }
+                          <div className="font-medium dark:text-white">
+                            <div>{e.AirlineCode}</div>
+                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                              <p>{e.FlightNumber}</p>
+                              <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                            </div>
+                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                        <div className=" col-span-6 xl:col-span-1 px-3">
+                          <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
+                        </div>
+                        <div className="col-span-6 xl:col-span-4">
+                          <div className="flex flex-row space-x-3">
+                            <FaPlaneDeparture className="w-4 my-auto" />
+                            <div className="flex flex-col w-full space-y-2">
+                              <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                              <div className="border-dashed border-b-2 ..."></div>
+                              {e.Stops == 0 &&
+                                <p className="text-center text-xs">Bay thẳng</p>
+                              }
+                            </div>
+                            <FaPlaneArrival className="w-4 my-auto" />
+                          </div>
+                        </div>
+                        <div className=" col-span-6 xl:col-span-1 px-3">
+                          <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                        </div>
+
+                      </div>
+                      <div className="grid col-span-4 xl:col-span-3">
+                        <Link href="/order" className="flex flex-col px-5 space-y-1">
+                          <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                          <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </div>
-          <div className="flex flex-col space-y-5 mt-5">
-            {m.map((e, i) => {
-              return (
-                <>
-                  <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
-                    <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
-                      <div className="flex items-center gap-4">
-                        <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
-                        <div className="font-medium dark:text-white">
-                          <div>Vietjet Air</div>
-                          <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                            <p>VJ197</p>
-                            <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
-                          </div>
-                          <p className=" block xl:hidden text-xs">Từ: 08:05, đến: 10:15</p>
+          <div className="my-10">
+            <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+              <div className=" text-start pt-2 bg-red-100">
+                <h1 className="text-black mx-3 text-xl font-bold">{trip.to} - {trip.from}</h1>
+                <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+              </div>
+              <ul className="flex flex-row justify-between ...">
+                <li className="mx-auto border-b-2 border-red-600">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+                <li className="mx-auto">
+                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                </li>
+              </ul>
+            </div>
+            <div className="flex flex-col space-y-5 mt-5">
+              {returnData.map((e: any, i: number) => {
+                return (
+                  <>
+                    <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                      <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                        <div className="flex items-center gap-4">
+                          {e.AirlineCode == 'VJ' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                          }
+                          {e.AirlineCode == 'VN' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                          }
+                          {e.AirlineCode == 'QH' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                          }
+                          {e.AirlineCode == 'VU' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                          }                          <div className="font-medium dark:text-white">
+                            <div>{e.AirlineCode}</div>
+                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                              <p>{e.FlightNumber}</p>
+                              <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                            </div>
+                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
 
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
-                      <div className=" col-span-6 xl:col-span-1 px-3">
-                        <p className="text-center">05:00</p>
-                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">HAN</p>
-                      </div>
-                      <div className="col-span-6 xl:col-span-4">
-                        <div className="flex flex-row space-x-3">
-                          <FaPlaneDeparture className="w-4 my-auto" />
-                          <div className="flex flex-col w-full space-y-2">
-                            <p className="text-center text-xs">02h 10m</p>
-                            <div className="border-dashed border-b-2 ..."></div>
-                            <p className="text-center text-xs">Bay thẳng</p>
-                          </div>
-                          <FaPlaneArrival className="w-4 my-auto" />
+                      <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                        <div className=" col-span-6 xl:col-span-1 px-3">
+                          <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
                         </div>
-                      </div>
-                      <div className=" col-span-6 xl:col-span-1 px-3">
-                        <p className="text-center">07:00</p>
-                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">SGN</p>
-                      </div>
+                        <div className="col-span-6 xl:col-span-4">
+                          <div className="flex flex-row space-x-3">
+                            <FaPlaneDeparture className="w-4 my-auto" />
+                            <div className="flex flex-col w-full space-y-2">
+                              <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                              <div className="border-dashed border-b-2 ..."></div>
+                              {e.Stops == 0 &&
+                                <p className="text-center text-xs">Bay thẳng</p>
+                              }
+                            </div>
+                            <FaPlaneArrival className="w-4 my-auto" />
+                          </div>
+                        </div>
+                        <div className=" col-span-6 xl:col-span-1 px-3">
+                          <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                        </div>
 
+                      </div>
+                      <div className="grid col-span-4 xl:col-span-3">
+                        <Link href="/order" className="flex flex-col px-5 space-y-1">
+                          <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                          <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
+                        </Link>
+                      </div>
                     </div>
-                    <div className="grid col-span-4 xl:col-span-3">
-                      <Link href="/order" className="flex flex-col px-5 space-y-1">
-                        <h4 className="text-red-600 text-lg font-bold text-center">1,584,800</h4>
-                        <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
-                      </Link>
-                    </div>
-                  </div>
-                </>
-              )
-            })}
+                  </>
+                );
+              })}
+
+
+
+            </div>
           </div>
         </div>
+
+
       </div>
     </div>
   );
