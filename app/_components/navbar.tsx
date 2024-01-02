@@ -21,9 +21,9 @@ export default function Nav() {
   return (
     <>
       <nav className=" invisible lg:visible fixed w-full shadow-sm top-0 z-50 bg-white font-medium py-2 backdrop-blur-sm divide-y">
-        <div className=" w-screen">
+        <div className=" w-screen px-5">
           <div className="flex flex-row max-w-7xl mx-auto  justify-between py-2">
-            <div>
+            <Link href={'/'}>
               <Image
                 src={"/img/sbay-w-r.png"}
                 width={512}
@@ -31,14 +31,7 @@ export default function Nav() {
                 alt={"Sbay group logo"}
                 className=" w-14 rounded-full"
               ></Image>
-              <Link
-                href={`tel:02363616616`}
-                className="col-span-4 ml-5 flex justify-end items-center md:hidden flex-row"
-              >
-                {" "}
-                <Icon.PhoneCall className="w-5 h-5 mr-2 md:block mt-1" />
-              </Link>
-            </div>
+            </Link>
             <div className=" flex flex-row space-x-5 text-sm my-auto">
               <Link href={"/"} className=" hover:text-gray-200 flex flex-row p-2">
                 <IoMdHome className="mr-1 w-4 mt-0.5" />
@@ -60,7 +53,7 @@ export default function Nav() {
 
           </div>
         </div>
-        <div className=" w-screen">
+        <div className=" w-screen px-5">
           <div className="flex flex-row max-w-7xl mx-auto justify-between py-2">
             <div className=" flex flex-row space-x-5 text-sm my-auto mt-1">
               <Link
@@ -101,7 +94,6 @@ export default function Nav() {
 
           </div>
         </div>
-
       </nav>
     </>
   );
