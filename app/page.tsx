@@ -38,7 +38,7 @@ export default function Home() {
   const popularFly = [1, 2, 3, 4]
   const popularRoom = [1, 2, 3, 4]
   const popularCar = [1, 2, 3]
-  const popularBana = [1, 2, 3, 4, 5, 6]
+  const popularBana = [1, 2, 3, 4]
   const popularTool = [1, 2, 3]
 
 
@@ -103,7 +103,7 @@ export default function Home() {
 
       </div> */}
       <section className="bg-white dark:bg-gray-900" style={{ backgroundImage: "url('/img/bg-02.jpg')" }}>
-        <div className=" lg:my-24 max-w-screen-xl grid grid-cols-1 lg:grid-cols-2 lg:gap-4 mx-auto p-5 lg:py-24">
+        <div className=" lg: my-20 max-w-screen-xl grid grid-cols-1 lg:grid-cols-2 lg:gap-4 mx-auto p-5 lg:py-24">
           <Search></Search>
           <div className="my-auto mx-auto invisible lg:visible">
             <Image
@@ -256,7 +256,7 @@ export default function Home() {
 
         <div className="flex flex-col max-w-7xl mx-auto justify-between py-2">
           <h2 className=" text-xl font-bold text-center my-10"> Dịch vụ vé Bà Nà</h2>
-          <div className="grid grid-cols-3 xl:grid-cols-6  justify-center ...">
+          <div className="grid grid-cols-2 xl:grid-cols-4 justify-center ...">
             {popularBana.map((e, i) => {
               return (
                 <div key={i} className="  hover:bg-blue-100 rounded-lg p-5 drop-shadow-md ...">

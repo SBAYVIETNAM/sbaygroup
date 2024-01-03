@@ -1,29 +1,22 @@
 "use client";
 import { useState, useEffect } from "react";
-import { BsAirplaneEngines } from "react-icons/bs";
-import { FiChevronDown } from "react-icons/fi";
-import {
-  AiOutlineCloseCircle,
-  AiOutlineMinusSquare,
-  AiOutlinePlusSquare,
-} from "react-icons/ai";
-import Datepicker from "react-tailwindcss-datepicker";
-import dayjs from "dayjs";
 import { FaPlaneDeparture, FaPlaneArrival, FaRegCalendar, FaRegCalendarCheck } from "react-icons/fa";
 import Select from 'react-select'
 import { format, addDays } from "date-fns";
 import Link from "next/link";
 import { useRouter, useSearchParams } from 'next/navigation';
 import { da, vi } from 'date-fns/locale';
+import Notfound from "./notfound";
+import Searching from "./search";
 
 export default function AirLineTicket({ params }: { params: { slug: string } }) {
 
   let searchParams = useSearchParams()
   // console.log('searchParams', searchParams.get('a'));
-
-  const data = {
+  const itineraryType = searchParams.get('t') || '2'
+  const dataUrl = {
     action: searchParams.get('a'),
-    ItineraryType: searchParams.get('t'),
+    ItineraryType: itineraryType,
     StartPoint: searchParams.get('sp'),
     EndPoint: searchParams.get('ep'),
     DepartureDate: format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi }),
@@ -32,274 +25,9 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     Children: searchParams.get('ch'),
     Infant: searchParams.get('ba')
   };
-  // console.log('searchParams', data);
+  // console.log('searchParams', dataUrl);
 
-  // const searchValue =
-  // {
-  //   "DepartureFlights": {
-  //     "0757eeb44dc042d8baf048331359123a": {
-  //       "StartPoint": "HAN",
-  //       "EndPoint": "SGN",
-  //       "FlightSession": "0757eeb44dc042d8baf048331359123a",
-  //       "FlightNumber": "VN7227",
-  //       "AirlineCode": "VN",
-  //       "StartDate": "2024-02-01T00:20:00",
-  //       "EndDate": "2024-02-01T02:35:00",
-  //       "Stops": 0,
-  //       "Duration": 135,
-  //       "PriceAdult": 1219000,
-  //       "PriceChild": 0,
-  //       "PriceInfant": 0,
-  //       "FeeAdult": 569000,
-  //       "FeeChild": 0,
-  //       "FeeInfant": 0,
-  //       "TaxAdult": 98000,
-  //       "TaxChild": 0,
-  //       "TaxInfant": 0,
-  //       "TotalPrice": 1886000,
-  //       "ServiceFee": 0,
-  //       "IssueFee": 0,
-  //       "SeatRemaining": 5,
-  //       "ListSegment": [
-  //         {
-  //           "AirlineCode": "VN",
-  //           "StartDate": "2024-02-01T00:20:00",
-  //           "EndDate": "2024-02-01T02:35:00",
-  //           "StartPoint": "HAN",
-  //           "EndPoint": "SGN",
-  //           "FlightNumber": "VN7227",
-  //           "Plane": "321",
-  //           "FlightTime": 135,
-  //           "Class": "T"
-  //         }
-  //       ],
-  //       "LastTkDate": "2024-01-03T00:58:26.5330863+07:00",
-  //       "Class": "T"
-  //     },
-  //   },
-  //   "ReturnFlights": {
-  //     "370f6fd7541b476996514403e4672957": {
-  //       "StartPoint": "SGN",
-  //       "EndPoint": "HAN",
-  //       "FlightSession": "370f6fd7541b476996514403e4672957",
-  //       "FlightNumber": "VN204",
-  //       "AirlineCode": "VN",
-  //       "StartDate": "2024-05-01T05:00:00",
-  //       "EndDate": "2024-05-01T07:15:00",
-  //       "Stops": 0,
-  //       "Duration": 135,
-  //       "PriceAdult": 1219000,
-  //       "PriceChild": 0,
-  //       "PriceInfant": 0,
-  //       "FeeAdult": 569000,
-  //       "FeeChild": 0,
-  //       "FeeInfant": 0,
-  //       "TaxAdult": 98000,
-  //       "TaxChild": 0,
-  //       "TaxInfant": 0,
-  //       "TotalPrice": 1886000,
-  //       "ServiceFee": 0,
-  //       "IssueFee": 0,
-  //       "SeatRemaining": 7,
-  //       "ListSegment": [
-  //         {
-  //           "AirlineCode": "VN",
-  //           "StartDate": "2024-05-01T05:00:00",
-  //           "EndDate": "2024-05-01T07:15:00",
-  //           "StartPoint": "SGN",
-  //           "EndPoint": "HAN",
-  //           "FlightNumber": "VN204",
-  //           "Plane": "321",
-  //           "FlightTime": 135,
-  //           "Class": "T"
-  //         }
-  //       ],
-  //       "LastTkDate": "2024-01-03T00:58:26.534087+07:00",
-  //       "Class": "T"
-  //     },
-  //   },
-  //   "ItineraryType": 2,
-  //   "DepartureDate": "01/02/2024",
-  //   "ReturnDate": "01/05/2024",
-  //   "StartPoint": "HAN",
-  //   "EndPoint": "SGN",
-  //   "Adult": 1,
-  //   "Children": 0,
-  //   "Infant": 0,
-  //   "DataSession": "6a41bc900798413b8e6a3301e3329fb9"
-  // }
 
-  // const ReturnFlights: any = {
-  //   "0757eeb44dc042d8baf048331359123a": {
-  //     "StartPoint": "HAN",
-  //     "EndPoint": "SGN",
-  //     "FlightSession": "0757eeb44dc042d8baf048331359123a",
-  //     "FlightNumber": "VN7227",
-  //     "AirlineCode": "VN",
-  //     "StartDate": "2024-02-01T00:20:00",
-  //     "EndDate": "2024-02-01T02:35:00",
-  //     "Stops": 0,
-  //     "Duration": 135,
-  //     "PriceAdult": 1219000,
-  //     "PriceChild": 0,
-  //     "PriceInfant": 0,
-  //     "FeeAdult": 569000,
-  //     "FeeChild": 0,
-  //     "FeeInfant": 0,
-  //     "TaxAdult": 98000,
-  //     "TaxChild": 0,
-  //     "TaxInfant": 0,
-  //     "TotalPrice": 1886000,
-  //     "ServiceFee": 0,
-  //     "IssueFee": 0,
-  //     "SeatRemaining": 5,
-  //     "ListSegment": [
-  //       {
-  //         "AirlineCode": "VN",
-  //         "StartDate": "2024-02-01T00:20:00",
-  //         "EndDate": "2024-02-01T02:35:00",
-  //         "StartPoint": "HAN",
-  //         "EndPoint": "SGN",
-  //         "FlightNumber": "VN7227",
-  //         "Plane": "321",
-  //         "FlightTime": 135,
-  //         "Class": "T"
-  //       }
-  //     ],
-  //     "LastTkDate": "2024-01-03T00:58:26.5330863+07:00",
-  //     "Class": "T"
-  //   },
-  //   "0757eeb44dc042d8baf048331359123b": {
-  //     "StartPoint": "HAN",
-  //     "EndPoint": "SGN",
-  //     "FlightSession": "0757eeb44dc042d8baf048331359123a",
-  //     "FlightNumber": "VN7227",
-  //     "AirlineCode": "VN",
-  //     "StartDate": "2024-02-01T00:20:00",
-  //     "EndDate": "2024-02-01T02:35:00",
-  //     "Stops": 0,
-  //     "Duration": 135,
-  //     "PriceAdult": 1219000,
-  //     "PriceChild": 0,
-  //     "PriceInfant": 0,
-  //     "FeeAdult": 569000,
-  //     "FeeChild": 0,
-  //     "FeeInfant": 0,
-  //     "TaxAdult": 98000,
-  //     "TaxChild": 0,
-  //     "TaxInfant": 0,
-  //     "TotalPrice": 1886000,
-  //     "ServiceFee": 0,
-  //     "IssueFee": 0,
-  //     "SeatRemaining": 5,
-  //     "ListSegment": [
-  //       {
-  //         "AirlineCode": "VN",
-  //         "StartDate": "2024-02-01T00:20:00",
-  //         "EndDate": "2024-02-01T02:35:00",
-  //         "StartPoint": "HAN",
-  //         "EndPoint": "SGN",
-  //         "FlightNumber": "VN7227",
-  //         "Plane": "321",
-  //         "FlightTime": 135,
-  //         "Class": "T"
-  //       }
-  //     ],
-  //     "LastTkDate": "2024-01-03T00:58:26.5330863+07:00",
-  //     "Class": "T"
-  //   },
-  //   "0757eeb44dc042d8baf048331359123e": {
-  //     "StartPoint": "HAN",
-  //     "EndPoint": "SGN",
-  //     "FlightSession": "0757eeb44dc042d8baf048331359123a",
-  //     "FlightNumber": "VN7227",
-  //     "AirlineCode": "VN",
-  //     "StartDate": "2024-02-01T00:20:00",
-  //     "EndDate": "2024-02-01T02:35:00",
-  //     "Stops": 0,
-  //     "Duration": 135,
-  //     "PriceAdult": 1219000,
-  //     "PriceChild": 0,
-  //     "PriceInfant": 0,
-  //     "FeeAdult": 569000,
-  //     "FeeChild": 0,
-  //     "FeeInfant": 0,
-  //     "TaxAdult": 98000,
-  //     "TaxChild": 0,
-  //     "TaxInfant": 0,
-  //     "TotalPrice": 1886000,
-  //     "ServiceFee": 0,
-  //     "IssueFee": 0,
-  //     "SeatRemaining": 5,
-  //     "ListSegment": [
-  //       {
-  //         "AirlineCode": "VN",
-  //         "StartDate": "2024-02-01T00:20:00",
-  //         "EndDate": "2024-02-01T02:35:00",
-  //         "StartPoint": "HAN",
-  //         "EndPoint": "SGN",
-  //         "FlightNumber": "VN7227",
-  //         "Plane": "321",
-  //         "FlightTime": 135,
-  //         "Class": "T"
-  //       }
-  //     ],
-  //     "LastTkDate": "2024-01-03T00:58:26.5330863+07:00",
-  //     "Class": "T"
-  //   },
-  // }
-  // const DepartureFlights:any = {
-  //   "370f6fd7541b476996514403e4672957": {
-  //     "StartPoint": "SGN",
-  //     "EndPoint": "HAN",
-  //     "FlightSession": "370f6fd7541b476996514403e4672957",
-  //     "FlightNumber": "VN204",
-  //     "AirlineCode": "VN",
-  //     "StartDate": "2024-05-01T05:00:00",
-  //     "EndDate": "2024-05-01T07:15:00",
-  //     "Stops": 0,
-  //     "Duration": 135,
-  //     "PriceAdult": 1219000,
-  //     "PriceChild": 0,
-  //     "PriceInfant": 0,
-  //     "FeeAdult": 569000,
-  //     "FeeChild": 0,
-  //     "FeeInfant": 0,
-  //     "TaxAdult": 98000,
-  //     "TaxChild": 0,
-  //     "TaxInfant": 0,
-  //     "TotalPrice": 1886000,
-  //     "ServiceFee": 0,
-  //     "IssueFee": 0,
-  //     "SeatRemaining": 7,
-  //     "ListSegment": [
-  //       {
-  //         "AirlineCode": "VN",
-  //         "StartDate": "2024-05-01T05:00:00",
-  //         "EndDate": "2024-05-01T07:15:00",
-  //         "StartPoint": "SGN",
-  //         "EndPoint": "HAN",
-  //         "FlightNumber": "VN204",
-  //         "Plane": "321",
-  //         "FlightTime": 135,
-  //         "Class": "T"
-  //       }
-  //     ],
-  //     "LastTkDate": "2024-01-03T00:58:26.534087+07:00",
-  //     "Class": "T"
-  //   },
-  // }
-  // var returnData = []
-  // for (const key in ReturnFlights) {
-  //   // console.log('key', key, ReturnFlights[key]);
-  //   returnData.push(ReturnFlights[key])
-  // }
-
-  // var departData = []
-  // for (const key in DepartureFlights) {
-  //   // console.log('key', key, ReturnFlights[key]);
-  //   departData.push(DepartureFlights[key])
-  // }
   const [departData, setDepartData] = useState<any>([])
   const [returnData, setReturnData] = useState<any>([])
 
@@ -310,10 +38,11 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     Infant: searchParams.get('ba')
   })
   useEffect(() => {
+    setSearchStatus(true)
     const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
 
-    var rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
-    console.log('data', data);
+    let rawData = `{\r\n    \"action\": \"` + dataUrl.action + `\",\r\n    \"ItineraryType\": ` + dataUrl.ItineraryType + `,\r\n    \"StartPoint\": \"` + dataUrl.StartPoint + `\",\r\n    \"EndPoint\": \"` + dataUrl.EndPoint + `\",\r\n    \"DepartureDate\": \"` + dataUrl.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + dataUrl.ReturnDate + `\",\r\n    \"Adult\": ` + dataUrl.Adult + `,\r\n    \"Children\": ` + dataUrl.Children + `,\r\n    \"Infant\": ` + dataUrl.Infant + `\r\n}`
+    console.log('data', dataUrl);
     const search = async () => {
       const res = await fetch(url, {
         method: "POST", // or 'PUT'
@@ -329,25 +58,27 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
         const data = await res.json();
         console.log("flight", data);
         if (data.Data) {
-          var departData = []
+          let departData = []
           for (const key in data.Data.DepartureFlights) {
             // console.log('key', key, ReturnFlights[key]);
             departData.push(data.Data.DepartureFlights[key])
           }
-          var returnData = []
+          let returnData = []
           for (const key in data.Data.ReturnFlights) {
             // console.log('key', key, ReturnFlights[key]);
             returnData.push(data.Data.ReturnFlights[key])
           }
           setDepartData(departData)
           setReturnData(returnData)
-
-
+          setSearchStatus(false)
+          setNotFound(false)
+        } else {
+          setSearchStatus(false)
+          setNotFound(true)
         }
       }
     }
     search()
-
   }, [])
 
   const airportOptions = [
@@ -401,9 +132,9 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     { value: 'YVR', label: 'Vancouver', type: 'Châu Úc' },
   ]
 
-  const findFrom = airportOptions.find(({ value }) => value === searchParams.get('sp'))
-  // console.log('findFrom', findFrom);
-  const findTo = airportOptions.find(({ value }) => value === searchParams.get('ep'))
+  const findFrom: any = airportOptions.find(({ value }) => value === searchParams.get('sp'))
+  console.log('findFrom', findFrom);
+  const findTo: any = airportOptions.find(({ value }) => value === searchParams.get('ep'))
   // console.log('findFrom', findFrom);
   // console.log({
   //   from: findFrom?.label,
@@ -413,21 +144,113 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     from: findFrom?.label + ', ' + findFrom?.label + ' (' + findFrom?.value + ')',
     to: findTo?.label + ', ' + findTo?.label + ' (' + findTo?.value + ')'
   })
-  const [today, setToday] = useState(format(new Date(), 'yyyy-MM-dd'))
-  const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd'))
-  const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd'))
+
+  /* Form search */
+  const defaultDepart = findFrom
+  const defaultReturn = findTo
+
+  const [defaultDepartTime, setDefaultDepartTime] = useState(format(new Date(), 'yyyy-MM-dd', { locale: vi }))
+  const [defaultReturnTime, setDefaultReturnTime] = useState(format(addDays(new Date(), 2), 'yyyy-MM-dd', { locale: vi }))
+  const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd', { locale: vi }))
+  const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd', { locale: vi }))
+  /* Time choose */
+  const [typeOfTicket, setTypeOfTicket] = useState<number>(parseInt(itineraryType))
+  /* Select depart */
+  const [selectedDepartAirport, setSelectedDepartAirport] = useState(defaultDepart.value);
+  const onChangeDepart = (e: any) => {
+    console.log('e', e);
+    setSelectedDepartAirport(e.value)
+  }
+  /* Select return */
+  const [selectedReturnAirport, setSelectedReturnAirport] = useState(defaultReturn.value);
+  const onChangeReturn = (e: any) => {
+    console.log('e', e);
+    setSelectedReturnAirport(e.value)
+  }
+  /* Time choose */
+  const [departTime, setDepartTime] = useState(defaultDepartTime)
+  const [returnTime, setReturnTime] = useState(defaultReturnTime)
+  /* Passengers choose */
+  const [Adult, setAdult] = useState(1)
+  const [Children, setChildren] = useState(0)
+  const [Infant, setInfant] = useState(0)
+
+  /*  */
+  const [searchStatus, setSearchStatus] = useState(false)
+  const [notFound, setNotFound] = useState(false)
+
+  const searchfn = async () => {
+    setSearchStatus(true)
+    setDepartData([])
+    setReturnData([])
+    console.log(selectedDepartAirport, selectedReturnAirport);
+    const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
+    const data = {
+      action: 'DOMSearchFlights',
+      ItineraryType: typeOfTicket,
+      StartPoint: selectedDepartAirport,
+      EndPoint: selectedReturnAirport,
+      DepartureDate: format(new Date(departTime), "dd/MM/yyyy", { locale: vi }),
+      ReturnDate: format(new Date(returnTime), "dd/MM/yyyy", { locale: vi }),
+      Adult: Adult,
+      Children: Children,
+      Infant: Infant
+    };
+    let rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
+    console.log('data', data);
+
+    const res = await fetch(url, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "text/plain",
+      },
+      body: rawData,
+    });
+    if (!res.ok) {
+      // This will activate the closest `error.js` Error Boundary
+      throw new Error("Failed to fetch data");
+    } else {
+      const data = await res.json();
+      console.log("flight search btn", data);
+      if (data.Data) {
+        let departData = []
+        for (const key in data.Data.DepartureFlights) {
+          // console.log('key', key, ReturnFlights[key]);
+          departData.push(data.Data.DepartureFlights[key])
+        }
+        let returnData = []
+        for (const key in data.Data.ReturnFlights) {
+          // console.log('key', key, ReturnFlights[key]);
+          returnData.push(data.Data.ReturnFlights[key])
+        }
+        setDepartData(departData)
+        setReturnData(returnData)
+        setSearchStatus(false)
+        setNotFound(false)
+
+      } else {
+        setSearchStatus(false)
+        setNotFound(true)
+      }
+    }
+  }
+
+  const [show, setShow] = useState(false)
+  // const showChoosePassengers = function () {
+  //   setShow(true)
+  // }
 
   return (
     <div className=" mt-32 bg-white mx-auto rounded-3xl p-5">
       <div className="flex bg-amber-500 rounded-xl min-h-max flex-col max-w-7xl mx-auto justify-between">
         <div className=" flex flex-row space-x-2 p-3">
           <div className="flex items-center">
-            <input id="default-radio-1" type="radio" value="" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-            <label htmlFor="default-radio-1" className="ms-2 text-sm font-medium text-white">Một chiều</label>
+            <input id="typeOfTicket-radio-1" onChange={() => { setTypeOfTicket(1) }} type="radio" defaultChecked={typeOfTicket === 1} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            <label htmlFor="typeOfTicket-radio-1" className="ms-2 text-sm font-medium text-white">Một chiều</label>
           </div>
           <div className="flex items-center">
-            <input checked id="default-radio-2" type="radio" value="" name="default-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-            <label htmlFor="default-radio-2" className="ms-2 text-sm font-medium text-white">Khứ hồi</label>
+            <input id="typeOfTicket-radio-2" onChange={() => { setTypeOfTicket(2) }} type="radio" defaultChecked={typeOfTicket === 2} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            <label htmlFor="typeOfTicket-radio-2" className="ms-2 text-sm font-medium text-white">Khứ hồi</label>
           </div>
         </div>
         <div className=" grid grid-cols-12 my-auto">
@@ -441,6 +264,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                 id="from"
                 placeholder="Nơi đi"
                 options={airportOptions}
+                defaultValue={defaultDepart}
                 formatOptionLabel={(airportOptions: any) => {
                   return (
                     <>
@@ -451,6 +275,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                     </>
                   )
                 }}
+                onChange={onChangeDepart}
                 className="w-full " />
             </div>
             <div className=" flex flex-col space-y-1 w-full">
@@ -462,6 +287,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                 id="to"
                 placeholder="Nơi đến"
                 options={airportOptions}
+                defaultValue={defaultReturn}
                 formatOptionLabel={(airportOptions: any) => {
                   return (
                     <>
@@ -472,6 +298,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                     </>
                   )
                 }}
+                onChange={onChangeReturn}
                 className="w-full" />
             </div>
           </div>
@@ -479,18 +306,31 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
           <div className=" col-span-12 xl:col-span-4 px-3 flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:space-x-5 justify-between ...">
             <div className=" flex flex-col space-y-1 w-full">
               <div className=' flex flex-row'>
-                <FaRegCalendar className="mr-1 w-3 mt-0.5 text-white" />
-                <label htmlFor="fromDate" className="block text-sm font-medium text-white dark:text-white">Ngày đi</label>
+                <FaRegCalendar className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
+                <label htmlFor="fromDate" className="block text-sm font-medium text-white">Ngày đi</label>
               </div>
-              <input id="fromDate" className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" name="trip-start" value={today} min={minDate} max={maxDate} />
-            </div>
+              <input
+                onChange={(e: any) => { setDepartTime(e.currentTarget.value) }}
+                id="fromDate"
+                className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date"
+                name="trip-start"
+                value={departTime}
+                min={minDate}
+                max={maxDate} />            </div>
             <div className=" flex flex-col space-y-1 w-full">
               <div className=' flex flex-row'>
-                <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 text-white" />
-                <label htmlFor="toDate" className="block text-sm font-medium text-white dark:text-white">Ngày đến</label>
+                <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
+                <label htmlFor="toDate" className="block text-sm font-medium text-white">Ngày đến</label>
               </div>
-              <input id="toDate" className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" name="trip-start" value={today} min={minDate} max={maxDate} />
-
+              <input
+                onChange={(e: any) => { setReturnTime(e.currentTarget.value) }}
+                id="toDate"
+                className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
+                type="date"
+                name="trip-start"
+                value={returnTime}
+                min={minDate}
+                max={maxDate} />
             </div>
           </div>
 
@@ -498,63 +338,90 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
 
             <div className=' col-span-4'>
               <label htmlFor="first_name" className="block mb-1 text-sm font-medium text-white">Số lượng khách</label>
-              <input type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="1 người lớn" required />
+              <input
+                type="text"
+                id="first_name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={Adult + ' n.lớn, ' + Children + ' trẻ em, ' + Infant + ' em bé'}
+                onClick={() => setShow(true)}
+
+                required />
             </div>
-            <div className="absolute col-span-4 top-20 bg-amber-500 rounded-xl p-5 shadow-lg ...">
-              <form className="max-w-xs mb-3">
-                <label htmlFor="quantity-input" className="block text-sm font-medium">Người lớn (từ 12 tuổi):</label>
-                <div className="relative flex items-center max-w-[8rem]">
-                  <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
-                    </svg>
-                  </button>
-                  <input type="text" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value={1} placeholder="1" required />
-                  <button type="button" id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
-                    </svg>
-                  </button>
-                </div>
-              </form>
-              <form className="max-w-xs mb-3">
-                <label htmlFor="quantity-input" className="block text-sm font-medium">Trẻ em (từ 2-12 tuổi):</label>
-                <div className="relative flex items-center max-w-[8rem]">
-                  <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
-                    </svg>
-                  </button>
-                  <input type="text" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0" required />
-                  <button type="button" id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
-                    </svg>
-                  </button>
-                </div>
-              </form>
-              <form className="max-w-xs">
-                <label htmlFor="quantity-input" className="block text-sm font-medium">Em bé (dưới 2 tuổi):</label>
-                <div className="relative flex items-center max-w-[8rem]">
-                  <button type="button" id="decrement-button" data-input-counter-decrement="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
-                    </svg>
-                  </button>
-                  <input type="text" id="quantity-input" data-input-counter aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0" required />
-                  <button type="button" id="increment-button" data-input-counter-increment="quantity-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
-                    <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
-                    </svg>
-                  </button>
-                </div>
-              </form>
-            </div>
+            {show == true &&
+              <div onMouseLeave={() => setShow(false)} className="absolute col-span-4 top-20 bg-amber-500 rounded-xl p-5 shadow-lg ...">
+                <form className="max-w-xs mb-3">
+                  <label htmlFor="aldult-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Người lớn (từ 12 tuổi):</label>
+                  <div className="relative flex items-center max-w-[10rem]">
+                    <button onClick={() => { Adult > 1 && setAdult(Adult - 1) }} type="button" id="decrement-button" data-input-counter-decrement="aldult-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                      <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
+                      </svg>
+                    </button>
+                    <input type="text"
+                      id="aldult-input"
+                      data-input-counter aria-describedby="helper-text-explanation"
+                      className="bg-gray-50 border-x-0 border-gray-300 h-10 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={Adult}
+                      placeholder="1"
+                      required />
+                    <button onClick={() => { Adult > 0 && setAdult(Adult + 1) }} type="button" id="increment-button" data-input-counter-increment="aldult-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                      <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </form>
+                <form className="max-w-xs mb-3">
+                  <label htmlFor="child-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Trẻ em (từ 2-12 tuổi):</label>
+                  <div className="relative flex items-center max-w-[10rem]">
+                    <button onClick={() => { Children >= 1 && setChildren(Children - 1) }} type="button" id="decrement-button" data-input-counter-decrement="child-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                      <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
+                      </svg>
+                    </button>
+                    <input
+                      type="text"
+                      id="child-input"
+                      data-input-counter aria-describedby="helper-text-explanation"
+                      className="bg-gray-50 border-x-0 border-gray-300 h-10 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={Children}
+                      placeholder="0" required />
+                    <button onClick={() => { Children >= 0 && setChildren(Children + 1) }} type="button" id="increment-button" data-input-counter-increment="child-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                      <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </form>
+                <form className="max-w-xs">
+                  <label htmlFor="baby-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Em bé (dưới 2 tuổi):</label>
+                  <div className="relative flex items-center max-w-[10rem]">
+                    <button onClick={() => { Infant >= 1 && setInfant(Infant - 1) }} type="button" id="decrement-button" data-input-counter-decrement="baby-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                      <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16" />
+                      </svg>
+                    </button>
+                    <input type="text" id="baby-input" data-input-counter aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-10 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      value={Infant}
+                      placeholder="0" required />
+                    <button onClick={() => { Infant >= 0 && setInfant(Infant + 1) }} type="button" id="increment-button" data-input-counter-increment="baby-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                      <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            }
+
 
           </div>
           <div className=" col-span-6 xl:col-span-2 px-3 flex flex-col justify-between ...">
             <label className="block text-sm font-medium text-white invisible">Tìm</label>
-            <button type="button" className="text-white mb-5 bg-blue-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10">Tìm kiếm</button>
+            <button
+              onClick={searchfn}
+              type="button"
+              className="text-white mb-5 bg-blue-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10">Tìm kiếm</button>
           </div>
         </div>
       </div>
@@ -618,201 +485,393 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
         </div>
         <div className="grid col-span-12 xl:col-span-9">
 
-
-          <div>
-            <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-              <div className=" text-start pt-2 bg-red-100">
-                <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
-                <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+          {
+            typeOfTicket == 1 &&
+            <div>
+              <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                <div className=" text-start pt-2 bg-red-100">
+                  <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
+                  <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+                </div>
+                <ul className="flex flex-row justify-between ...">
+                  <li className="mx-auto border-b-2 border-red-600">
+                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                  </li>
+                  <li className="mx-auto">
+                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                  </li>
+                  <li className="mx-auto">
+                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                  </li>
+                  <li className="mx-auto">
+                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                  </li>
+                  <li className="mx-auto">
+                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                  </li>
+                  <li className="mx-auto">
+                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                  </li>
+                  <li className="mx-auto">
+                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                  </li>
+                </ul>
               </div>
-              <ul className="flex flex-row justify-between ...">
-                <li className="mx-auto border-b-2 border-red-600">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-              </ul>
-            </div>
-            <div className="flex flex-col space-y-5 mt-5">
-              {departData.map((e: any, i: number) => {
-                return (
-                  <>
-                    <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
-                      <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
-                        <div className="flex items-center gap-4">
-                          {e.AirlineCode == 'VJ' &&
-                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
-                          }
-                          {e.AirlineCode == 'VN' &&
-                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
-                          }
-                          {e.AirlineCode == 'QH' &&
-                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
-                          }
-                          {e.AirlineCode == 'VU' &&
-                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
-                          }
-                          <div className="font-medium dark:text-white">
-                            <div>{e.AirlineCode}</div>
-                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                              <p>{e.FlightNumber}</p>
-                              <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
-                            </div>
-                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
 
-                          </div>
-                        </div>
-                      </div>
-                      <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
-                        <div className=" col-span-6 xl:col-span-1 px-3">
-                          <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
-                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
-                        </div>
-                        <div className="col-span-6 xl:col-span-4">
-                          <div className="flex flex-row space-x-3">
-                            <FaPlaneDeparture className="w-4 my-auto" />
-                            <div className="flex flex-col w-full space-y-2">
-                              <p className="text-center text-xs">{e.Duration + ' phút'}</p>
-                              <div className="border-dashed border-b-2 ..."></div>
-                              {e.Stops == 0 &&
-                                <p className="text-center text-xs">Bay thẳng</p>
+              {searchStatus == false ?
+                <div className="flex flex-col space-y-5 mt-5">
+                  {departData.map((e: any, i: number) => {
+                    return (
+                      <>
+                        <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                          <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                            <div className="flex items-center gap-4">
+                              {e.AirlineCode == 'VJ' &&
+                                <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
                               }
+                              {e.AirlineCode == 'VN' &&
+                                <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                              }
+                              {e.AirlineCode == 'QH' &&
+                                <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                              }
+                              {e.AirlineCode == 'VU' &&
+                                <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                              }
+                              <div className="font-medium dark:text-white">
+                                <div>{e.AirlineCode}</div>
+                                <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                  <p>{e.FlightNumber}</p>
+                                  <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                </div>
+                                <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+
+                              </div>
                             </div>
-                            <FaPlaneArrival className="w-4 my-auto" />
+                          </div>
+                          <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                            <div className=" col-span-6 xl:col-span-1 px-3">
+                              <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                              <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
+                            </div>
+                            <div className="col-span-6 xl:col-span-4">
+                              <div className="flex flex-row space-x-3">
+                                <FaPlaneDeparture className="w-4 my-auto" />
+                                <div className="flex flex-col w-full space-y-2">
+                                  <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                                  <div className="border-dashed border-b-2 ..."></div>
+                                  {e.Stops == 0 &&
+                                    <p className="text-center text-xs">Bay thẳng</p>
+                                  }
+                                </div>
+                                <FaPlaneArrival className="w-4 my-auto" />
+                              </div>
+                            </div>
+                            <div className=" col-span-6 xl:col-span-1 px-3">
+                              <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                              <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                            </div>
+
+                          </div>
+                          <div className="grid col-span-4 xl:col-span-3">
+                            <Link href="/order" className="flex flex-col px-5 space-y-1">
+                              <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                              <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
+                            </Link>
                           </div>
                         </div>
-                        <div className=" col-span-6 xl:col-span-1 px-3">
-                          <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
-                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
-                        </div>
-
-                      </div>
-                      <div className="grid col-span-4 xl:col-span-3">
-                        <Link href="/order" className="flex flex-col px-5 space-y-1">
-                          <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
-                          <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
-                        </Link>
-                      </div>
-                    </div>
-                  </>
-                );
-              })}
+                      </>
+                    );
+                  })}
+                </div>
+                :
+                <Searching></Searching>
+              }
+              {notFound == true &&
+                <Notfound></Notfound>
+              }
             </div>
-          </div>
-          <div className="my-10">
-            <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-              <div className=" text-start pt-2 bg-red-100">
-                <h1 className="text-black mx-3 text-xl font-bold">{trip.to} - {trip.from}</h1>
-                <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+          }
+
+          {
+            typeOfTicket == 2 &&
+            <>
+              <div>
+                <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                  <div className=" text-start pt-2 bg-red-100">
+                    <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
+                    <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+                  </div>
+                  <ul className="flex flex-row justify-between ...">
+                    <li className="mx-auto border-b-2 border-red-600">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                  </ul>
+                </div>
+                {searchStatus == false
+                  ?
+                  <div className="flex flex-col space-y-5 mt-5">
+                    {departData.map((e: any, i: number) => {
+                      return (
+                        <>
+                          <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                            <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                              <div className="flex items-center gap-4">
+                                {e.AirlineCode == 'VJ' &&
+                                  <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                }
+                                {e.AirlineCode == 'VN' &&
+                                  <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                }
+                                {e.AirlineCode == 'QH' &&
+                                  <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                }
+                                {e.AirlineCode == 'VU' &&
+                                  <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                }
+                                <div className="font-medium dark:text-white">
+                                  <div>{e.AirlineCode}</div>
+                                  <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                    <p>{e.FlightNumber}</p>
+                                    <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                  </div>
+                                  <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+
+                                </div>
+                              </div>
+                            </div>
+                            <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                              <div className=" col-span-6 xl:col-span-1 px-3">
+                                <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                                <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
+                              </div>
+                              <div className="col-span-6 xl:col-span-4">
+                                <div className="flex flex-row space-x-3">
+                                  <FaPlaneDeparture className="w-4 my-auto" />
+                                  <div className="flex flex-col w-full space-y-2">
+                                    <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                                    <div className="border-dashed border-b-2 ..."></div>
+                                    {e.Stops == 0 &&
+                                      <p className="text-center text-xs">Bay thẳng</p>
+                                    }
+                                  </div>
+                                  <FaPlaneArrival className="w-4 my-auto" />
+                                </div>
+                              </div>
+                              <div className=" col-span-6 xl:col-span-1 px-3">
+                                <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                                <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                              </div>
+
+                            </div>
+                            <div className="grid col-span-4 xl:col-span-3">
+                              <Link href="/order" className="flex flex-col px-5 space-y-1">
+                                <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                                <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
+                              </Link>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                  :
+                  <Searching></Searching>
+                }
+                {notFound == true &&
+                  <Notfound></Notfound>
+                }
               </div>
-              <ul className="flex flex-row justify-between ...">
-                <li className="mx-auto border-b-2 border-red-600">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-                <li className="mx-auto">
-                  <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                </li>
-              </ul>
-            </div>
-            <div className="flex flex-col space-y-5 mt-5">
-              {returnData.map((e: any, i: number) => {
-                return (
-                  <>
-                    <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
-                      <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
-                        <div className="flex items-center gap-4">
-                          {e.AirlineCode == 'VJ' &&
-                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
-                          }
-                          {e.AirlineCode == 'VN' &&
-                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
-                          }
-                          {e.AirlineCode == 'QH' &&
-                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
-                          }
-                          {e.AirlineCode == 'VU' &&
-                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
-                          }                          <div className="font-medium dark:text-white">
-                            <div>{e.AirlineCode}</div>
-                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                              <p>{e.FlightNumber}</p>
-                              <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
-                            </div>
-                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
-
-                          </div>
-                        </div>
-                      </div>
-                      <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
-                        <div className=" col-span-6 xl:col-span-1 px-3">
-                          <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
-                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
-                        </div>
-                        <div className="col-span-6 xl:col-span-4">
-                          <div className="flex flex-row space-x-3">
-                            <FaPlaneDeparture className="w-4 my-auto" />
-                            <div className="flex flex-col w-full space-y-2">
-                              <p className="text-center text-xs">{e.Duration + ' phút'}</p>
-                              <div className="border-dashed border-b-2 ..."></div>
-                              {e.Stops == 0 &&
-                                <p className="text-center text-xs">Bay thẳng</p>
+              <div className="my-10">
+                <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                  <div className=" text-start pt-2 bg-red-100">
+                    <h1 className="text-black mx-3 text-xl font-bold">{trip.to} - {trip.from}</h1>
+                    <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+                  </div>
+                  <ul className="flex flex-row justify-between ...">
+                    <li className="mx-auto border-b-2 border-red-600">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                    <li className="mx-auto">
+                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
+                    </li>
+                  </ul>
+                </div>
+                <div className="flex flex-col space-y-5 mt-5">
+                  {returnData.map((e: any, i: number) => {
+                    return (
+                      <>
+                        <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                          <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                            <div className="flex items-center gap-4">
+                              {e.AirlineCode == 'VJ' &&
+                                <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
                               }
+                              {e.AirlineCode == 'VN' &&
+                                <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                              }
+                              {e.AirlineCode == 'QH' &&
+                                <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                              }
+                              {e.AirlineCode == 'VU' &&
+                                <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                              }                          <div className="font-medium dark:text-white">
+                                <div>{e.AirlineCode}</div>
+                                <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                  <p>{e.FlightNumber}</p>
+                                  <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                </div>
+                                <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+
+                              </div>
                             </div>
-                            <FaPlaneArrival className="w-4 my-auto" />
+                          </div>
+                          <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                            <div className=" col-span-6 xl:col-span-1 px-3">
+                              <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                              <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
+                            </div>
+                            <div className="col-span-6 xl:col-span-4">
+                              <div className="flex flex-row space-x-3">
+                                <FaPlaneDeparture className="w-4 my-auto" />
+                                <div className="flex flex-col w-full space-y-2">
+                                  <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                                  <div className="border-dashed border-b-2 ..."></div>
+                                  {e.Stops == 0 &&
+                                    <p className="text-center text-xs">Bay thẳng</p>
+                                  }
+                                </div>
+                                <FaPlaneArrival className="w-4 my-auto" />
+                              </div>
+                            </div>
+                            <div className=" col-span-6 xl:col-span-1 px-3">
+                              <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                              <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                            </div>
+
+                          </div>
+                          <div className="grid col-span-4 xl:col-span-3">
+                            <Link href="/order" className="flex flex-col px-5 space-y-1">
+                              <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                              <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
+                            </Link>
                           </div>
                         </div>
-                        <div className=" col-span-6 xl:col-span-1 px-3">
-                          <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
-                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
-                        </div>
+                      </>
+                    );
+                  })}
+                </div>
+                {searchStatus == false
+                  ?
+                  <div className="flex flex-col space-y-5 mt-5">
+                    {departData.map((e: any, i: number) => {
+                      return (
+                        <>
+                          <div className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                            <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                              <div className="flex items-center gap-4">
+                                {e.AirlineCode == 'VJ' &&
+                                  <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                }
+                                {e.AirlineCode == 'VN' &&
+                                  <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                }
+                                {e.AirlineCode == 'QH' &&
+                                  <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                }
+                                {e.AirlineCode == 'VU' &&
+                                  <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                }
+                                <div className="font-medium dark:text-white">
+                                  <div>{e.AirlineCode}</div>
+                                  <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                    <p>{e.FlightNumber}</p>
+                                    <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                  </div>
+                                  <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
 
-                      </div>
-                      <div className="grid col-span-4 xl:col-span-3">
-                        <Link href="/order" className="flex flex-col px-5 space-y-1">
-                          <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
-                          <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
-                        </Link>
-                      </div>
-                    </div>
-                  </>
-                );
-              })}
+                                </div>
+                              </div>
+                            </div>
+                            <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                              <div className=" col-span-6 xl:col-span-1 px-3">
+                                <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                                <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
+                              </div>
+                              <div className="col-span-6 xl:col-span-4">
+                                <div className="flex flex-row space-x-3">
+                                  <FaPlaneDeparture className="w-4 my-auto" />
+                                  <div className="flex flex-col w-full space-y-2">
+                                    <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                                    <div className="border-dashed border-b-2 ..."></div>
+                                    {e.Stops == 0 &&
+                                      <p className="text-center text-xs">Bay thẳng</p>
+                                    }
+                                  </div>
+                                  <FaPlaneArrival className="w-4 my-auto" />
+                                </div>
+                              </div>
+                              <div className=" col-span-6 xl:col-span-1 px-3">
+                                <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                                <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                              </div>
 
+                            </div>
+                            <div className="grid col-span-4 xl:col-span-3">
+                              <Link href="/order" className="flex flex-col px-5 space-y-1">
+                                <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                                <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
+                              </Link>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })}
+                  </div>
+                  :
+                  <Searching></Searching>
+                }
+                {notFound == true &&
+                  <Notfound></Notfound>
+                }
+              </div>
+            </>
 
+          }
 
-            </div>
-          </div>
         </div>
 
 

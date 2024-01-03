@@ -20,7 +20,7 @@ export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <nav className=" invisible lg:visible fixed w-full shadow-sm top-0 z-50 bg-white font-medium py-2 backdrop-blur-sm divide-y">
+      <nav className=" invisible lg:visible fixed w-full shadow-sm top-0 z-50 bg-white font-medium backdrop-blur-sm divide-y">
         <div className=" w-screen px-5">
           <div className="flex flex-row max-w-7xl mx-auto  justify-between py-2">
             <Link href={'/'}>
@@ -53,9 +53,9 @@ export default function Nav() {
 
           </div>
         </div>
-        <div className=" w-screen px-5">
+        <div className=" w-screen px-5 bg-red-600 text-white">
           <div className="flex flex-row max-w-7xl mx-auto justify-between py-2">
-            <div className=" flex flex-row space-x-5 text-sm my-auto mt-1">
+            <div className=" flex flex-row space-x-5 text-sm my-auto">
               <Link
                 href={"/agents-airfare"}
                 className=" hover:text-gray-200 flex flex-row"

@@ -6,11 +6,6 @@ import Footer from "./_components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "SBAY VIỆT NAM",
-  description: "Kiến tạo sự nghiệp.",
-};
-
 export default function RootLayout({
   children,
 }: {
