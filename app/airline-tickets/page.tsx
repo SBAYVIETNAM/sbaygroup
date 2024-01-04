@@ -15,6 +15,10 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   let searchParams = useSearchParams()
   // console.log('searchParams', searchParams.get('a'));
   const itineraryType = searchParams.get('t') || '2'
+  const adult = searchParams.get('ad') || '1'
+  const children = searchParams.get('cd') || '0'
+  const infant = searchParams.get('ba') || '0'
+
   const dataUrl = {
     action: searchParams.get('a'),
     ItineraryType: itineraryType,
@@ -22,9 +26,9 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     EndPoint: searchParams.get('ep'),
     DepartureDate: format(new Date(searchParams.get('dp') || Date.now()), "MM/dd/yyyy", { locale: vi }),
     ReturnDate: format(new Date(searchParams.get('rd') || Date.now()), "MM/dd/yyyy", { locale: vi }),
-    Adult: searchParams.get('ad'),
-    Children: searchParams.get('ch'),
-    Infant: searchParams.get('ba')
+    Adult: adult,
+    Children: children,
+    Infant: infant
   };
   console.log('searchParams', dataUrl);
 
@@ -153,8 +157,8 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   const defaultDepart = findFrom
   const defaultReturn = findTo
 
-  const [defaultDepartTime, setDefaultDepartTime] = useState(format(new Date(), 'yyyy-MM-dd', { locale: vi }))
-  const [defaultReturnTime, setDefaultReturnTime] = useState(format(addDays(new Date(), 2), 'yyyy-MM-dd', { locale: vi }))
+  const [defaultDepartTime, setDefaultDepartTime] = useState(format(new Date(dataUrl.DepartureDate), 'yyyy-MM-dd', { locale: vi }))
+  const [defaultReturnTime, setDefaultReturnTime] = useState(format(addDays(new Date(dataUrl.ReturnDate), 2), 'yyyy-MM-dd', { locale: vi }))
   const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd', { locale: vi }))
   const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd', { locale: vi }))
   /* Time choose */
@@ -175,9 +179,9 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   const [departTime, setDepartTime] = useState(defaultDepartTime)
   const [returnTime, setReturnTime] = useState(defaultReturnTime)
   /* Passengers choose */
-  const [Adult, setAdult] = useState(1)
-  const [Children, setChildren] = useState(0)
-  const [Infant, setInfant] = useState(0)
+  const [Adult, setAdult] = useState(parseInt(dataUrl.Adult))
+  const [Children, setChildren] = useState(parseInt(dataUrl.Children))
+  const [Infant, setInfant] = useState(parseInt(dataUrl.Infant))
 
   /*  */
   const [searchStatus, setSearchStatus] = useState(false)
@@ -246,53 +250,76 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   // const showChoosePassengers = function () {
   //   setShow(true)
   // }
-  const weekChoose =
+  const weekChooseDepart =
     [
       {
-        dayOfWeek: format(new Date(), "EEEE", { locale: vi }),
-        date: format(new Date(), "dd/MM", { locale: vi }),
-        dateStandar: format(new Date(), "MM/dd/yyyy", { locale: vi }),
+        dayOfWeek: format(addDays(new Date(dataUrl.DepartureDate), -2), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.DepartureDate), -2), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.DepartureDate), -2), "MM/dd/yyyy", { locale: vi }),
       },
       {
-        dayOfWeek: format(addDays(new Date(), 1), 'EEEE', { locale: vi }),
-        date: format(addDays(new Date(), 1), 'dd/MM', { locale: vi }),
-        dateStandar: format(addDays(new Date(), 1), "MM/dd/yyyy", { locale: vi }),
+        dayOfWeek: format(addDays(new Date(dataUrl.DepartureDate), -1), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.DepartureDate), -1), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.DepartureDate), -1), "MM/dd/yyyy", { locale: vi }),
       },
       {
-        dayOfWeek: format(addDays(new Date(), 2), 'EEEE', { locale: vi }),
-        date: format(addDays(new Date(), 2), 'dd/MM', { locale: vi }),
-        dateStandar: format(addDays(new Date(), 2), "MM/dd/yyyy", { locale: vi }),
+        dayOfWeek: format(addDays(new Date(dataUrl.DepartureDate), 0), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.DepartureDate), 0), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.DepartureDate), 0), "MM/dd/yyyy", { locale: vi }),
       },
       {
-        dayOfWeek: format(addDays(new Date(), 3), 'EEEE', { locale: vi }),
-        date: format(addDays(new Date(), 3), 'dd/MM', { locale: vi }),
-        dateStandar: format(addDays(new Date(), 3), "MM/dd/yyyy", { locale: vi }),
+        dayOfWeek: format(addDays(new Date(dataUrl.DepartureDate), 1), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.DepartureDate), 1), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.DepartureDate), 2), "MM/dd/yyyy", { locale: vi }),
       },
       {
-        dayOfWeek: format(addDays(new Date(), 4), 'EEEE', { locale: vi }),
-        date: format(addDays(new Date(), 4), 'dd/MM', { locale: vi }),
-        dateStandar: format(addDays(new Date(), 4), "MM/dd/yyyy", { locale: vi }),
+        dayOfWeek: format(addDays(new Date(dataUrl.DepartureDate), 3), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.DepartureDate), 3), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.DepartureDate), 3), "MM/dd/yyyy", { locale: vi }),
       },
       {
-        dayOfWeek: format(addDays(new Date(), 5), 'EEEE', { locale: vi }),
-        date: format(addDays(new Date(), 5), 'dd/MM', { locale: vi }),
-        dateStandar: format(addDays(new Date(), 5), "MM/dd/yyyy", { locale: vi }),
+        dayOfWeek: format(addDays(new Date(dataUrl.DepartureDate), 4), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.DepartureDate), 4), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.DepartureDate), 4), "MM/dd/yyyy", { locale: vi }),
+      },
+    ]
+  const weekChooseReturn =
+    [
+      {
+        dayOfWeek: format(addDays(new Date(dataUrl.ReturnDate), -2), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.ReturnDate), -2), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.ReturnDate), -2), "MM/dd/yyyy", { locale: vi }),
       },
       {
-        dayOfWeek: format(addDays(new Date(), 6), 'EEEE', { locale: vi }),
-        date: format(addDays(new Date(), 6), 'dd/MM', { locale: vi }),
-        dateStandar: format(addDays(new Date(), 6), "MM/dd/yyyy", { locale: vi }),
+        dayOfWeek: format(addDays(new Date(dataUrl.ReturnDate), -1), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.ReturnDate), -1), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.ReturnDate), -1), "MM/dd/yyyy", { locale: vi }),
       },
       {
-        dayOfWeek: format(addDays(new Date(), 7), 'EEEE', { locale: vi }),
-        date: format(addDays(new Date(), 7), 'dd/MM', { locale: vi }),
-        dateStandar: format(addDays(new Date(), 7), "MM/dd/yyyy", { locale: vi }),
-      }
+        dayOfWeek: format(addDays(new Date(dataUrl.ReturnDate), 0), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.ReturnDate), 0), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.ReturnDate), 0), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(dataUrl.ReturnDate), 1), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.ReturnDate), 1), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.ReturnDate), 2), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(dataUrl.ReturnDate), 3), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.ReturnDate), 3), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.ReturnDate), 3), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(dataUrl.ReturnDate), 4), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(dataUrl.ReturnDate), 4), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(dataUrl.ReturnDate), 4), "MM/dd/yyyy", { locale: vi }),
+      },
     ]
   const searchInDateDepart = function (e: any) {
     // console.log(e.target.getAttribute('data-dateStandar'));
     const dateChoose = e.target.getAttribute('data-dateStandar')
-    router.push('/airline-tickets?a=DOMSearchFlights&t=' + typeOfTicket + '&sp=' + selectedDepartAirport + '&ep=' + selectedReturnAirport + '&dp=' + dateChoose + '&rd=' + format(new Date(returnTime), "MM/dd/yyyy", { locale: vi }) + '&ad=' + Adult + '&ch=' + Children + '&ba=' + Infant)
+    router.push('/airline-tickets?a=DOMSearchFlights&t=' + typeOfTicket + '&sp=' + selectedDepartAirport + '&ep=' + selectedReturnAirport + '&dp=' + dateChoose + '&rd=' + format(addDays(new Date(dateChoose), 1), 'MM/dd/yyyy', { locale: vi }) + '&ad=' + Adult + '&ch=' + Children + '&ba=' + Infant)
   }
 
   const searchInDateReturn = function (e: any) {
@@ -305,11 +332,11 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       <div className="flex bg-amber-500 rounded-xl min-h-max flex-col max-w-7xl mx-auto justify-between">
         <div className=" flex flex-row space-x-2 p-3">
           <div className="flex items-center">
-            <input id="typeOfTicket-radio-1" onChange={() => { setTypeOfTicket(1) }} type="radio" defaultChecked={typeOfTicket === 1} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            <input id="typeOfTicket-radio-1" onChange={() => { setTypeOfTicket(1) }} type="radio" defaultChecked={typeOfTicket == 1} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
             <label htmlFor="typeOfTicket-radio-1" className="ms-2 text-sm font-medium text-white">Một chiều</label>
           </div>
           <div className="flex items-center">
-            <input id="typeOfTicket-radio-2" onChange={() => { setTypeOfTicket(2) }} type="radio" defaultChecked={typeOfTicket === 2} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            <input id="typeOfTicket-radio-2" onChange={() => { setTypeOfTicket(2) }} type="radio" defaultChecked={typeOfTicket == 2} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
             <label htmlFor="typeOfTicket-radio-2" className="ms-2 text-sm font-medium text-white">Khứ hồi</label>
           </div>
         </div>
@@ -554,27 +581,26 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                   <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                 </div>
                 <ul className="flex flex-row justify-between ...">
-                  {weekChoose.map((e: any, i: number) => {
+                  {weekChooseDepart.map((e: any, i: number) => {
+                    // console.log('here ...', format(new Date(dataUrl.DepartureDate), "dd/MM", { locale: vi }), format(new Date(e.dateStandar), "dd/MM", { locale: vi }))
                     return (
                       <>
                         {
-                          format(new Date(dataUrl.DepartureDate), "MM/dd", { locale: vi }) == e.date
+                          format(new Date(dataUrl.DepartureDate), "dd/MM", { locale: vi }) == e.date
                             ?
-                            <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-600">
+                            <li key={'weekChooseDepart' + i} className="mx-auto border-b-2 border-red-600">
                               <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg text-red-600">
                                 {e.dayOfWeek} <br />
                                 {e.date}</button>
                             </li>
                             :
-                            <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-100">
+                            <li key={'weekChooseDepart' + i} className="mx-auto border-b-2 border-red-100">
                               <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
                                 {e.dayOfWeek} <br />
                                 {e.date}</button>
                             </li>
                         }
                       </>
-
-
                     )
                   })}
 
@@ -667,19 +693,20 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                     <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                   </div>
                   <ul className="flex flex-row justify-between ...">
-                    {weekChoose.map((e: any, i: number) => {
+                    {weekChooseDepart.map((e: any, i: number) => {
+                      console.log('here ...', format(new Date(dataUrl.DepartureDate), "dd/MM", { locale: vi }), format(new Date(e.dateStandar), "dd/MM", { locale: vi }))
                       return (
                         <>
                           {
-                            format(new Date(dataUrl.DepartureDate), "MM/dd", { locale: vi }) == e.date
+                            format(new Date(dataUrl.DepartureDate), "dd/MM", { locale: vi }) == e.date
                               ?
-                              <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-600">
+                              <li key={'weekChooseDepart' + i} className="mx-auto border-b-2 border-red-600">
                                 <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg text-red-600">
                                   {e.dayOfWeek} <br />
                                   {e.date}</button>
                               </li>
                               :
-                              <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-100">
+                              <li key={'weekChooseDepart' + i} className="mx-auto border-b-2 border-red-100">
                                 <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
                                   {e.dayOfWeek} <br />
                                   {e.date}</button>
@@ -771,20 +798,19 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                     <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - về ngày {format(new Date(searchParams.get('rd') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                   </div>
                   <ul className="flex flex-row justify-between ...">
-                    {weekChoose.map((e: any, i: number) => {
-                      console.log(format(new Date(dataUrl.ReturnDate), "MM/dd", { locale: vi }), format(new Date(e.dateStandar), "dd/MM", { locale: vi }))
+                    {weekChooseReturn.map((e: any, i: number) => {
                       return (
                         <>
                           {
-                            format(new Date(dataUrl.ReturnDate), "MM/dd", { locale: vi }) == format(new Date(e.dateStandar), "dd/MM", { locale: vi })
+                            format(new Date(dataUrl.ReturnDate), "dd/MM", { locale: vi }) == format(new Date(e.dateStandar), "dd/MM", { locale: vi })
                               ?
-                              <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-600">
+                              <li key={'weekChooseReturn' + i} className="mx-auto border-b-2 border-red-600">
                                 <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateReturn(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg text-red-600">
                                   {e.dayOfWeek} <br />
                                   {e.date}</button>
                               </li>
                               :
-                              <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-100">
+                              <li key={'weekChooseReturn' + i} className="mx-auto border-b-2 border-red-100">
                                 <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateReturn(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
                                   {e.dayOfWeek} <br />
                                   {e.date}</button>
