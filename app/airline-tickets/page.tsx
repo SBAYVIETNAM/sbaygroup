@@ -20,13 +20,13 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     ItineraryType: itineraryType,
     StartPoint: searchParams.get('sp'),
     EndPoint: searchParams.get('ep'),
-    DepartureDate: format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi }),
-    ReturnDate: format(new Date(searchParams.get('rd') || Date.now()), "dd/MM/yyyy", { locale: vi }),
+    DepartureDate: format(new Date(searchParams.get('dp') || Date.now()), "MM/dd/yyyy", { locale: vi }),
+    ReturnDate: format(new Date(searchParams.get('rd') || Date.now()), "MM/dd/yyyy", { locale: vi }),
     Adult: searchParams.get('ad'),
     Children: searchParams.get('ch'),
     Infant: searchParams.get('ba')
   };
-  // console.log('searchParams', dataUrl);
+  console.log('searchParams', dataUrl);
 
 
   const [departData, setDepartData] = useState<any>([])
@@ -45,7 +45,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     setSearchStatus(true)
     const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
 
-    let rawData = `{\r\n    \"action\": \"` + dataUrl.action + `\",\r\n    \"ItineraryType\": ` + dataUrl.ItineraryType + `,\r\n    \"StartPoint\": \"` + dataUrl.StartPoint + `\",\r\n    \"EndPoint\": \"` + dataUrl.EndPoint + `\",\r\n    \"DepartureDate\": \"` + dataUrl.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + dataUrl.ReturnDate + `\",\r\n    \"Adult\": ` + dataUrl.Adult + `,\r\n    \"Children\": ` + dataUrl.Children + `,\r\n    \"Infant\": ` + dataUrl.Infant + `\r\n}`
+    let rawData = `{\r\n    \"action\": \"` + dataUrl.action + `\",\r\n    \"ItineraryType\": ` + dataUrl.ItineraryType + `,\r\n    \"StartPoint\": \"` + dataUrl.StartPoint + `\",\r\n    \"EndPoint\": \"` + dataUrl.EndPoint + `\",\r\n    \"DepartureDate\": \"` + format(new Date(dataUrl.DepartureDate), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"ReturnDate\": \"` + format(new Date(dataUrl.ReturnDate), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"Adult\": ` + dataUrl.Adult + `,\r\n    \"Children\": ` + dataUrl.Children + `,\r\n    \"Infant\": ` + dataUrl.Infant + `\r\n}`
     console.log('data', dataUrl);
     const search = async () => {
       const res = await fetch(url, {
