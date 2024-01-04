@@ -176,8 +176,8 @@ export default function Search() {
             ItineraryType: typeOfTicket,
             StartPoint: selectedDepartAirport,
             EndPoint: selectedReturnAirport,
-            DepartureDate: format(new Date(departTime), "dd/MM/yyyy", { locale: vi }),
-            ReturnDate: format(new Date(returnTime), "dd/MM/yyyy", { locale: vi }),
+            DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
+            ReturnDate: format(new Date(returnTime), "MM/dd/yyyy", { locale: vi }),
             Adult: Adult,
             Children: Children,
             Infant: Infant

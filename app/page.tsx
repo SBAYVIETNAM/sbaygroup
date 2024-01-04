@@ -44,64 +44,6 @@ export default function Home() {
 
   return (
     <>
-      {/* <div className="flex flex-col bg-cover" style={{ backgroundImage: "url('/img/bg-02.jpg')" }}>
-        <h2 className=" mt-48 text-4xl text-white font-bold text-center"> Đặt nhanh, ưu đãi lớn</h2>
-        <div className=" max-w-7xl mx-auto mt-10" >
-          <div className="border-b border-gray-200 shadow-xl dark:border-red-700 rounded-md mb-5">
-            <ul className="flex flex-wrap -mb-px text-sm font-medium text-center bg-white rounded-lg dark:text-gray-400">
-              <li>
-                <a href="#" className="inline-flex items-center justify-center p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 group" aria-current="page">
-                  <MdAirplanemodeActive className="mr-1 w-4 mt-0.5" />
-                  Vé máy bay
-                </a>
-              </li>
-              <li>
-                <a href="#" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
-                  <MdHotel className="mr-1 w-4 mt-0.5" />
-                  Khách sạn
-                </a>
-              </li>
-              <li>
-                <a href="https://datxe.sbayvietnam.com" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
-                  <FaCar className="mr-1 w-4 mt-0.5" />
-                  Đặt xe
-                </a>
-              </li>
-              <li>
-                <a href="https://datve.sbayvietnam.com" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
-                  <ImLocation className="mr-1 w-4 mt-0.5" />
-                  Vé Bà Nà
-                </a>
-              </li>
-              <li>
-                <a href="#" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
-                  <SiYourtraveldottv className="mr-1 w-4 mt-0.5" />
-                  Tour du lịch
-                </a>
-              </li>
-
-            </ul>
-          </div>
-          <div className="flex flex-row space-x-5 mb-5 justify-between ...">
-            <Select
-              options={options}
-              className="w-full " />
-            <Select
-              options={options}
-              className="w-full" />
-          </div>
-          <div className="flex flex-row space-x-5 justify-between mb-5 ...">
-            <input className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31" />
-            <input className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01" max="2018-12-31" />
-
-          </div>
-          <div className="flex flex-row mb-32 ...">
-            <button type="button" className="text-white bg-red-500 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Tìm kiếm</button>
-          </div>
-
-        </div>
-
-      </div> */}
       <section className="bg-white dark:bg-gray-900" style={{ backgroundImage: "url('/img/bg-02.jpg')" }}>
         <div className=" lg: my-20 max-w-screen-xl grid grid-cols-1 lg:grid-cols-2 lg:gap-4 mx-auto p-5 lg:py-24">
           <Search></Search>

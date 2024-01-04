@@ -10,6 +10,7 @@ import Notfound from "./notfound";
 import Searching from "./search";
 
 export default function AirLineTicket({ params }: { params: { slug: string } }) {
+  const router = useRouter()
 
   let searchParams = useSearchParams()
   // console.log('searchParams', searchParams.get('a'));
@@ -38,6 +39,9 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     Infant: searchParams.get('ba')
   })
   useEffect(() => {
+    console.log('useEffect ...');
+    setDepartData([])
+    setReturnData([])
     setSearchStatus(true)
     const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
 
@@ -79,7 +83,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       }
     }
     search()
-  }, [])
+  }, [dataUrl.DepartureDate, dataUrl.ReturnDate])
 
   const airportOptions = [
     { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' },
@@ -180,66 +184,122 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   const [notFound, setNotFound] = useState(false)
 
   const searchfn = async () => {
-    setSearchStatus(true)
-    setDepartData([])
-    setReturnData([])
-    console.log(selectedDepartAirport, selectedReturnAirport);
-    const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
+    // setSearchStatus(true)
+    // setDepartData([])
+    // setReturnData([])
+    // console.log(selectedDepartAirport, selectedReturnAirport);
+    // const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
     const data = {
       action: 'DOMSearchFlights',
       ItineraryType: typeOfTicket,
       StartPoint: selectedDepartAirport,
       EndPoint: selectedReturnAirport,
-      DepartureDate: format(new Date(departTime), "dd/MM/yyyy", { locale: vi }),
-      ReturnDate: format(new Date(returnTime), "dd/MM/yyyy", { locale: vi }),
+      DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
+      ReturnDate: format(new Date(returnTime), "MM/dd/yyyy", { locale: vi }),
       Adult: Adult,
       Children: Children,
       Infant: Infant
     };
-    let rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
-    console.log('data', data);
+    router.push('/airline-tickets?a=DOMSearchFlights&t=' + data.ItineraryType + '&sp=' + data.StartPoint + '&ep=' + data.EndPoint + '&dp=' + data.DepartureDate + '&rd=' + data.ReturnDate + '&ad=' + data.Adult + '&ch=' + data.Children + '&ba=' + data.Infant)
 
-    const res = await fetch(url, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "text/plain",
-      },
-      body: rawData,
-    });
-    if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error("Failed to fetch data");
-    } else {
-      const data = await res.json();
-      console.log("flight search btn", data);
-      if (data.Data) {
-        let departData = []
-        for (const key in data.Data.DepartureFlights) {
-          // console.log('key', key, ReturnFlights[key]);
-          departData.push(data.Data.DepartureFlights[key])
-        }
-        let returnData = []
-        for (const key in data.Data.ReturnFlights) {
-          // console.log('key', key, ReturnFlights[key]);
-          returnData.push(data.Data.ReturnFlights[key])
-        }
-        setDepartData(departData)
-        setReturnData(returnData)
-        setSearchStatus(false)
-        setNotFound(false)
+    // let rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
+    // console.log('data', data);
 
-      } else {
-        setSearchStatus(false)
-        setNotFound(true)
-      }
-    }
+    // const res = await fetch(url, {
+    //   method: "POST", // or 'PUT'
+    //   headers: {
+    //     "Content-Type": "text/plain",
+    //   },
+    //   body: rawData,
+    // });
+    // if (!res.ok) {
+    //   // This will activate the closest `error.js` Error Boundary
+    //   throw new Error("Failed to fetch data");
+    // } else {
+    //   const data = await res.json();
+    //   console.log("flight search btn", data);
+    //   if (data.Data) {
+    //     let departData = []
+    //     for (const key in data.Data.DepartureFlights) {
+    //       // console.log('key', key, ReturnFlights[key]);
+    //       departData.push(data.Data.DepartureFlights[key])
+    //     }
+    //     let returnData = []
+    //     for (const key in data.Data.ReturnFlights) {
+    //       // console.log('key', key, ReturnFlights[key]);
+    //       returnData.push(data.Data.ReturnFlights[key])
+    //     }
+    //     setDepartData(departData)
+    //     setReturnData(returnData)
+    //     setSearchStatus(false)
+    //     setNotFound(false)
+
+    //   } else {
+    //     setSearchStatus(false)
+    //     setNotFound(true)
+    //   }
+    // }
+
   }
 
   const [show, setShow] = useState(false)
   // const showChoosePassengers = function () {
   //   setShow(true)
   // }
+  const weekChoose =
+    [
+      {
+        dayOfWeek: format(new Date(), "EEEE", { locale: vi }),
+        date: format(new Date(), "dd/MM", { locale: vi }),
+        dateStandar: format(new Date(), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(), 1), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(), 1), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(), 1), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(), 2), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(), 2), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(), 2), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(), 3), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(), 3), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(), 3), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(), 4), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(), 4), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(), 4), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(), 5), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(), 5), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(), 5), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(), 6), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(), 6), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(), 6), "MM/dd/yyyy", { locale: vi }),
+      },
+      {
+        dayOfWeek: format(addDays(new Date(), 7), 'EEEE', { locale: vi }),
+        date: format(addDays(new Date(), 7), 'dd/MM', { locale: vi }),
+        dateStandar: format(addDays(new Date(), 7), "MM/dd/yyyy", { locale: vi }),
+      }
+    ]
+  const searchInDateDepart = function (e: any) {
+    // console.log(e.target.getAttribute('data-dateStandar'));
+    const dateChoose = e.target.getAttribute('data-dateStandar')
+    router.push('/airline-tickets?a=DOMSearchFlights&t=' + typeOfTicket + '&sp=' + selectedDepartAirport + '&ep=' + selectedReturnAirport + '&dp=' + dateChoose + '&rd=' + format(new Date(returnTime), "MM/dd/yyyy", { locale: vi }) + '&ad=' + Adult + '&ch=' + Children + '&ba=' + Infant)
+  }
 
+  const searchInDateReturn = function (e: any) {
+    // console.log(e.target.getAttribute('data-dateStandar'));
+    const dateChoose = e.target.getAttribute('data-dateStandar')
+    router.push('/airline-tickets?a=DOMSearchFlights&t=' + typeOfTicket + '&sp=' + selectedDepartAirport + '&ep=' + selectedReturnAirport + '&dp=' + format(new Date(departTime), "MM/dd/yyyy", { locale: vi }) + '&rd=' + dateChoose + '&ad=' + Adult + '&ch=' + Children + '&ba=' + Infant)
+  }
   return (
     <div className=" mt-32 bg-white mx-auto rounded-3xl p-5">
       <div className="flex bg-amber-500 rounded-xl min-h-max flex-col max-w-7xl mx-auto justify-between">
@@ -494,27 +554,31 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                   <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                 </div>
                 <ul className="flex flex-row justify-between ...">
-                  <li className="mx-auto border-b-2 border-red-600">
-                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                  </li>
-                  <li className="mx-auto">
-                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                  </li>
-                  <li className="mx-auto">
-                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                  </li>
-                  <li className="mx-auto">
-                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                  </li>
-                  <li className="mx-auto">
-                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                  </li>
-                  <li className="mx-auto">
-                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                  </li>
-                  <li className="mx-auto">
-                    <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                  </li>
+                  {weekChoose.map((e: any, i: number) => {
+                    return (
+                      <>
+                        {
+                          format(new Date(dataUrl.DepartureDate), "MM/dd", { locale: vi }) == e.date
+                            ?
+                            <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-600">
+                              <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg text-red-600">
+                                {e.dayOfWeek} <br />
+                                {e.date}</button>
+                            </li>
+                            :
+                            <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-100">
+                              <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                                {e.dayOfWeek} <br />
+                                {e.date}</button>
+                            </li>
+                        }
+                      </>
+
+
+                    )
+                  })}
+
+
                 </ul>
               </div>
 
@@ -603,27 +667,27 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                     <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                   </div>
                   <ul className="flex flex-row justify-between ...">
-                    <li className="mx-auto border-b-2 border-red-600">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
+                    {weekChoose.map((e: any, i: number) => {
+                      return (
+                        <>
+                          {
+                            format(new Date(dataUrl.DepartureDate), "MM/dd", { locale: vi }) == e.date
+                              ?
+                              <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-600">
+                                <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg text-red-600">
+                                  {e.dayOfWeek} <br />
+                                  {e.date}</button>
+                              </li>
+                              :
+                              <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-100">
+                                <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                                  {e.dayOfWeek} <br />
+                                  {e.date}</button>
+                              </li>
+                          }
+                        </>
+                      )
+                    })}
                   </ul>
                 </div>
                 {searchStatus == false
@@ -704,30 +768,31 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                 <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                   <div className=" text-start pt-2 bg-red-100">
                     <h1 className="text-black mx-3 text-xl font-bold">{trip.to} - {trip.from}</h1>
-                    <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(searchParams.get('dp') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+                    <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - về ngày {format(new Date(searchParams.get('rd') || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                   </div>
                   <ul className="flex flex-row justify-between ...">
-                    <li className="mx-auto border-b-2 border-red-600">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
-                    <li className="mx-auto">
-                      <a href="#" className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Thứ 6 <br /> 29/12</a>
-                    </li>
+                    {weekChoose.map((e: any, i: number) => {
+                      console.log(format(new Date(dataUrl.ReturnDate), "MM/dd", { locale: vi }), format(new Date(e.dateStandar), "dd/MM", { locale: vi }))
+                      return (
+                        <>
+                          {
+                            format(new Date(dataUrl.ReturnDate), "MM/dd", { locale: vi }) == format(new Date(e.dateStandar), "dd/MM", { locale: vi })
+                              ?
+                              <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-600">
+                                <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateReturn(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg text-red-600">
+                                  {e.dayOfWeek} <br />
+                                  {e.date}</button>
+                              </li>
+                              :
+                              <li key={'weekChoose' + i} className="mx-auto border-b-2 border-red-100">
+                                <button data-dateStandar={e.dateStandar} onClick={(e) => searchInDateReturn(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
+                                  {e.dayOfWeek} <br />
+                                  {e.date}</button>
+                              </li>
+                          }
+                        </>
+                      )
+                    })}
                   </ul>
                 </div>
                 <div className="flex flex-col space-y-5 mt-5">
