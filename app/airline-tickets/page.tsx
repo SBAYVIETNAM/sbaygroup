@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { da, vi } from 'date-fns/locale';
 import Notfound from "./notfound";
 import Searching from "./search";
+var _ = require('lodash');
 
 export default function AirLineTicket({ params }: { params: { slug: string } }) {
   const router = useRouter()
@@ -44,13 +45,20 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   })
   useEffect(() => {
     console.log('useEffect ...');
+    const findFrom: any = airportOptions.find(({ value }) => value === searchParams.get('sp'))
+    const findTo: any = airportOptions.find(({ value }) => value === searchParams.get('ep'))
+    setTrip({
+      from: findFrom?.label + ', ' + findFrom?.label + ' (' + findFrom?.value + ')',
+      to: findTo?.label + ', ' + findTo?.label + ' (' + findTo?.value + ')'
+    })
     setDepartData([])
     setReturnData([])
     setSearchStatus(true)
+
     const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
 
     let rawData = `{\r\n    \"action\": \"` + dataUrl.action + `\",\r\n    \"ItineraryType\": ` + dataUrl.ItineraryType + `,\r\n    \"StartPoint\": \"` + dataUrl.StartPoint + `\",\r\n    \"EndPoint\": \"` + dataUrl.EndPoint + `\",\r\n    \"DepartureDate\": \"` + format(new Date(dataUrl.DepartureDate), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"ReturnDate\": \"` + format(new Date(dataUrl.ReturnDate), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"Adult\": ` + dataUrl.Adult + `,\r\n    \"Children\": ` + dataUrl.Children + `,\r\n    \"Infant\": ` + dataUrl.Infant + `\r\n}`
-    console.log('data', dataUrl);
+    // console.log('data', dataUrl);
     const search = async () => {
       const res = await fetch(url, {
         method: "POST", // or 'PUT'
@@ -64,7 +72,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
         throw new Error("Failed to fetch data");
       } else {
         const data = await res.json();
-        console.log("flight", data);
+        // console.log("flight", data);
         if (data.Data) {
           let departData = []
           for (const key in data.Data.DepartureFlights) {
@@ -87,7 +95,17 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       }
     }
     search()
-  }, [dataUrl.DepartureDate, dataUrl.ReturnDate])
+
+  }, [
+    dataUrl.ItineraryType,
+    dataUrl.StartPoint,
+    dataUrl.EndPoint,
+    dataUrl.DepartureDate,
+    dataUrl.ReturnDate,
+    dataUrl.Adult,
+    dataUrl.Children,
+    dataUrl.Infant,
+  ])
 
   const airportOptions = [
     { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' },
@@ -158,7 +176,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   const defaultReturn = findTo
 
   const [defaultDepartTime, setDefaultDepartTime] = useState(format(new Date(dataUrl.DepartureDate), 'yyyy-MM-dd', { locale: vi }))
-  const [defaultReturnTime, setDefaultReturnTime] = useState(format(addDays(new Date(dataUrl.ReturnDate), 2), 'yyyy-MM-dd', { locale: vi }))
+  const [defaultReturnTime, setDefaultReturnTime] = useState(format(new Date(dataUrl.ReturnDate), 'yyyy-MM-dd', { locale: vi }))
   const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd', { locale: vi }))
   const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd', { locale: vi }))
   /* Time choose */
@@ -166,13 +184,13 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   /* Select depart */
   const [selectedDepartAirport, setSelectedDepartAirport] = useState(defaultDepart.value);
   const onChangeDepart = (e: any) => {
-    console.log('e', e);
+    // console.log('e', e);
     setSelectedDepartAirport(e.value)
   }
   /* Select return */
   const [selectedReturnAirport, setSelectedReturnAirport] = useState(defaultReturn.value);
   const onChangeReturn = (e: any) => {
-    console.log('e', e);
+    // console.log('e', e);
     setSelectedReturnAirport(e.value)
   }
   /* Time choose */
@@ -188,11 +206,6 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   const [notFound, setNotFound] = useState(false)
 
   const searchfn = async () => {
-    // setSearchStatus(true)
-    // setDepartData([])
-    // setReturnData([])
-    // console.log(selectedDepartAirport, selectedReturnAirport);
-    // const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
     const data = {
       action: 'DOMSearchFlights',
       ItineraryType: typeOfTicket,
@@ -205,51 +218,9 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       Infant: Infant
     };
     router.push('/airline-tickets?a=DOMSearchFlights&t=' + data.ItineraryType + '&sp=' + data.StartPoint + '&ep=' + data.EndPoint + '&dp=' + data.DepartureDate + '&rd=' + data.ReturnDate + '&ad=' + data.Adult + '&ch=' + data.Children + '&ba=' + data.Infant)
-
-    // let rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
-    // console.log('data', data);
-
-    // const res = await fetch(url, {
-    //   method: "POST", // or 'PUT'
-    //   headers: {
-    //     "Content-Type": "text/plain",
-    //   },
-    //   body: rawData,
-    // });
-    // if (!res.ok) {
-    //   // This will activate the closest `error.js` Error Boundary
-    //   throw new Error("Failed to fetch data");
-    // } else {
-    //   const data = await res.json();
-    //   console.log("flight search btn", data);
-    //   if (data.Data) {
-    //     let departData = []
-    //     for (const key in data.Data.DepartureFlights) {
-    //       // console.log('key', key, ReturnFlights[key]);
-    //       departData.push(data.Data.DepartureFlights[key])
-    //     }
-    //     let returnData = []
-    //     for (const key in data.Data.ReturnFlights) {
-    //       // console.log('key', key, ReturnFlights[key]);
-    //       returnData.push(data.Data.ReturnFlights[key])
-    //     }
-    //     setDepartData(departData)
-    //     setReturnData(returnData)
-    //     setSearchStatus(false)
-    //     setNotFound(false)
-
-    //   } else {
-    //     setSearchStatus(false)
-    //     setNotFound(true)
-    //   }
-    // }
-
   }
 
   const [show, setShow] = useState(false)
-  // const showChoosePassengers = function () {
-  //   setShow(true)
-  // }
   const weekChooseDepart =
     [
       {
@@ -327,16 +298,182 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     const dateChoose = e.target.getAttribute('data-dateStandar')
     router.push('/airline-tickets?a=DOMSearchFlights&t=' + typeOfTicket + '&sp=' + selectedDepartAirport + '&ep=' + selectedReturnAirport + '&dp=' + format(new Date(departTime), "MM/dd/yyyy", { locale: vi }) + '&rd=' + dateChoose + '&ad=' + Adult + '&ch=' + Children + '&ba=' + Infant)
   }
+
+  /* Sort */
+  const [priceTax, setPriceTax] = useState(true)
+  const [sortBy, setSortBy] = useState(3) // 1: giá, 2: thời gian đi, 3: hãng a đến z
+
+  const sortFn = (e: any) => {
+    // setDepartData([])
+    // setReturnData([])
+    console.log('departData', departData);
+    // console.log('returnData', returnData);
+    if (e == 1) {
+      const de = [...departData].sort((a: any, b: any) => a.TotalPrice - b.TotalPrice);
+      console.log('de', de);
+      const re = [...returnData].sort((a: any, b: any) => a.TotalPrice - b.TotalPrice);
+      setDepartData(de)
+      setReturnData(re)
+      // setUpdateSort(!updateSort)
+    } else if (e == 2) {
+      const de = [...departData].sort((a, b) => {
+        const nameA = a.StartDate; // ignore upper and lowercase
+        const nameB = b.StartDate; // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
+      console.log('de', de);
+      const re = [...returnData].sort((a, b) => {
+        const nameA = a.StartDate; // ignore upper and lowercase
+        const nameB = b.StartDate; // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
+      setDepartData(de)
+      setReturnData(re)
+    } else if (e == 3) {
+      const de = [...departData].sort((a, b) => {
+        const nameA = a.AirlineCode.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.AirlineCode.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
+      console.log('de', de);
+      const re = [...returnData].sort((a, b) => {
+        const nameA = a.AirlineCode.toUpperCase(); // ignore upper and lowercase
+        const nameB = b.AirlineCode.toUpperCase(); // ignore upper and lowercase
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+
+        // names must be equal
+        return 0;
+      });
+      setDepartData(de)
+      setReturnData(re)
+
+    }
+    setSortBy(e)
+  }
+  /* Filter */
+  const [filterBy, setFilterBy] = useState({
+    bambo: true,
+    vietjet: true,
+    vietnam: true,
+    vietravel: true
+  })
+  const filterFn = (e: any, i: number) => {
+    console.log(e.target.checked);
+    if (e.target.checked == false && i == 1) {
+      setFilterBy(
+        {
+          bambo: false,
+          vietjet: filterBy.vietjet,
+          vietnam: filterBy.vietnam,
+          vietravel: filterBy.vietravel
+        }
+      )
+    } else if (e.target.checked == false && i == 2) {
+      setFilterBy(
+        {
+          bambo: filterBy.bambo,
+          vietjet: false,
+          vietnam: filterBy.vietnam,
+          vietravel: filterBy.vietravel
+        }
+      )
+    } else if (e.target.checked == false && i == 3) {
+      setFilterBy(
+        {
+          bambo: filterBy.bambo,
+          vietjet: filterBy.vietjet,
+          vietnam: false,
+          vietravel: filterBy.vietravel
+        }
+      )
+    } else if (e.target.checked == false && i == 4) {
+      setFilterBy(
+        {
+          bambo: filterBy.bambo,
+          vietjet: filterBy.vietjet,
+          vietnam: filterBy.vietnam,
+          vietravel: false
+        }
+      )
+    } else if (e.target.checked == true && i == 1) {
+      setFilterBy(
+        {
+          bambo: true,
+          vietjet: filterBy.vietjet,
+          vietnam: filterBy.vietnam,
+          vietravel: filterBy.vietravel
+        }
+      )
+    } else if (e.target.checked == true && i == 2) {
+      setFilterBy(
+        {
+          bambo: filterBy.bambo,
+          vietjet: true,
+          vietnam: filterBy.vietnam,
+          vietravel: filterBy.vietravel
+        }
+      )
+    } else if (e.target.checked == true && i == 3) {
+      setFilterBy(
+        {
+          bambo: filterBy.bambo,
+          vietjet: filterBy.vietjet,
+          vietnam: true,
+          vietravel: filterBy.vietravel
+        }
+      )
+    } else if (e.target.checked == true && i == 4) {
+      setFilterBy(
+        {
+          bambo: filterBy.bambo,
+          vietjet: filterBy.vietjet,
+          vietnam: filterBy.vietnam,
+          vietravel: true
+        }
+      )
+    }
+    // const x = _.filter(departData, ['AirlineCode', 'VN'])
+    // setDepartData(x)
+  }
   return (
     <div className=" mt-32 bg-white mx-auto rounded-3xl p-5">
       <div className="flex bg-amber-500 rounded-xl min-h-max flex-col max-w-7xl mx-auto justify-between">
         <div className=" flex flex-row space-x-2 p-3">
           <div className="flex items-center">
-            <input id="typeOfTicket-radio-1" onChange={() => { setTypeOfTicket(1) }} type="radio" defaultChecked={typeOfTicket == 1} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            <input id="typeOfTicket-radio-1" onChange={() => { setTypeOfTicket(1) }} type="radio" checked={typeOfTicket == 1} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
             <label htmlFor="typeOfTicket-radio-1" className="ms-2 text-sm font-medium text-white">Một chiều</label>
           </div>
           <div className="flex items-center">
-            <input id="typeOfTicket-radio-2" onChange={() => { setTypeOfTicket(2) }} type="radio" defaultChecked={typeOfTicket == 2} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+            <input id="typeOfTicket-radio-2" onChange={() => { setTypeOfTicket(2) }} type="radio" checked={typeOfTicket == 2} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
             <label htmlFor="typeOfTicket-radio-2" className="ms-2 text-sm font-medium text-white">Khứ hồi</label>
           </div>
         </div>
@@ -519,48 +656,78 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
             <div className="flex flex-col space-y-5 p-5 border-b-2">
               <h3>Hiển thị giá</h3>
               <div className="flex items-center mb-4">
-                <input checked id="priceRadio1" type="radio" value="" name="priceRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="priceRadio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Giá bao gồm thuế phí</label>
+                <input
+                  id="priceTax"
+                  type="radio"
+                  onChange={() => { setPriceTax(true) }}
+                  checked={priceTax == true}
+                  name="priceTaxRadio"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="priceTax" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Giá bao gồm thuế phí</label>
               </div>
               <div className="flex items-center">
-                <input id="priceRadio2" type="radio" value="" name="priceRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="priceRadio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Giá chưa gồm thuế phí</label>
+                <input id="priceNoTax" type="radio"
+                  onChange={() => { setPriceTax(false) }}
+                  checked={priceTax == false}
+                  name="priceTaxRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="priceNoTax" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Giá chưa gồm thuế phí</label>
               </div>
             </div>
             <div className="flex flex-col space-y-5 p-5 border-b-2">
               <h3>Sắp xếp</h3>
               <div className="flex items-center mb-4">
-                <input checked id="priceLowRadio" type="radio" value="" name="sortRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="sortRadio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Giá (Thấp tới Cao)</label>
+                <input
+                  onClick={() => sortFn(1)}
+                  checked={sortBy == 1}
+                  id="priceLowRadio" type="radio" name="sortRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="priceLowRadio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Giá (Thấp tới Cao)</label>
               </div>
               <div className="flex items-center">
-                <input id="timeStartRadio" type="radio" value="" name="sortRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="sortRadio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Thời gian khởi hành</label>
+                <input
+                  onClick={() => sortFn(2)}
+                  checked={sortBy == 2}
+                  id="timeStartRadio" type="radio" name="sortRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="timeStartRadio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Thời gian khởi hành</label>
               </div>
               <div className="flex items-center mb-4">
-                <input id="byAir" type="radio" value="" name="sortRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="sortRadio" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hãng hàng không</label>
+                <input
+                  onClick={() => sortFn(3)}
+                  checked={sortBy == 3}
+                  id="byAir" type="radio" name="sortRadio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="byAir" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Hãng hàng không</label>
               </div>
             </div>
             <div className="flex flex-col space-y-5 p-5 border-b-2">
               <h3>Hãng hàng không</h3>
               <div className="flex items-center mb-4">
-                <input checked id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bamboo Airways</label>
+                <input
+                  onClick={(e) => filterFn(e, 1)}
+                  checked={filterBy.bambo == true}
+                  id="BamboCheckbox" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="BamboCheckbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Bamboo Airways</label>
               </div>
               <div className="flex items-center">
-                <input checked id="checked-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="checked-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vietjet Air</label>
+                <input
+                  onClick={(e) => filterFn(e, 2)}
+                  checked={filterBy.vietjet == true}
+                  id="VietJetCheckbox" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="VietJetCheckbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vietjet Air</label>
               </div>
 
               <div className="flex items-center">
-                <input checked id="checked-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="checked-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vietnam Airlines</label>
+                <input
+                  onClick={(e) => filterFn(e, 3)}
+                  checked={filterBy.vietnam == true}
+                  id="VnAirlineCheckbox" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="VnAirlineCheckbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vietnam Airlines</label>
               </div>
 
               <div className="flex items-center">
-                <input checked id="checked-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                <label htmlFor="checked-checkbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vietravel Airlines</label>
+                <input
+                  onClick={(e) => filterFn(e, 4)}
+                  checked={filterBy.vietravel == true}
+                  id="VietTravelCheckbox" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                <label htmlFor="VietTravelCheckbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vietravel Airlines</label>
               </div>
               <div className="flex flex-col space-y-3">
                 <button type="button" className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Copy text</button>
@@ -665,7 +832,13 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                           </div>
                           <div className="grid col-span-4 xl:col-span-3">
                             <Link href="/order" className="flex flex-col px-5 space-y-1">
-                              <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                              {priceTax == true
+                                ?
+                                <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}<span className=" text-xs">vnđ</span></h4>
+                                :
+                                <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
+
+                              }
                               <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
                             </Link>
                           </div>
@@ -694,7 +867,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                   </div>
                   <ul className="flex flex-row justify-between ...">
                     {weekChooseDepart.map((e: any, i: number) => {
-                      console.log('here ...', format(new Date(dataUrl.DepartureDate), "dd/MM", { locale: vi }), format(new Date(e.dateStandar), "dd/MM", { locale: vi }))
+                      // console.log('here ...', format(new Date(dataUrl.DepartureDate), "dd/MM", { locale: vi }), format(new Date(e.dateStandar), "dd/MM", { locale: vi }))
                       return (
                         <>
                           {
@@ -775,7 +948,13 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                             </div>
                             <div className="grid col-span-4 xl:col-span-3">
                               <Link href="/order" className="flex flex-col px-5 space-y-1">
-                                <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                                {priceTax == true
+                                  ?
+                                  <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}<span className=" text-xs">vnđ</span></h4>
+                                  :
+                                  <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
+
+                                }
                                 <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
                               </Link>
                             </div>
@@ -876,7 +1055,13 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                           </div>
                           <div className="grid col-span-4 xl:col-span-3">
                             <Link href="/order" className="flex flex-col px-5 space-y-1">
-                              <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                              {priceTax == true
+                                ?
+                                <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}<span className=" text-xs">vnđ</span></h4>
+                                :
+                                <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
+
+                              }
                               <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
                             </Link>
                           </div>
@@ -943,7 +1128,13 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                             </div>
                             <div className="grid col-span-4 xl:col-span-3">
                               <Link href="/order" className="flex flex-col px-5 space-y-1">
-                                <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}</h4>
+                                {priceTax == true
+                                  ?
+                                  <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}<span className=" text-xs">vnđ</span></h4>
+                                  :
+                                  <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
+
+                                }
                                 <button type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
                               </Link>
                             </div>
