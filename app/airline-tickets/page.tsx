@@ -58,7 +58,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
     const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
 
     let rawData = `{\r\n    \"action\": \"` + dataUrl.action + `\",\r\n    \"ItineraryType\": ` + dataUrl.ItineraryType + `,\r\n    \"StartPoint\": \"` + dataUrl.StartPoint + `\",\r\n    \"EndPoint\": \"` + dataUrl.EndPoint + `\",\r\n    \"DepartureDate\": \"` + format(new Date(dataUrl.DepartureDate), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"ReturnDate\": \"` + format(new Date(dataUrl.ReturnDate), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"Adult\": ` + dataUrl.Adult + `,\r\n    \"Children\": ` + dataUrl.Children + `,\r\n    \"Infant\": ` + dataUrl.Infant + `\r\n}`
-    // console.log('data', dataUrl);
+    console.log('rawData', rawData);
     const search = async () => {
       const res = await fetch(url, {
         method: "POST", // or 'PUT'
@@ -73,8 +73,6 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       } else {
         const data = await res.json();
         console.log("flight", data);
-
-
         if (data.Data) {
           let departData = []
           for (const key in data.Data.DepartureFlights) {
@@ -104,7 +102,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
             departureFlight: data.Data.DepartureFlights,
             returnFlight: data.Data.ReturnFlights,
             DOMSearchFlights: data.DOMSearchFlights,
-            DOMGetBaggages: "",
+
           }
         )
       }
@@ -490,53 +488,14 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       departureFlight: '',
       returnFlight: '',
       DOMSearchFlights: '',
-      DOMGetBaggages: '',
     }
   )
   const [chooseFlightDepartId, setChooseFlightDepartId] = useState('')
   const [chooseFlightReturn, setChooseFlightReturn] = useState('')
-  const [departChooseData, setDepartChooseData] = useState<any>([
-    {
-      "StartPoint": "HAN",
-      "EndPoint": "SGN",
-      "FlightSession": "25ad6af895c34afcb997813488b0a180",
-      "FlightNumber": "VU787",
-      "AirlineCode": "VU",
-      "StartDate": "2024-01-08T20:55:00",
-      "EndDate": "2024-01-08T23:10:00",
-      "Stops": 0,
-      "Duration": 135,
-      "PriceAdult": 1348000,
-      "PriceChild": 1348000,
-      "PriceInfant": 162000,
-      "FeeAdult": 570000,
-      "FeeChild": 510000,
-      "FeeInfant": 0,
-      "TaxAdult": 143840,
-      "TaxChild": 143840,
-      "TaxInfant": 0,
-      "TotalPrice": 4225680,
-      "ServiceFee": 0,
-      "IssueFee": 0,
-      "SeatRemaining": 3,
-      "ListSegment": [
-        {
-          "AirlineCode": "VU",
-          "StartDate": "2024-01-08T20:55:00",
-          "EndDate": "2024-01-08T23:10:00",
-          "StartPoint": "HAN",
-          "EndPoint": "SGN",
-          "FlightNumber": "VU787",
-          "Plane": "Airbus A321 CEO",
-          "FlightTime": 135,
-          "Class": "ECONOMY-REFUNDABLE"
-        }
-      ],
-      "LastTkDate": "2024-01-08T14:19:32.5314204+07:00",
-      "Class": "ECONOMY-REFUNDABLE"
-    }
-  ])
-
+  const [departureBaggages, setDepartureBaggages] = useState([])
+  const [returnBaggages, setReturnBaggages] = useState([])
+  /*  */
+  const [domGetBaggages, setDOMGetBaggages] = useState('')
   const chooseFlightDepartFn = (e: any) => {
     const getFlightDepartId = e.target.getAttribute('data-departureFlightSession')
     console.log(getFlightDepartId);
@@ -570,6 +529,8 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       } else {
         const data = await res.json();
         console.log("get getBaggage ...", data);
+        setDepartureBaggages(data.Data.DepartureBaggages)
+        setDOMGetBaggages(data.DOMGetBaggages)
       }
     }
     getBaggage()
@@ -607,6 +568,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       } else {
         const data = await res.json();
         console.log("return getBaggage ...", data);
+        setReturnBaggages(data.Data.ReturnBaggages)
       }
     }
     getBaggage()
@@ -614,7 +576,51 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
   const [checkOutStep, setCheckOutStep] = useState(false)
   const [orderStep, setOrderStep] = useState(false)
   /* Order */
+  interface Passenger {
+    "FirstName": string,
+    "LastName": string,
+    "Type": string,
+    "Gender": string,
+    "Birthday": string,
+    "Phone": string,
+    "Email": string,
+    "BaggageDeparture": string,
+    "BaggageReturn": string
+  }
+  interface Passengers extends Array<Passenger> { }
+  const [listPassengers, setListPassengers] = useState<Passengers>([{
+    "FirstName": "BLA",
+    "LastName": "BLA",
+    "Type": "ADT",
+    "Gender": "1",
+    "Birthday": "",
+    "Phone": "1231231234",
+    "Email": "123@123.com",
+    "BaggageDeparture": "20",
+    "BaggageReturn": "20"
+  }])
+
+  const [contactInfo, setContactInfo] = useState({
+    "Gender": "1",
+    "FirstName": "#",
+    "LastName": "#",
+    "Phone": "0123456789",
+    "Email": "0123456789@123.com",
+    "Address": "#",
+    "Company": "#",
+    "Note": "#"
+  })
+  const [invoiceInfo, setInvoiceInfo] = useState({
+    "company": "abc",
+    "address": "abc",
+    "city": "abc",
+    "mst": "123123",
+    "receiver": "123123",
+    "email": "123@gmail.com"
+  })
+
   const orderfn = () => {
+
     console.log('đặt chuyến bay ...');
 
     const orderData = {
@@ -623,40 +629,24 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       dataSession: orderDataBefore.dataSession,
       departureFlightSession: chooseFlightDepartId,
       returnFlightSession: chooseFlightReturn,
-      ListPassengers: [{
-        "FirstName": "CUC",
-        "LastName": "CU",
-        "Type": "ADT",
-        "Gender": "1",
-        "Birthday": "",
-        "Phone": "0123123123",
-        "Email": "a@123.com",
-        "BaggageDeparture": "15",
-        "BaggageReturn": ""
-      }],
-      ContactInfo: {
-        "Gender": "1",
-        "FirstName": "Bla",
-        "LastName": "bla",
-        "Phone": "0123123123",
-        "Email": "a@123.com",
-        "Address": "123",
-        "Company": "Sbay",
-        "Note": "123"
+      ListPassengers: listPassengers,
+      ContactInfo: contactInfo,
+      InvoiceInfo: invoiceInfo,
+      SBAY_data_search: {
+        "action": dataUrl.action,
+        "ItineraryType":  parseInt(dataUrl.ItineraryType),
+        "StartPoint": dataUrl.StartPoint,
+        "EndPoint": dataUrl.EndPoint,
+        "DepartureDate": format(new Date(dataUrl.DepartureDate), "dd/MM/yyyy", { locale: vi }),
+        "ReturnDate": '',
+        "Adult": parseInt(dataUrl.Adult),
+        "Children": parseInt(dataUrl.Children),
+        "Infant": parseInt(dataUrl.Infant)
       },
-      InvoiceInfo: {
-        "company": "abc123",
-        "address": "123123",
-        "city": "123123",
-        "mst": "123131321321",
-        "receiver": "12313213213213",
-        "email": "123@123.com"
-      },
-      SBAY_data_search: orderDataBefore.SBAY_data_search,
-      departureFlight: orderDataBefore.departureFlight,
-      returnFlight: orderDataBefore.returnFlight,
+      departureFlight: departData[0],
+      returnFlight: "",
       DOMSearchFlights: orderDataBefore.DOMSearchFlights,
-      DOMGetBaggages: orderDataBefore.DOMGetBaggages,
+      DOMGetBaggages: domGetBaggages,
       DOMGetFareRuleInfo: '',
       DOMGetFareRuleInfo1: '',
       SBAY_detail_of_agent_website_json: {
@@ -701,8 +691,29 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       sbay_agent: 'abcbibibi',
       sbtoken: '',
       gia_chieu_di: '',
-      gia_chieu_ve: ''
+      gia_chieu_ve: '0'
     }
+    const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
+
+    console.log('orderData', orderData);
+    const search = async () => {
+      const res = await fetch(url, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+      if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error("Failed to fetch data");
+      } else {
+        const data = await res.json();
+        console.log("orderData", data);
+      }
+    }
+    search()
+
   }
   /* form show */
   const [showVatInfo, setShowVatInfo] = useState(false)
@@ -714,6 +725,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
       setShowVatInfo(false)
     }
   }
+
   return (
     <>
       {orderStep == false &&
@@ -1388,7 +1400,7 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
           </div>
         </div>
       }
-      
+
       {orderStep == true &&
         <div className=" mt-28 bg-white mx-auto rounded-3xl p-5">
           <div className=" grid grid-cols-12 gap-4 max-w-7xl mx-auto py-2">
@@ -1415,20 +1427,47 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                             <input placeholder="Hoàng Văn Hải" type="text" id="fullname" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
                           </div>
                         </div>
-                        <div className=" flex flex-col px-3 py-5">
-                          {/* <label htmlFor="baggage" className="block mb-2 text-sm font-medium text-start">Hành lý</label> */}
-                          <select id="baggage" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected={true} value="0">Không thêm hành lý chiều đi</option>
-                            <option value="20">Mua 20 kg hành lý (195,000 VND)</option>
-                            <option value="30">Mua 30 kg hành lý (292,000 VND)</option>
-                            <option value="40">Mua 40 kg hành lý (389,000 VND)</option>
-                            <option value="50">Mua 50 kg hành lý (486,000 VND)</option>
-                            <option value="60">Mua 60 kg hành lý (584,000 VND)</option>
-                            <option value="70">Mua 70 kg hành lý (681,000 VND)</option>
-                            <option value="20+">Mua 20 kg HLQK hành lý (411,000 VND)</option>
-                            <option value="30+">Mua 30 kg HLQK hành lý (508,000 VND)</option>
-                          </select>
-                        </div>
+                        {typeOfTicket == 1 &&
+                          <div className=" flex flex-col px-3 py-5">
+                            {<label htmlFor="baggage" className="block mb-2 text-sm font-medium text-start">Hành lý chiều đi</label>}
+                            <select id="baggage" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                              <option selected={true} value="0">Không thêm hành lý chiều đi</option>
+                              {departureBaggages.map((e: any, i: number) => {
+                                return (
+                                  <option value="20">Mua {e.Code} kg hành lý ({e.Price.toLocaleString()} VND)</option>
+                                )
+                              })}
+                            </select>
+                          </div>
+                        }
+                        {typeOfTicket == 2 &&
+                          <>
+                            <div className=" flex flex-col px-3 pt-5">
+                              {<label htmlFor="baggage" className="block mb-2 text-sm font-medium text-start">Hành lý chiều đi</label>}
+                              <select id="baggage" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option selected={true} value="0">Không thêm hành lý chiều đi</option>
+                                {departureBaggages.map((e: any, i: number) => {
+                                  return (
+                                    <option value="20">Mua {e.Code} kg hành lý ({e.Price.toLocaleString()} VND)</option>
+                                  )
+                                })}
+                              </select>
+                            </div>
+                            <div className=" flex flex-col px-3 py-5">
+                              {<label htmlFor="baggage" className="block mb-2 text-sm font-medium text-start">Hành lý chiều về</label>}
+                              <select id="baggage" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option selected={true} value="0">Không thêm hành lý chiều về</option>
+                                {returnBaggages.map((e: any, i: number) => {
+                                  return (
+                                    <option value="20">Mua {e.Code} kg hành lý ({e.Price.toLocaleString()} VND)</option>
+                                  )
+                                })}
+                              </select>
+                            </div>
+                          </>
+
+                        }
+
                       </div>
                     </>
                   )
@@ -1601,40 +1640,40 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
 
                     <div className="px-3">
                       <div className="flex items-center gap-4">
-                        {departChooseData[0].AirlineCode == 'VJ' &&
+                        {departData[0].AirlineCode == 'VJ' &&
                           <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
                         }
-                        {departChooseData[0].AirlineCode == 'VN' &&
+                        {departData[0].AirlineCode == 'VN' &&
                           <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
                         }
-                        {departChooseData[0].AirlineCode == 'QH' &&
+                        {departData[0].AirlineCode == 'QH' &&
                           <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
                         }
-                        {departChooseData[0].AirlineCode == 'VU' &&
+                        {departData[0].AirlineCode == 'VU' &&
                           <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
                         }
                         <div className="font-medium dark:text-white">
-                          <div>{departChooseData[0].AirlineCode}</div>
+                          <div>{departData[0].AirlineCode}</div>
                           <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                            <p>{departChooseData[0].FlightNumber}</p>
+                            <p>{departData[0].FlightNumber}</p>
                             <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
                           </div>
-                          <p className=" block xl:hidden text-xs">Từ: {format(new Date(departChooseData[0].StartDate), "HH:mm", { locale: vi })}, đến: {departChooseData[0].EndDate}</p>
+                          <p className=" block xl:hidden text-xs">Từ: {format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}, đến: {departData[0].EndDate}</p>
                         </div>
                       </div>
                     </div>
                     <div className=" grid grid-cols-6 py-5">
                       <div className=" col-span-6 xl:col-span-1 px-3">
-                        <p className="text-center">{format(new Date(departChooseData[0].StartDate), "HH:mm", { locale: vi })}</p>
-                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departChooseData[0].StartPoint}</p>
+                        <p className="text-center">{format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}</p>
+                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].StartPoint}</p>
                       </div>
                       <div className="col-span-6 xl:col-span-4">
                         <div className="flex flex-row space-x-3">
                           <FaPlaneDeparture className="w-4 my-auto" />
                           <div className="flex flex-col w-full space-y-2">
-                            <p className="text-center text-xs">{departChooseData[0].Duration + ' phút'}</p>
+                            <p className="text-center text-xs">{departData[0].Duration + ' phút'}</p>
                             <div className="border-dashed border-b-2 ..."></div>
-                            {departChooseData[0].Stops == 0 &&
+                            {departData[0].Stops == 0 &&
                               <p className="text-center text-xs">Bay thẳng</p>
                             }
                           </div>
@@ -1642,56 +1681,56 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                         </div>
                       </div>
                       <div className=" col-span-6 xl:col-span-1 px-3">
-                        <p className="text-center">{format(new Date(departChooseData[0].EndDate), "HH:mm", { locale: vi })}</p>
-                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departChooseData[0].EndPoint}</p>
+                        <p className="text-center">{format(new Date(departData[0].EndDate), "HH:mm", { locale: vi })}</p>
+                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].EndPoint}</p>
                       </div>
 
 
                     </div>
                   </div>
                 }
-
-                {/* {typeOfTicket == 2 &&
+                {typeOfTicket == 2 &&
                   <>
+                    {/* Đi */}
                     <div className="flex flex-col tems-center shadow-lg p-2 rounded-lg">
                       <p className=" text-xs text-end mb-2">Chiều đi</p>
 
                       <div className="px-3">
                         <div className="flex items-center gap-4">
-                          {departChooseData[0].AirlineCode == 'VJ' &&
+                          {departData[0].AirlineCode == 'VJ' &&
                             <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
                           }
-                          {departChooseData[0].AirlineCode == 'VN' &&
+                          {departData[0].AirlineCode == 'VN' &&
                             <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
                           }
-                          {departChooseData[0].AirlineCode == 'QH' &&
+                          {departData[0].AirlineCode == 'QH' &&
                             <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
                           }
-                          {departChooseData[0].AirlineCode == 'VU' &&
+                          {departData[0].AirlineCode == 'VU' &&
                             <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
                           }
                           <div className="font-medium dark:text-white">
-                            <div>{departChooseData[0].AirlineCode}</div>
+                            <div>{departData[0].AirlineCode}</div>
                             <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                              <p>{departChooseData[0].FlightNumber}</p>
+                              <p>{departData[0].FlightNumber}</p>
                               <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
                             </div>
-                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(departChooseData[0].StartDate), "HH:mm", { locale: vi })}, đến: {departChooseData[0].EndDate}</p>
+                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}, đến: {departData[0].EndDate}</p>
                           </div>
                         </div>
                       </div>
                       <div className=" grid grid-cols-6 py-5">
                         <div className=" col-span-6 xl:col-span-1 px-3">
-                          <p className="text-center">{format(new Date(departChooseData[0].StartDate), "HH:mm", { locale: vi })}</p>
-                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departChooseData[0].StartPoint}</p>
+                          <p className="text-center">{format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}</p>
+                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].StartPoint}</p>
                         </div>
                         <div className="col-span-6 xl:col-span-4">
                           <div className="flex flex-row space-x-3">
                             <FaPlaneDeparture className="w-4 my-auto" />
                             <div className="flex flex-col w-full space-y-2">
-                              <p className="text-center text-xs">{departChooseData[0].Duration + ' phút'}</p>
+                              <p className="text-center text-xs">{departData[0].Duration + ' phút'}</p>
                               <div className="border-dashed border-b-2 ..."></div>
-                              {departChooseData[0].Stops == 0 &&
+                              {departData[0].Stops == 0 &&
                                 <p className="text-center text-xs">Bay thẳng</p>
                               }
                             </div>
@@ -1699,101 +1738,221 @@ export default function AirLineTicket({ params }: { params: { slug: string } }) 
                           </div>
                         </div>
                         <div className=" col-span-6 xl:col-span-1 px-3">
-                          <p className="text-center">{format(new Date(departChooseData[0].EndDate), "HH:mm", { locale: vi })}</p>
-                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departChooseData[0].EndPoint}</p>
+                          <p className="text-center">{format(new Date(departData[0].EndDate), "HH:mm", { locale: vi })}</p>
+                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].EndPoint}</p>
                         </div>
 
 
                       </div>
                     </div>
+                    {/* Về */}
                     <div className="flex flex-col tems-center shadow-lg p-2 rounded-lg">
                       <p className=" text-xs text-end mb-2">Chiều về</p>
                       <div className="px-3">
                         <div className="flex items-center gap-4">
-                          <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                          {returnData[0].AirlineCode == 'VJ' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                          }
+                          {returnData[0].AirlineCode == 'VN' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                          }
+                          {returnData[0].AirlineCode == 'QH' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                          }
+                          {returnData[0].AirlineCode == 'VU' &&
+                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                          }
                           <div className="font-medium dark:text-white">
-                            <div>Vietjet Air</div>
+                            <div>{returnData[0].AirlineCode}</div>
                             <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                              <p>VJ197</p>
+                              <p>{returnData[0].FlightNumber}</p>
                               <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
                             </div>
-                            <p className=" block xl:hidden text-xs">Từ: 08:05, đến: 10:15</p>
+                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(returnData[0].StartDate), "HH:mm", { locale: vi })}, đến: {returnData[0].EndDate}</p>
                           </div>
                         </div>
                       </div>
                       <div className=" grid grid-cols-6 py-5">
-                        <div className=" col-span-1">
-                          <p className="text-center">05:00</p>
-                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">HAN</p>
+                        <div className=" col-span-6 xl:col-span-1 px-3">
+                          <p className="text-center">{format(new Date(returnData[0].StartDate), "HH:mm", { locale: vi })}</p>
+                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{returnData[0].StartPoint}</p>
                         </div>
-                        <div className="col-span-4">
+                        <div className="col-span-6 xl:col-span-4">
                           <div className="flex flex-row space-x-3">
                             <FaPlaneDeparture className="w-4 my-auto" />
                             <div className="flex flex-col w-full space-y-2">
-                              <p className="text-center text-xs">02h 10m</p>
+                              <p className="text-center text-xs">{returnData[0].Duration + ' phút'}</p>
                               <div className="border-dashed border-b-2 ..."></div>
-                              <p className="text-center text-xs">Bay thẳng</p>
+                              {returnData[0].Stops == 0 &&
+                                <p className="text-center text-xs">Bay thẳng</p>
+                              }
                             </div>
                             <FaPlaneArrival className="w-4 my-auto" />
                           </div>
                         </div>
-                        <div className=" col-span-1">
-                          <p className="text-center">07:00</p>
-                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">SGN</p>
+                        <div className=" col-span-6 xl:col-span-1 px-3">
+                          <p className="text-center">{format(new Date(returnData[0].EndDate), "HH:mm", { locale: vi })}</p>
+                          <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{returnData[0].EndPoint}</p>
                         </div>
+
 
                       </div>
                     </div>
                   </>
 
-                } */}
+                }
+
 
                 <div className="flex flex-col space-y-2 text-sm">
                   <p className=" text-xs text-end">Thông tin thanh toán</p>
-                  <div className=" flex flex-row justify-between ...">
-                    <p>
-                      Người lớn (1,476,800 x 01)
-                    </p>
-                    <p className=" font-bold">
-                      1,476,800 VNĐ
-                    </p>
-                  </div>
-                  <div className=" flex flex-row justify-between ...">
-                    <p>
-                      Người lớn (1,476,800 x 01)
-                    </p>
-                    <p className=" font-bold">
-                      1,476,800 VNĐ
-                    </p>
-                  </div>
-                  <div className=" flex flex-row justify-between ...">
-                    <p>
-                      Người lớn (1,476,800 x 01)
-                    </p>
-                    <p className=" font-bold">
-                      1,476,800 VNĐ
-                    </p>
-                  </div>
-                  <div className=" flex flex-row justify-between ...">
-                    <p>
-                      Hành lí bổ sung
-                    </p>
-                    <p className=" font-bold">
-                      0 VNĐ
-                    </p>
-                  </div>
-                  <div className=" flex flex-row justify-between ...">
-                    <p>
-                      Tổng cộng
-                    </p>
-                    <p className=" font-bold">
-                      3,001,600 VNĐ
-                    </p>
-                  </div>
+                  {typeOfTicket == 1 &&
+                    <>
+                      <div className="flex flex-col space-y-2 text-sm">
+                        <p className=" text-xs text-start">Chiều đi:</p>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Người lớn
+                          </p>
+                          <p className=" font-bold">
+                            ({(departData[0].FeeAdult + departData[0].PriceAdult + departData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Trẻ em
+                          </p>
+                          <p className=" font-bold">
+                            ({(departData[0].FeeChild + departData[0].PriceChild + departData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Em bé
+                          </p>
+                          <p className=" font-bold">
+                            ({(departData[0].FeeInfant + departData[0].PriceInfant + departData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Hành lí bổ sung
+                          </p>
+                          <p className=" font-bold">
+                            0 VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Tổng cộng
+                          </p>
+                          <p className=" font-bold">
+                            {departData[0].TotalPrice.toLocaleString()} VNĐ
+                          </p>
+                        </div>
+                      </div>
+
+                    </>
+                  }
+                  {typeOfTicket == 2 &&
+                    <>
+
+                      <div className="flex flex-col space-y-2 text-sm">
+                        <p className=" text-xs text-start">Chiều đi:</p>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Người lớn
+                          </p>
+                          <p className=" font-bold">
+                            ({(departData[0].FeeAdult + departData[0].PriceAdult + departData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Trẻ em
+                          </p>
+                          <p className=" font-bold">
+                            ({(departData[0].FeeChild + departData[0].PriceChild + departData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Em bé
+                          </p>
+                          <p className=" font-bold">
+                            ({(departData[0].FeeInfant + departData[0].PriceInfant + departData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Hành lí bổ sung
+                          </p>
+                          <p className=" font-bold">
+                            0 VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Tổng cộng
+                          </p>
+                          <p className=" font-bold">
+                            {departData[0].TotalPrice.toLocaleString()} VNĐ
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col space-y-2 text-sm">
+                        <p className=" text-xs text-start">Chiều về:</p>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Người lớn
+                          </p>
+                          <p className=" font-bold">
+                            ({(returnData[0].FeeAdult + returnData[0].PriceAdult + returnData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Trẻ em
+                          </p>
+                          <p className=" font-bold">
+                            ({(returnData[0].FeeChild + returnData[0].PriceChild + returnData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Em bé
+                          </p>
+                          <p className=" font-bold">
+                            ({(returnData[0].FeeInfant + returnData[0].PriceInfant + returnData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Hành lí bổ sung
+                          </p>
+                          <p className=" font-bold">
+                            0 VNĐ
+                          </p>
+                        </div>
+                        <div className=" ml-5 flex flex-row justify-between ...">
+                          <p>
+                            Tổng cộng
+                          </p>
+                          <p className=" font-bold">
+                            {returnData[0].TotalPrice.toLocaleString()} VNĐ
+                          </p>
+                        </div>
+                      </div>
+                    </>
+                  }
+
+
                 </div>
 
                 <div className="flex flex-col">
-                  <button type="button" className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Đặt vé</button>
+                  <button
+                    onClick={orderfn}
+                    type="button"
+                    className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Đặt vé</button>
                 </div>
               </div>
             </div>
