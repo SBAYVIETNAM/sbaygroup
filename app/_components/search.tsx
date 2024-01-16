@@ -84,8 +84,6 @@ export interface AirportOption {
 export default function Search() {
     const router = useRouter()
 
-    const [defaultDepartTime, setDefaultDepartTime] = useState(format(new Date(), 'yyyy-MM-dd', { locale: vi }))
-    const [defaultReturnTime, setDefaultReturnTime] = useState(format(addDays(new Date(), 2), 'yyyy-MM-dd', { locale: vi }))
     const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd', { locale: vi }))
     const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd', { locale: vi }))
 
@@ -128,62 +126,81 @@ export default function Search() {
         setSelectedReturnAirport(e.value)
     }
     /* Time choose */
-    const [departTime, setDepartTime] = useState(defaultDepartTime)
-    const [returnTime, setReturnTime] = useState(defaultReturnTime)
+    const [departTime, setDepartTime] = useState(format(new Date(), 'yyyy-MM-dd', { locale: vi }))
+    const [returnTime, setReturnTime] = useState(format(addDays(new Date(), 2), 'yyyy-MM-dd', { locale: vi }))
     /* Passengers choose */
     const [Adult, setAdult] = useState(1)
     const [Children, setChildren] = useState(0)
     const [Infant, setInfant] = useState(0)
 
 
-    const searchfn = async () => {
-        console.log(selectedDepartAirport, selectedReturnAirport);
-        const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
-        const data = {
-            action: 'DOMSearchFlights',
-            ItineraryType: typeOfTicket,
-            StartPoint: selectedDepartAirport,
-            EndPoint: selectedReturnAirport,
-            DepartureDate: format(new Date(departTime), "dd/MM/yyyy", { locale: vi }),
-            ReturnDate: format(new Date(returnTime), "dd/MM/yyyy", { locale: vi }),
-            Adult: Adult,
-            Children: Children,
-            Infant: Infant
-        };
-        var rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
-        console.log('data', data);
+    // const searchfn = async () => {
+    //     console.log(selectedDepartAirport, selectedReturnAirport);
+    //     const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
+    //     const data = {
+    //         action: 'DOMSearchFlights',
+    //         ItineraryType: typeOfTicket,
+    //         StartPoint: selectedDepartAirport,
+    //         EndPoint: selectedReturnAirport,
+    //         DepartureDate: format(new Date(departTime), "dd/MM/yyyy", { locale: vi }),
+    //         ReturnDate: format(new Date(returnTime), "dd/MM/yyyy", { locale: vi }),
+    //         Adult: Adult,
+    //         Children: Children,
+    //         Infant: Infant
+    //     };
+    //     var rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
+    //     console.log('data', data);
 
-        const res = await fetch(url, {
-            method: "POST", // or 'PUT'
-            headers: {
-                "Content-Type": "text/plain",
-            },
-            body: rawData,
-        });
-        if (!res.ok) {
-            // This will activate the closest `error.js` Error Boundary
-            throw new Error("Failed to fetch data");
-        } else {
-            const data = await res.json();
-            console.log("flight", data);
-        }
-    }
-    
+    //     const res = await fetch(url, {
+    //         method: "POST", // or 'PUT'
+    //         headers: {
+    //             "Content-Type": "text/plain",
+    //         },
+    //         body: rawData,
+    //     });
+    //     if (!res.ok) {
+    //         // This will activate the closest `error.js` Error Boundary
+    //         throw new Error("Failed to fetch data");
+    //     } else {
+    //         const data = await res.json();
+    //         console.log("flight", data);
+    //     }
+    // }
+
 
     const openLink = async () => {
-        const data = {
-            action: 'DOMSearchFlights',
-            ItineraryType: typeOfTicket,
-            StartPoint: selectedDepartAirport,
-            EndPoint: selectedReturnAirport,
-            DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
-            ReturnDate: format(new Date(returnTime), "MM/dd/yyyy", { locale: vi }),
-            Adult: Adult,
-            Children: Children,
-            Infant: Infant
-        };
-        router.push('/airline-tickets?a='+data.action+'&t='+data.ItineraryType+'&sp='+data.StartPoint+'&ep='+data.EndPoint+'&dp='+data.DepartureDate+'&rd='+data.ReturnDate+'&ad='+data.Adult+'&ch='+data.Children+'&ba='+data.Infant)
+        if (typeOfTicket == 1) {
+            const data = {
+                action: 'DOMSearchFlights',
+                ItineraryType: typeOfTicket,
+                StartPoint: selectedDepartAirport,
+                EndPoint: selectedReturnAirport,
+                DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
+                ReturnDate: '',
+                Adult: Adult,
+                Children: Children,
+                Infant: Infant
+            };
+            router.push('/airline-tickets?a=' + data.action + '&t=' + data.ItineraryType + '&sp=' + data.StartPoint + '&ep=' + data.EndPoint + '&dp=' + data.DepartureDate + '&rd=' + data.ReturnDate + '&ad=' + data.Adult + '&ch=' + data.Children + '&ba=' + data.Infant)
+
+        } else {
+            const data = {
+                action: 'DOMSearchFlights',
+                ItineraryType: typeOfTicket,
+                StartPoint: selectedDepartAirport,
+                EndPoint: selectedReturnAirport,
+                DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
+                ReturnDate: format(new Date(returnTime), "MM/dd/yyyy", { locale: vi }),
+                Adult: Adult,
+                Children: Children,
+                Infant: Infant
+            };
+            router.push('/airline-tickets?a=' + data.action + '&t=' + data.ItineraryType + '&sp=' + data.StartPoint + '&ep=' + data.EndPoint + '&dp=' + data.DepartureDate + '&rd=' + data.ReturnDate + '&ad=' + data.Adult + '&ch=' + data.Children + '&ba=' + data.Infant)
+
+        }
+
     }
+
     return (
         <>
             <div>
