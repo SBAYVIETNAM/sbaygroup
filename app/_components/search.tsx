@@ -112,7 +112,7 @@ export default function Search() {
     }, [])
 
     /* Time choose */
-    const [typeOfTicket, setTypeOfTicket] = useState(2)
+    const [typeOfTicket, setTypeOfTicket] = useState(1)
     /* Select depart */
     const [selectedDepartAirport, setSelectedDepartAirport] = useState(defaultDepart.value);
     const onChangeDepart = (e: any) => {
@@ -132,40 +132,6 @@ export default function Search() {
     const [Adult, setAdult] = useState(1)
     const [Children, setChildren] = useState(0)
     const [Infant, setInfant] = useState(0)
-
-
-    // const searchfn = async () => {
-    //     console.log(selectedDepartAirport, selectedReturnAirport);
-    //     const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
-    //     const data = {
-    //         action: 'DOMSearchFlights',
-    //         ItineraryType: typeOfTicket,
-    //         StartPoint: selectedDepartAirport,
-    //         EndPoint: selectedReturnAirport,
-    //         DepartureDate: format(new Date(departTime), "dd/MM/yyyy", { locale: vi }),
-    //         ReturnDate: format(new Date(returnTime), "dd/MM/yyyy", { locale: vi }),
-    //         Adult: Adult,
-    //         Children: Children,
-    //         Infant: Infant
-    //     };
-    //     var rawData = `{\r\n    \"action\": \"` + data.action + `\",\r\n    \"ItineraryType\": ` + data.ItineraryType + `,\r\n    \"StartPoint\": \"` + data.StartPoint + `\",\r\n    \"EndPoint\": \"` + data.EndPoint + `\",\r\n    \"DepartureDate\": \"` + data.DepartureDate + `\",\r\n    \"ReturnDate\": \"` + data.ReturnDate + `\",\r\n    \"Adult\": ` + data.Adult + `,\r\n    \"Children\": ` + data.Children + `,\r\n    \"Infant\": ` + data.Infant + `\r\n}`
-    //     console.log('data', data);
-
-    //     const res = await fetch(url, {
-    //         method: "POST", // or 'PUT'
-    //         headers: {
-    //             "Content-Type": "text/plain",
-    //         },
-    //         body: rawData,
-    //     });
-    //     if (!res.ok) {
-    //         // This will activate the closest `error.js` Error Boundary
-    //         throw new Error("Failed to fetch data");
-    //     } else {
-    //         const data = await res.json();
-    //         console.log("flight", data);
-    //     }
-    // }
 
 
     const openLink = async () => {

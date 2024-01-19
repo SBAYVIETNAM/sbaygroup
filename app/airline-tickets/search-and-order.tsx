@@ -14,11 +14,8 @@ import TopSearch from "./top-search";
 import SearchResponse from "./search-res";
 
 export default function SearchAndOrder(props: any) {
-    const [step, setStep] = useState(1) // 1: search, 2: order, 3, return result
-    /* Step 1 */
-    const searchData = props.searchData
-
-
+    // console.log('searchDataxxxxx', props.searchData);
+    
     return (
         <>
             <div className=" bg-white mx-auto rounded-3xl p-5">
@@ -32,7 +29,7 @@ export default function SearchAndOrder(props: any) {
                     Adult={props.Adult}
                     Children={props.Children}
                     Infant={props.Infant}
-                    searchData={searchData}
+                    searchData={props.searchData}
                 ></SearchResponse>
             </div>
 

@@ -23,7 +23,7 @@ async function getDepart(
     + ItineraryType + `,\r\n    \"StartPoint\": \"`
     + StartPoint + `\",\r\n    \"EndPoint\": \"`
     + EndPoint + `\",\r\n    \"DepartureDate\": \"`
-    + format(new Date(DepartureDate), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"ReturnDate\": \"` + '' + `\",\r\n    \"Adult\": `
+    + format(new Date(DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"ReturnDate\": \"` + '' + `\",\r\n    \"Adult\": `
     + Adult + `,\r\n    \"Children\": `
     + Children + `,\r\n    \"Infant\": `
     + Infant + `\r\n}`
@@ -82,17 +82,26 @@ async function getDepartAndReturn() {
 
 }
 
+type Props = {
+  params: {};
+  searchParams: { [key: string]: string};
+};
 
-export default async function AirLineTicket({ params }: { params: { slug: string } }) {
+export default async function AirLineTicket(props: Props) {
 
-  const action = 'DOMSearchFlights'
-  const ItineraryType = 1
-  const StartPoint = 'HAN'
-  const EndPoint = 'SGN'
-  const DepartureDate = '01/22/2024'
-  const Adult = 2
-  const Children = 1
-  const Infant = 1
+  const searchParams = props.searchParams;
+
+  console.log('searchParams', searchParams);
+
+  const action = searchParams.a
+  const ItineraryType = parseInt(searchParams.t)
+  const StartPoint = searchParams.sp
+  const EndPoint = searchParams.ep
+  const DepartureDate = searchParams.dp
+  
+  const Adult = parseInt(searchParams.ad)
+  const Children = parseInt(searchParams.ch)
+  const Infant = parseInt(searchParams.ba)
 
   const searchData = await getDepart(
     action,
@@ -104,6 +113,8 @@ export default async function AirLineTicket({ params }: { params: { slug: string
     Children,
     Infant
   )
+
+  console.log('searchData', searchData);
 
   return (
     <SearchAndOrder

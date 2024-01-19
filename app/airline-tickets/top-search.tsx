@@ -5,81 +5,34 @@ import { FaPlaneDeparture, FaPlaneArrival, FaRegCalendar, FaRegCalendarCheck, Fa
 import Select from 'react-select'
 import { format, addDays } from "date-fns";
 import { da, vi } from 'date-fns/locale';
+import airportOptions from '../_helper/airport-options'
+import { useRouter } from "next/navigation";
 
-const airportOptions = [
-    { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' },
-    { value: 'HPH', label: 'Hải Phòng', type: 'Miền Bắc' },
-    { value: 'DIN', label: 'Điện Biên Phủ', type: 'Miền Bắc' },
-    { value: 'VDO', label: 'Vân Đồn', type: 'Miền Bắc' },
-    { value: 'SGN', label: 'Hồ Chí Minh', type: 'Miền Nam' },
-    { value: 'PQC', label: 'Phú Quốc', type: 'Miền Nam' },
-    { value: 'VCA', label: 'Cần Thơ', type: 'Miền Nam' },
-    { value: 'VCS', label: 'Côn Đảo', type: 'Miền Nam' },
-    { value: 'VKG', label: 'Kiên Giang', type: 'Miền Nam' },
-    { value: 'DAD', label: 'Đà Nẵng', type: 'Miền Trung' },
-    { value: 'CXR', label: 'Nha Trang', type: 'Miền Trung' },
-    { value: 'DLI', label: 'Đà Lạt', type: 'Miền Trung' },
-    { value: 'HUI', label: 'Huế', type: 'Miền Trung' },
-    { value: 'BMV', label: 'Ban Mê Thuột', type: 'Miền Trung' },
-    { value: 'PXU', label: 'PleiKu', type: 'Miền Trung' },
-    { value: 'TBB', label: 'Phú Yên', type: 'Miền Trung' },
-    { value: 'THD', label: 'Thanh Hóa', type: 'Miền Trung' },
-    { value: 'UIH', label: 'Qui Nhơn', type: 'Miền Trung' },
-    { value: 'VCL', label: 'Chu Lai', type: 'Miền Trung' },
-    { value: 'VDH', label: 'Quảng Bình', type: 'Miền Trung' },
-    { value: 'VII', label: 'Vinh', type: 'Miền Trung' },
-    { value: 'BKK', label: 'Băng Cốc', type: 'Châu Á' },
-    { value: 'CAN', label: 'Quảng Châu', type: 'Châu Á' },
-    { value: 'HKG', label: 'Hồng Kông', type: 'Châu Á' },
-    { value: 'KUL', label: 'Kuala Lumpur', type: 'Châu Á' },
-    { value: 'ICN', label: 'Seoul, Incheon', type: 'Châu Á' },
-    { value: 'SHA', label: 'Thượng Hải', type: 'Châu Á' },
-    { value: 'SIN', label: 'Singapore', type: 'Châu Á' },
-    { value: 'TPE', label: 'Đài Bắc', type: 'Châu Á' },
-    { value: 'TYO', label: 'Tokyo', type: 'Châu Á' },
-    { value: 'KOS', label: 'Campuchia', type: 'Châu Á' },
-    { value: 'AMS', label: 'Amsterdam', type: 'Châu Âu' },
-    { value: 'CPH', label: 'Cô-pen-ha-gen', type: 'Châu Âu' },
-    { value: 'FRA', label: 'Frankfurt', type: 'Châu Âu' },
-    { value: 'LON', label: 'London', type: 'Châu Âu' },
-    { value: 'PAR', label: 'Paris', type: 'Châu Âu' },
-    { value: 'PRG', label: 'Praha', type: 'Châu Âu' },
-    { value: 'STO', label: 'Stockholm', type: 'Châu Âu' },
-    { value: 'ZRH', label: 'Zurich', type: 'Châu Âu' },
-    { value: 'DFW', label: 'Dallas', type: 'Châu Úc' },
-    { value: 'HOU', label: 'Houston', type: 'Châu Úc' },
-    { value: 'LAX', label: 'Los Angeles', type: 'Châu Úc' },
-    { value: 'MEL', label: 'Men-bơn', type: 'Châu Úc' },
-    { value: 'NYC', label: 'New York', type: 'Châu Úc' },
-    { value: 'SFO', label: 'San Francisco', type: 'Châu Úc' },
-    { value: 'SYD', label: 'Sydney', type: 'Châu Úc' },
-    { value: 'YTO', label: 'Toronto', type: 'Châu Úc' },
-    { value: 'YVR', label: 'Vancouver', type: 'Châu Úc' },
-]
 export default function TopSearch(props: any) {
     /* Data from Url*/
     const action = props.action
     const ItineraryType = props.ItineraryType
     const StartPoint = props.StartPoint
     const EndPoint = props.EndPoint
+
+    const findFrom: any = airportOptions.find(({ value }) => value === StartPoint)
+    const findTo: any = airportOptions.find(({ value }) => value === EndPoint)
+
     const DepartureDate = props.DepartureDate
-    console.log('DepartureDate', DepartureDate);
-    // const Adult = props.Adult
-    // const Children = props.Children
-    // const Infant = props.Infant
+
 
     const [typeOfTicket, setTypeOfTicket] = useState<number>(parseInt(ItineraryType))
     /* Select depart */
-    const [selectedDepartAirport, setSelectedDepartAirport] = useState(/* defaultDepart.value */);
+    const [selectedDepartAirport, setSelectedDepartAirport] = useState(findFrom);
     const onChangeDepart = (e: any) => {
-        // console.log('e', e);
-        setSelectedDepartAirport(e.value)
+        console.log('e', e);
+        setSelectedDepartAirport(e)
     }
     /* Select return */
-    const [selectedReturnAirport, setSelectedReturnAirport] = useState(/* defaultReturn.value */);
+    const [selectedReturnAirport, setSelectedReturnAirport] = useState(findTo);
     const onChangeReturn = (e: any) => {
-        // console.log('e', e);
-        setSelectedReturnAirport(e.value)
+        console.log('e', e);
+        setSelectedReturnAirport(e)
     }
     /* Passengers choose */
     const [Adult, setAdult] = useState(parseInt(props.Adult))
@@ -89,6 +42,31 @@ export default function TopSearch(props: any) {
     const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd', { locale: vi }))
     const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd', { locale: vi }))
     const [departTime, setDepartTime] = useState(format(new Date(DepartureDate), 'yyyy-MM-dd', { locale: vi }))
+
+    /*  */
+    const router = useRouter()
+
+    const searchDepart = async () => {
+        const data = {
+            action: action,
+            ItineraryType: typeOfTicket,
+            StartPoint: selectedDepartAirport.value,
+            EndPoint: selectedReturnAirport.value,
+            DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
+            ReturnDate: "",
+            Adult: Adult,
+            Children: Children,
+            Infant: Infant
+        };
+        console.log('data', data);
+        router.push('/airline-tickets?a=DOMSearchFlights&t=' + data.ItineraryType + '&sp=' + data.StartPoint + '&ep=' + data.EndPoint + '&dp=' + data.DepartureDate + '&rd=' + data.ReturnDate + '&ad=' + data.Adult + '&ch=' + data.Children + '&ba=' + data.Infant)
+        // router.refresh()
+        // location.reload()
+        // router.reload()
+
+
+
+    }
 
     return (
         <div className=" mt-32 flex bg-amber-500 rounded-xl min-h-max flex-col max-w-7xl mx-auto justify-between">
@@ -121,7 +99,7 @@ export default function TopSearch(props: any) {
                             id="from"
                             placeholder="Nơi đi"
                             options={airportOptions}
-                            // defaultValue={defaultDepart}
+                            defaultValue={selectedDepartAirport}
                             formatOptionLabel={(airportOptions: any) => {
                                 return (
                                     <>
@@ -144,7 +122,7 @@ export default function TopSearch(props: any) {
                             id="to"
                             placeholder="Nơi đến"
                             options={airportOptions}
-                            //   defaultValue={defaultReturn}
+                            defaultValue={selectedReturnAirport}
                             formatOptionLabel={(airportOptions: any) => {
                                 return (
                                     <>
@@ -159,36 +137,57 @@ export default function TopSearch(props: any) {
                             className="w-full whitespace-nowrap" />
                     </div>
                     <div className=" col-span-12 xl:col-span-4 px-3 flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:space-x-5 justify-between ...">
-                        <div className=" flex flex-col space-y-1 w-full">
-                            <div className=' flex flex-row'>
-                                <FaRegCalendar className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
-                                <label htmlFor="fromDate" className="block text-sm font-medium text-white">Ngày đi</label>
-                            </div>
-                            <input
-                                onChange={(e: any) => { setDepartTime(e.currentTarget.value) }}
-                                id="fromDate"
-                                className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date"
-                                name="trip-start"
-                                value={departTime}
-                                min={minDate}
-                                max={maxDate} />
-                        </div>
-                        {ItineraryType == 2 &&
+
+
+                        {typeOfTicket == 1
+                            ?
                             <div className=" flex flex-col space-y-1 w-full">
                                 <div className=' flex flex-row'>
-                                    <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
-                                    <label htmlFor="toDate" className="block text-sm font-medium text-white">Ngày đến</label>
+                                    <FaRegCalendar className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
+                                    <label htmlFor="fromDate" className="block text-sm font-medium text-white">Ngày đi</label>
                                 </div>
                                 <input
-                                    // onChange={(e: any) => { setReturnTime(e.currentTarget.value) }}
-                                    id="toDate"
-                                    className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
-                                    type="date"
+                                    onChange={(e: any) => { setDepartTime(e.currentTarget.value) }}
+                                    id="fromDate"
+                                    className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date"
                                     name="trip-start"
-                                    // value={returnTime}
+                                    value={departTime}
                                     min={minDate}
                                     max={maxDate} />
                             </div>
+                            :
+                            <>
+                                <div className=" flex flex-col space-y-1 w-full">
+                                    <div className=' flex flex-row'>
+                                        <FaRegCalendar className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
+                                        <label htmlFor="fromDate" className="block text-sm font-medium text-white">Ngày đi</label>
+                                    </div>
+                                    <input
+                                        onChange={(e: any) => { setDepartTime(e.currentTarget.value) }}
+                                        id="fromDate"
+                                        className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date"
+                                        name="trip-start"
+                                        value={departTime}
+                                        min={minDate}
+                                        max={maxDate} />
+                                </div>
+                                <div className=" flex flex-col space-y-1 w-full">
+                                    <div className=' flex flex-row'>
+                                        <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
+                                        <label htmlFor="toDate" className="block text-sm font-medium text-white">Ngày đến</label>
+                                    </div>
+                                    <input
+                                        // onChange={(e: any) => { setReturnTime(e.currentTarget.value) }}
+                                        id="toDate"
+                                        className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
+                                        type="date"
+                                        name="trip-start"
+                                        // value={returnTime}
+                                        min={minDate}
+                                        max={maxDate} />
+                                </div>
+                            </>
+
                         }
                     </div>
                 </div>
@@ -277,7 +276,7 @@ export default function TopSearch(props: any) {
                 <div className=" col-span-6 xl:col-span-2 px-3 flex flex-col justify-between ...">
                     <label className="block text-sm font-medium text-white invisible">Tìm</label>
                     <button
-                        // onClick={searchfn}
+                        onClick={searchDepart}
                         type="button"
                         className="text-white mb-5 bg-blue-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10">Tìm kiếm</button>
                 </div>

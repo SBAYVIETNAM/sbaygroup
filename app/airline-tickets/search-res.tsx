@@ -65,18 +65,23 @@ const airportOptions = [
 
 
 export default function SearchResponse(props: any) {
-    const searchData = props.searchData
-    const [departData, setDepartData] = useState<any>([])
+    console.log('searchDataxxxxx', props.searchData);
+    // let searchData = props.searchData
+
+    const [departData, setDepartData] = useState<any[]>([])
 
     useEffect(() => {
-        console.log('useEffect.....');
         let x: any = []
-        for (const key in searchData.Data.DepartureFlights) {
+        for (const key in props.searchData.Data.DepartureFlights) {
             // console.log('key', key, ReturnFlights[key]);
-            x.push(searchData.Data.DepartureFlights[key])
+            x.push(props.searchData.Data.DepartureFlights[key])
         }
         setDepartData(x)
-    }, [])
+        setTrip({
+            from: findFrom?.label + ', ' + findFrom?.label + ' (' + findFrom?.value + ')',
+            to: findTo?.label + ', ' + findTo?.label + ' (' + findTo?.value + ')'
+        })
+    }, [props.searchData])
 
     const DataSession = props.searchData.Data.DataSession
     const DOMSearchFlights = props.searchData.DOMSearchFlights
@@ -689,76 +694,83 @@ export default function SearchResponse(props: any) {
                                     </div>
 
                                     <div className="flex flex-col space-y-5 mt-5">
-                                        {departData.map((e: any, i: number) => {
-                                            // console.log('departData', departData);
-                                            return (
-                                                <>
-                                                    <div key={'departData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
-                                                        <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
-                                                            <div className="flex items-center gap-4">
-                                                                {e.AirlineCode == 'VJ' &&
-                                                                    <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
-                                                                }
-                                                                {e.AirlineCode == 'VN' &&
-                                                                    <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
-                                                                }
-                                                                {e.AirlineCode == 'QH' &&
-                                                                    <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
-                                                                }
-                                                                {e.AirlineCode == 'VU' &&
-                                                                    <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
-                                                                }
-                                                                <div className="font-medium dark:text-white">
-                                                                    <div>{e.AirlineCode}</div>
-                                                                    <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                                                                        <p>{e.FlightNumber}</p>
-                                                                        <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
-                                                                    </div>
-                                                                    <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+                                        {departData.length != 0
+                                            ?
+                                            departData.map((e: any, i: number) => {
+                                                console.log('departData....', e);
+                                                return (
+                                                    <>
+                                                        <div key={'departData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                                                            <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                                                                <div className="flex items-center gap-4">
+                                                                    {e.AirlineCode == 'VJ' &&
+                                                                        <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                                                    }
+                                                                    {e.AirlineCode == 'VN' &&
+                                                                        <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                                                    }
+                                                                    {e.AirlineCode == 'QH' &&
+                                                                        <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                                                    }
+                                                                    {e.AirlineCode == 'VU' &&
+                                                                        <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                                                    }
+                                                                    <div className="font-medium dark:text-white">
+                                                                        <div>{e.AirlineCode}</div>
+                                                                        <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                                                            <p>{e.FlightNumber}</p>
+                                                                            <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                                        </div>
+                                                                        <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                                                                <div className=" col-span-6 xl:col-span-1 px-3">
+                                                                    <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                                                                    <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
+                                                                </div>
+                                                                <div className="col-span-6 xl:col-span-4">
+                                                                    <div className="flex flex-row space-x-3">
+                                                                        <FaPlaneDeparture className="w-4 my-auto" />
+                                                                        <div className="flex flex-col w-full space-y-2">
+                                                                            <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                                                                            <div className="border-dashed border-b-2 ..."></div>
+                                                                            {e.Stops == 0 &&
+                                                                                <p className="text-center text-xs">Bay thẳng</p>
+                                                                            }
+                                                                        </div>
+                                                                        <FaPlaneArrival className="w-4 my-auto" />
+                                                                    </div>
+                                                                </div>
+                                                                <div className=" col-span-6 xl:col-span-1 px-3">
+                                                                    <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                                                                    <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                                                                </div>
+
+                                                            </div>
+                                                            <div className="grid col-span-4 xl:col-span-3">
+                                                                <div className="flex flex-col px-5 space-y-1">
+                                                                    {priceTax == true
+                                                                        ?
+                                                                        <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}<span className=" text-xs">vnđ</span></h4>
+                                                                        :
+                                                                        <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
+
+                                                                    }
+                                                                    <button onClick={(e) => chooseFlightDepartFn(e)} data-departureflightsession={e.FlightSession} type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
-                                                            <div className=" col-span-6 xl:col-span-1 px-3">
-                                                                <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
-                                                                <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
-                                                            </div>
-                                                            <div className="col-span-6 xl:col-span-4">
-                                                                <div className="flex flex-row space-x-3">
-                                                                    <FaPlaneDeparture className="w-4 my-auto" />
-                                                                    <div className="flex flex-col w-full space-y-2">
-                                                                        <p className="text-center text-xs">{e.Duration + ' phút'}</p>
-                                                                        <div className="border-dashed border-b-2 ..."></div>
-                                                                        {e.Stops == 0 &&
-                                                                            <p className="text-center text-xs">Bay thẳng</p>
-                                                                        }
-                                                                    </div>
-                                                                    <FaPlaneArrival className="w-4 my-auto" />
-                                                                </div>
-                                                            </div>
-                                                            <div className=" col-span-6 xl:col-span-1 px-3">
-                                                                <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
-                                                                <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
-                                                            </div>
+                                                    </>
+                                                );
+                                            })
+                                            :
+                                            <p className="text-center">Không có chuyến nào, vui lòng tìm lại với điều kiện khác</p>
+                                            
+                                        }
 
-                                                        </div>
-                                                        <div className="grid col-span-4 xl:col-span-3">
-                                                            <div className="flex flex-col px-5 space-y-1">
-                                                                {priceTax == true
-                                                                    ?
-                                                                    <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}<span className=" text-xs">vnđ</span></h4>
-                                                                    :
-                                                                    <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
-
-                                                                }
-                                                                <button onClick={(e) => chooseFlightDepartFn(e)} data-departureflightsession={e.FlightSession} type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </>
-                                            );
-                                        })}
                                     </div>
                                 </div>
                             }
