@@ -1,104 +1,109 @@
 "use client"
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik';
+import { Formik, Field, Form, ErrorMessage, FieldArray, getIn, FieldProps } from 'formik';
+import * as Yup from "yup";
 
-// const initialValues = {
-//   friends: [
-//     {
-//       name: '',
-//     },
-//   ],
-// };
-
-const initialValues = {
-  friends: [
-    {
-      gender: '1',
-      fullname: 'a',
-      departureBaggages: '20',
-    },
-  ],
-};
 
 function App() {
   return (
-    <div className=' mt-28 bg-white mx-auto rounded-3xl p-5'>
-      <h1>Invite friends</h1>
+    <div className=' mt-32 max-w-md mx-auto'>
+      <h3>Organzation Form (Dyanamic users - Array of Object) </h3>
+      <hr />
       <Formik
-        initialValues={initialValues}
-        onSubmit={async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          // alert(JSON.stringify(values, null, 2));
-          console.log(values.friends);
+        initialValues={{
+          users: [
+            {
+              name: "deshan madurajith",
+              email: "desh@email.com"
+            },
+            {
+              name: "Hello Desh",
+              email: "hello@email.com"
+            }
+          ],
+          organizationName: []
         }}
-      >
-        {({ values }) => (
+        validationSchema={Yup.object({
+          organizationName: Yup.string().required(
+            "Organization Name is required"
+          ),
+          users: Yup.array().of(
+            Yup.object().shape({
+              name: Yup.string().required("Name required"),
+              email: Yup.string()
+                .required("email required")
+                .email("Enter valid email")
+            })
+          )
+        })}
+        onSubmit={values => alert(JSON.stringify(values, null, 2))}
+        render={({ values }) => (
           <Form>
-            <FieldArray name="friends">
-              {({ insert, remove, push }) => (
-                <div className=" flex flex-col justify-start ...">
-                  {values.friends.length > 0 &&
-
-                    values.friends.map((friend, index) => (
-                      <>
-                        <div className=" grid grid-cols-6 gap-4 px-3" key={index}>
-                          <div className="col-span-2">
-                            <label htmlFor={`friends.${index}.gender`}>Name</label>
-
-                            <Field as="select" name={`friends.${index}.gender`}>
-                              <option value="1">Nam</option>
-                              <option value="2">Nữ</option>
-                            </Field>
-                            <ErrorMessage
-                              name={`friends.${index}.gender`}
-                              component="div"
-                              className="field-error"
-                            />
-                          </div>
-                          <div className="col-span-4">
-                            <label htmlFor={`friends.${index}.fullname`}>Name</label>
-                            <Field
-                              name={`friends.${index}.fullname`}
-                              placeholder="Jane Doe"
-                              type="text"
-                            />
-                            <ErrorMessage
-                              name={`friends.${index}.fullname`}
-                              component="div"
-                              className="field-error"
-                            />
-                          </div>
-
-
-
-                        </div>
-                        <div className="flex flex-col px-3 py-5">
-                          <label htmlFor={`friends.${index}.departureBaggages`}>Hành lý chiều đi</label>
-
-                          <Field as="select" name={`friends.${index}.departureBaggages`}>
-                            <option value="20">Mua {'e.Code'} kg hành lý ({'e.Price.toLocaleString()'} VND)</option>
-                            <option value="20">Mua {'e.Code'} kg hành lý ({'e.Price.toLocaleString()'} VND)</option>
-                            <option value="20">Mua {'e.Code'} kg hành lý ({'e.Price.toLocaleString()'} VND)</option>
-                            <option value="20">Mua {'e.Code'} kg hành lý ({'e.Price.toLocaleString()'} VND)</option>
-                            <option value="20">Mua {'e.Code'} kg hành lý ({'e.Price.toLocaleString()'} VND)</option>
-                          </Field>
-                          <ErrorMessage
-                            name={`friends.${index}.gender`}
-                            component="div"
-                            className="field-error"
+            <h5>Form </h5>
+            <Field placeholder="Organization name" name={`organizationName`} />
+            <ErrorMessage name={`organizationName`} />
+            <h5>Organzation users </h5>
+            <FieldArray
+              name="users"
+              render={arrayHelpers => {
+                const users = values.users;
+                return (
+                  <div>
+                    {users && users.length > 0
+                      ? users.map((user, index) => (
+                        <div key={index}>
+                          <Field
+                            placeholder="user name"
+                            name={`users.${index}.name`}
                           />
-                        </div>
-                      </>
-                    ))}
+                          <ErrorMessage name={`users.${index}.name`} />
+                          <br />
 
-                </div>
-              )}
-            </FieldArray>
-            <button type="submit">Invite</button>
+                          <Field
+                            placeholder="user email"
+                            name={`users.${index}.email`}
+                          />
+                          <ErrorMessage name={`users.${index}.email`} />
+
+                          <br />
+
+                          <button
+                            type="button"
+                            onClick={() => arrayHelpers.remove(index)} // remove a friend from the list
+                          >
+                            -
+                          </button>
+                          <br />
+                          <br />
+                        </div>
+                      ))
+                      : null}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        arrayHelpers.push({
+                          name: "",
+                          email: ""
+                        })
+                      } // insert an empty string at a position
+                    >
+                      add a User
+                    </button>
+                    <br />
+                    <br />
+                    <br />
+                    <div>
+                      <button type="submit">Form Submit</button>
+                    </div>
+                  </div>
+                );
+              }}
+            />
+            <hr />
           </Form>
         )}
-      </Formik>
+      />
     </div>
   );
 }

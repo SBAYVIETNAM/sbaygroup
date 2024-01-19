@@ -240,6 +240,7 @@ export default function SearchResponse(props: any) {
         vietnam: true,
         vietravel: true
     })
+
     const filterFn = (e: any, i: number) => {
         console.log(e.target.checked);
         if (e.target.checked == false && i == 1) {
@@ -426,7 +427,7 @@ export default function SearchResponse(props: any) {
 
     const orderfn = () => {
 
-        console.log('đặt chuyến bay ...');
+        // console.log('listPassengers ...', listPassengers);
 
         const orderData = {
             action: 'DOMMakeReservation',
@@ -529,13 +530,19 @@ export default function SearchResponse(props: any) {
 
     /* Checkout */
     const [checkoutStep, setCheckoutStep] = useState(1)
+
     const getListPassengers = function (e: any) {
         console.log('getListPassengers', e);
+        const x: any = e.adultbaggages.concat(e.childbaggages).concat(e.infanbaggages)
+        setListPassengers(x)
         setCheckoutStep(2)
     }
 
     const getContactAndTax = function (e: any) {
         console.log('getContactAndTax', e);
+        setContactInfo(e.ContactInfo[0])
+        setContactInfo(e.InvoiceInfo[0])
+        orderfn()
     }
 
 
@@ -545,7 +552,7 @@ export default function SearchResponse(props: any) {
                 ?
                 <>
                     <TopSearch
-                        className="mt-32"
+
                         action={props.action}
                         ItineraryType={props.ItineraryType}
                         StartPoint={props.StartPoint}
@@ -1030,13 +1037,22 @@ export default function SearchResponse(props: any) {
                     :
                     <div className=" mt-28 bg-white mx-auto rounded-3xl p-5">
                         <div className=" flex flex-col max-w-7xl mx-auto py-2">
-                            <p className="text-red-600">Chúc mừng quý khách đặt chỗ thành công!</p>
+                            <p className="text-red-600 my-5">Chúc mừng quý khách đặt chỗ thành công!</p>
                             <p>Mã đặt chỗ của quý khách</p>
-                            <p className="text-4xl">
-                                {'completeData.Data.DepartureCode'}
+                            {completeData.Data.DepartureCode != "" &&
+                                <>
+                                    <p className=" text-sm mt-2 font-bold">Chiều đi</p>
+                                    <p className="text-4xl my-10">
+                                        {completeData.Data.DepartureCode}
+                                    </p>
+                                </>
+
+                            }
+                            <p>
+                                Quý khách vui lòng thanh toán số tiền là: <strong className="text-red-600 font-bold">{completeData.current_price_cart_row.toLocaleString()}</strong>  vnd
                             </p>
                             <p>
-                                {"Quý khách vui lòng thanh toán, đặt chỗ sẽ hết hạn nếu quý khách không thanh toán trước thời gian:" + completeData.exp_date}
+                                {`Đặt chỗ sẽ hết hạn nếu quý khách không thanh toán trước thời gian:` + completeData.exp_date}
                             </p>
                         </div>
 

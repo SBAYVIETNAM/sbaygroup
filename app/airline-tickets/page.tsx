@@ -89,9 +89,9 @@ export default async function AirLineTicket({ params }: { params: { slug: string
   const ItineraryType = 1
   const StartPoint = 'HAN'
   const EndPoint = 'SGN'
-  const DepartureDate = '01/17/2024'
-  const Adult = 3
-  const Children = 2
+  const DepartureDate = '01/22/2024'
+  const Adult = 2
+  const Children = 1
   const Infant = 1
 
   const searchData = await getDepart(

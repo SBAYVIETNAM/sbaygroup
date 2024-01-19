@@ -1,6 +1,9 @@
 "use client"
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage, FieldArray } from 'formik';
+import * as Yup from "yup";
+import { format, addDays } from "date-fns";
+import { da, vi } from 'date-fns/locale';
 
 
 
@@ -18,7 +21,7 @@ export default function DepartureBaggagesInfomation(
             AudultDepartureBaggagesInfomation.push({
                 "FirstName": "",
                 "LastName": "",
-                "Type": "",
+                "Type": "ADT",
                 "Gender": "1",
                 "Birthday": "",
                 "Phone": "",
@@ -35,7 +38,7 @@ export default function DepartureBaggagesInfomation(
             ChildDepartureBaggagesInfomation.push({
                 "FirstName": "",
                 "LastName": "",
-                "Type": "",
+                "Type": "CHD",
                 "Gender": "1",
                 "Birthday": "",
                 "Phone": "",
@@ -52,7 +55,7 @@ export default function DepartureBaggagesInfomation(
             InfantDepartureBaggagesInfomation.push({
                 "FirstName": "",
                 "LastName": "",
-                "Type": "",
+                "Type": "INF",
                 "Gender": "1",
                 "Birthday": "",
                 "Phone": "",
@@ -76,11 +79,65 @@ export default function DepartureBaggagesInfomation(
         <>
             <Formik
                 initialValues={initialValuesAudultDepartureBaggagesInfomation}
+
+                validationSchema={Yup.object({
+                    adultbaggages: Yup.array().of(
+                        Yup.object().shape({
+                            FirstName: Yup.string().required("Họ là bắt buộc"),
+                            LastName: Yup.string().required("Tên đệm và tên chính là bắt buộc"),
+                            // email: Yup.string()
+                            //   .required("email required")
+                            //   .email("Enter valid email")
+
+                        })
+                    ),
+
+                    childbaggages: Yup.array().of(
+                        Yup.object().shape({
+                            FirstName: Yup.string().required("Họ là bắt buộc"),
+                            LastName: Yup.string().required("Tên đệm và tên chính là bắt buộc"),
+                            Birthday: Yup.string().required("Ngày sinh là bắt buộc"),
+                        })
+                    ),
+
+                    infanbaggages: Yup.array().of(
+                        Yup.object().shape({
+                            FirstName: Yup.string().required("Họ là bắt buộc"),
+                            LastName: Yup.string().required("Tên đệm và tên chính là bắt buộc"),
+                            Birthday: Yup.string().required("Ngày sinh là bắt buộc"),
+                        })
+                    ),
+
+
+                })}
+
                 onSubmit={async (values) => {
                     // await new Promise((r) => setTimeout(r, 500));
                     // alert(JSON.stringify(values, null, 2));
                     // console.log(values.adultbaggages);
-                    getListPassengers(values.adultbaggages)
+                    // console.log('onSubmit');
+                    const childbaggages:any[] = values.childbaggages
+                    const newChildbaggages:any = []
+                    childbaggages.forEach(e=>{
+                        const newob = Object.assign({}, e, {
+                            Birthday:format(new Date(e.Birthday), "dd/MM/yyyy", { locale: vi })
+                        })
+                        newChildbaggages.push(newob)
+                    })
+
+                    const infanbaggages:any[] = values.infanbaggages
+                    const newInfanbaggages:any = []
+                    infanbaggages.forEach(e=>{
+                        const newob = Object.assign({}, e, {
+                            Birthday:format(new Date(e.Birthday), "dd/MM/yyyy", { locale: vi })
+                        })
+                        newInfanbaggages.push(newob)
+                    })
+                    getListPassengers({
+                        'adultbaggages': values.adultbaggages,
+                        'childbaggages': newChildbaggages,
+                        'infanbaggages': newInfanbaggages,
+                    })
                 }}
             >
                 {({ values }) => (
@@ -104,7 +161,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`adultbaggages.${index}.gender`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                         <div className=' col-span-2'>
@@ -118,7 +175,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`adultbaggages.${index}.FirstName`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                         <div className=' col-span-2'>
@@ -132,7 +189,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`adultbaggages.${index}.LastName`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                     </div>
@@ -176,7 +233,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`childbaggages.${index}.gender`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                         <div className=' col-span-1'>
@@ -190,21 +247,21 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`childbaggages.${index}.FirstName`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                         <div className=' col-span-2'>
                                                             <label htmlFor={`childbaggages.${index}.LastName`} className="block mb-2 text-sm font-medium text-start">Tên đệm và tên chính</label>
                                                             <Field
                                                                 name={`childbaggages.${index}.LastName`}
-                                                                placeholder="Van Hai"
+                                                                placeholder="Thi Loan"
                                                                 type="text"
                                                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                             />
                                                             <ErrorMessage
                                                                 name={`childbaggages.${index}.LastName`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                         <div className=' col-span-2'>
@@ -218,7 +275,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`childbaggages.${index}.Birthday`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                     </div>
@@ -262,7 +319,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`infanbaggages.${index}.gender`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                         <div className=' col-span-1'>
@@ -276,7 +333,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`infanbaggages.${index}.FirstName`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                         <div className=' col-span-2'>
@@ -290,7 +347,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`infanbaggages.${index}.LastName`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                         <div className=' col-span-2'>
@@ -304,7 +361,7 @@ export default function DepartureBaggagesInfomation(
                                                             <ErrorMessage
                                                                 name={`infanbaggages.${index}.Birthday`}
                                                                 component="div"
-                                                                className="field-error"
+                                                                className="field-error text-start text-red-600"
                                                             />
                                                         </div>
                                                     </div>
