@@ -19,7 +19,12 @@ export default function TopSearch(props: any) {
     const findTo: any = airportOptions.find(({ value }) => value === EndPoint)
 
     const DepartureDate = props.DepartureDate
-
+    let ReturnDate
+    if(props.ReturnDate == ""){
+        ReturnDate = format(addDays(new Date(), 2), 'yyyy-MM-dd', { locale: vi })
+    } else {
+        ReturnDate = format(new Date(props.ReturnDate), 'yyyy-MM-dd', { locale: vi })
+    }
 
     const [typeOfTicket, setTypeOfTicket] = useState<number>(parseInt(ItineraryType))
     /* Select depart */
@@ -42,30 +47,43 @@ export default function TopSearch(props: any) {
     const [minDate, setMinDate] = useState(format(addDays(new Date(), 0), 'yyyy-MM-dd', { locale: vi }))
     const [maxDate, setMaxDate] = useState(format(addDays(new Date(), 365), 'yyyy-MM-dd', { locale: vi }))
     const [departTime, setDepartTime] = useState(format(new Date(DepartureDate), 'yyyy-MM-dd', { locale: vi }))
-
+    const [returnTime, setReturnTime] = useState(format(new Date(ReturnDate), 'yyyy-MM-dd', { locale: vi }))
+    
     /*  */
     const router = useRouter()
 
-    const searchDepart = async () => {
-        const data = {
-            action: action,
-            ItineraryType: typeOfTicket,
-            StartPoint: selectedDepartAirport.value,
-            EndPoint: selectedReturnAirport.value,
-            DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
-            ReturnDate: "",
-            Adult: Adult,
-            Children: Children,
-            Infant: Infant
-        };
-        console.log('data', data);
-        router.push('/airline-tickets?a=DOMSearchFlights&t=' + data.ItineraryType + '&sp=' + data.StartPoint + '&ep=' + data.EndPoint + '&dp=' + data.DepartureDate + '&rd=' + data.ReturnDate + '&ad=' + data.Adult + '&ch=' + data.Children + '&ba=' + data.Infant)
-        // router.refresh()
-        // location.reload()
-        // router.reload()
+    const search = async () => {
+        if (typeOfTicket == 1) {
+            const data = {
+                action: action,
+                ItineraryType: typeOfTicket,
+                StartPoint: selectedDepartAirport.value,
+                EndPoint: selectedReturnAirport.value,
+                DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
+                ReturnDate: "",
+                Adult: Adult,
+                Children: Children,
+                Infant: Infant
+            };
+            console.log('data', data);
+            router.push('/airline-tickets?a=DOMSearchFlights&t=' + data.ItineraryType + '&sp=' + data.StartPoint + '&ep=' + data.EndPoint + '&dp=' + data.DepartureDate + '&rd=' + data.ReturnDate + '&ad=' + data.Adult + '&ch=' + data.Children + '&ba=' + data.Infant)
+        } else {
+            
+            const data = {
+                action: action,
+                ItineraryType: typeOfTicket,
+                StartPoint: selectedDepartAirport.value,
+                EndPoint: selectedReturnAirport.value,
+                DepartureDate: format(new Date(departTime), "MM/dd/yyyy", { locale: vi }),
+                ReturnDate: format(new Date(returnTime), "MM/dd/yyyy", { locale: vi }),
+                Adult: Adult,
+                Children: Children,
+                Infant: Infant
+            };
+            console.log('data', data);
+            router.push('/airline-tickets?a=DOMSearchFlights&t=' + data.ItineraryType + '&sp=' + data.StartPoint + '&ep=' + data.EndPoint + '&dp=' + data.DepartureDate + '&rd=' + data.ReturnDate + '&ad=' + data.Adult + '&ch=' + data.Children + '&ba=' + data.Infant)
 
-
-
+        }
     }
 
     return (
@@ -139,55 +157,39 @@ export default function TopSearch(props: any) {
                     <div className=" col-span-12 xl:col-span-4 px-3 flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:space-x-5 justify-between ...">
 
 
-                        {typeOfTicket == 1
-                            ?
+
+
+                        <div className=" flex flex-col space-y-1 w-full">
+                            <div className=' flex flex-row'>
+                                <FaRegCalendar className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
+                                <label htmlFor="fromDate" className="block text-sm font-medium text-white">Ngày đi</label>
+                            </div>
+                            <input
+                                onChange={(e: any) => { setDepartTime(e.currentTarget.value) }}
+                                id="fromDate"
+                                className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date"
+                                name="trip-start"
+                                value={departTime}
+                                min={minDate}
+                                max={maxDate} />
+                        </div>
+
+                        {typeOfTicket == 2 &&
                             <div className=" flex flex-col space-y-1 w-full">
                                 <div className=' flex flex-row'>
-                                    <FaRegCalendar className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
-                                    <label htmlFor="fromDate" className="block text-sm font-medium text-white">Ngày đi</label>
+                                    <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
+                                    <label htmlFor="toDate" className="block text-sm font-medium text-white">Ngày đến</label>
                                 </div>
                                 <input
-                                    onChange={(e: any) => { setDepartTime(e.currentTarget.value) }}
-                                    id="fromDate"
-                                    className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date"
+                                    onChange={(e: any) => { setReturnTime(e.currentTarget.value) }}
+                                    id="toDate"
+                                    className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
+                                    type="date"
                                     name="trip-start"
-                                    value={departTime}
+                                    value={returnTime}
                                     min={minDate}
                                     max={maxDate} />
                             </div>
-                            :
-                            <>
-                                <div className=" flex flex-col space-y-1 w-full">
-                                    <div className=' flex flex-row'>
-                                        <FaRegCalendar className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
-                                        <label htmlFor="fromDate" className="block text-sm font-medium text-white">Ngày đi</label>
-                                    </div>
-                                    <input
-                                        onChange={(e: any) => { setDepartTime(e.currentTarget.value) }}
-                                        id="fromDate"
-                                        className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400" type="date"
-                                        name="trip-start"
-                                        value={departTime}
-                                        min={minDate}
-                                        max={maxDate} />
-                                </div>
-                                <div className=" flex flex-col space-y-1 w-full">
-                                    <div className=' flex flex-row'>
-                                        <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 opacity-70 text-white" />
-                                        <label htmlFor="toDate" className="block text-sm font-medium text-white">Ngày đến</label>
-                                    </div>
-                                    <input
-                                        // onChange={(e: any) => { setReturnTime(e.currentTarget.value) }}
-                                        id="toDate"
-                                        className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
-                                        type="date"
-                                        name="trip-start"
-                                        // value={returnTime}
-                                        min={minDate}
-                                        max={maxDate} />
-                                </div>
-                            </>
-
                         }
                     </div>
                 </div>
@@ -276,7 +278,7 @@ export default function TopSearch(props: any) {
                 <div className=" col-span-6 xl:col-span-2 px-3 flex flex-col justify-between ...">
                     <label className="block text-sm font-medium text-white invisible">Tìm</label>
                     <button
-                        onClick={searchDepart}
+                        onClick={search}
                         type="button"
                         className="text-white mb-5 bg-blue-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10">Tìm kiếm</button>
                 </div>

@@ -12,63 +12,16 @@ import TopSearch from "./top-search";
 var _ = require('lodash');
 import DepartureBaggagesInfomation from "./DepartureBaggagesInfomation";
 import ContactAndTaxInfomation from "./contact-tax-Infomation";
-const airportOptions = [
-    { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' },
-    { value: 'HPH', label: 'Hải Phòng', type: 'Miền Bắc' },
-    { value: 'DIN', label: 'Điện Biên Phủ', type: 'Miền Bắc' },
-    { value: 'VDO', label: 'Vân Đồn', type: 'Miền Bắc' },
-    { value: 'SGN', label: 'Hồ Chí Minh', type: 'Miền Nam' },
-    { value: 'PQC', label: 'Phú Quốc', type: 'Miền Nam' },
-    { value: 'VCA', label: 'Cần Thơ', type: 'Miền Nam' },
-    { value: 'VCS', label: 'Côn Đảo', type: 'Miền Nam' },
-    { value: 'VKG', label: 'Kiên Giang', type: 'Miền Nam' },
-    { value: 'DAD', label: 'Đà Nẵng', type: 'Miền Trung' },
-    { value: 'CXR', label: 'Nha Trang', type: 'Miền Trung' },
-    { value: 'DLI', label: 'Đà Lạt', type: 'Miền Trung' },
-    { value: 'HUI', label: 'Huế', type: 'Miền Trung' },
-    { value: 'BMV', label: 'Ban Mê Thuột', type: 'Miền Trung' },
-    { value: 'PXU', label: 'PleiKu', type: 'Miền Trung' },
-    { value: 'TBB', label: 'Phú Yên', type: 'Miền Trung' },
-    { value: 'THD', label: 'Thanh Hóa', type: 'Miền Trung' },
-    { value: 'UIH', label: 'Qui Nhơn', type: 'Miền Trung' },
-    { value: 'VCL', label: 'Chu Lai', type: 'Miền Trung' },
-    { value: 'VDH', label: 'Quảng Bình', type: 'Miền Trung' },
-    { value: 'VII', label: 'Vinh', type: 'Miền Trung' },
-    { value: 'BKK', label: 'Băng Cốc', type: 'Châu Á' },
-    { value: 'CAN', label: 'Quảng Châu', type: 'Châu Á' },
-    { value: 'HKG', label: 'Hồng Kông', type: 'Châu Á' },
-    { value: 'KUL', label: 'Kuala Lumpur', type: 'Châu Á' },
-    { value: 'ICN', label: 'Seoul, Incheon', type: 'Châu Á' },
-    { value: 'SHA', label: 'Thượng Hải', type: 'Châu Á' },
-    { value: 'SIN', label: 'Singapore', type: 'Châu Á' },
-    { value: 'TPE', label: 'Đài Bắc', type: 'Châu Á' },
-    { value: 'TYO', label: 'Tokyo', type: 'Châu Á' },
-    { value: 'KOS', label: 'Campuchia', type: 'Châu Á' },
-    { value: 'AMS', label: 'Amsterdam', type: 'Châu Âu' },
-    { value: 'CPH', label: 'Cô-pen-ha-gen', type: 'Châu Âu' },
-    { value: 'FRA', label: 'Frankfurt', type: 'Châu Âu' },
-    { value: 'LON', label: 'London', type: 'Châu Âu' },
-    { value: 'PAR', label: 'Paris', type: 'Châu Âu' },
-    { value: 'PRG', label: 'Praha', type: 'Châu Âu' },
-    { value: 'STO', label: 'Stockholm', type: 'Châu Âu' },
-    { value: 'ZRH', label: 'Zurich', type: 'Châu Âu' },
-    { value: 'DFW', label: 'Dallas', type: 'Châu Úc' },
-    { value: 'HOU', label: 'Houston', type: 'Châu Úc' },
-    { value: 'LAX', label: 'Los Angeles', type: 'Châu Úc' },
-    { value: 'MEL', label: 'Men-bơn', type: 'Châu Úc' },
-    { value: 'NYC', label: 'New York', type: 'Châu Úc' },
-    { value: 'SFO', label: 'San Francisco', type: 'Châu Úc' },
-    { value: 'SYD', label: 'Sydney', type: 'Châu Úc' },
-    { value: 'YTO', label: 'Toronto', type: 'Châu Úc' },
-    { value: 'YVR', label: 'Vancouver', type: 'Châu Úc' },
-]
-
+import WeekCalendarDepart from "./week-calendar-depart";
+import WeekCalendarReturn from "./week-calendar-return";
+import airportOptions from "../_helper/airport-options";
 
 export default function SearchResponse(props: any) {
     console.log('searchDataxxxxx', props.searchData);
     // let searchData = props.searchData
 
     const [departData, setDepartData] = useState<any[]>([])
+    const [returnData, setReturnData] = useState<any[]>([])
 
     useEffect(() => {
         let x: any = []
@@ -77,6 +30,13 @@ export default function SearchResponse(props: any) {
             x.push(props.searchData.Data.DepartureFlights[key])
         }
         setDepartData(x)
+
+        let y: any = []
+        for (const key in props.searchData.Data.ReturnFlights) {
+            y.push(props.searchData.Data.ReturnFlights[key])
+        }
+        setReturnData(y)
+
         setTrip({
             from: findFrom?.label + ', ' + findFrom?.label + ' (' + findFrom?.value + ')',
             to: findTo?.label + ', ' + findTo?.label + ' (' + findTo?.value + ')'
@@ -99,44 +59,6 @@ export default function SearchResponse(props: any) {
         Infant: props.Infant
     })
 
-    const weekChooseDepart =
-        [
-            {
-                dayOfWeek: format(addDays(new Date(props.DepartureDate), -2), 'EEEE', { locale: vi }),
-                date: format(addDays(new Date(props.DepartureDate), -2), 'dd/MM', { locale: vi }),
-                dateStandar: format(addDays(new Date(props.DepartureDate), -2), "MM/dd/yyyy", { locale: vi }),
-            },
-            {
-                dayOfWeek: format(addDays(new Date(props.DepartureDate), -1), 'EEEE', { locale: vi }),
-                date: format(addDays(new Date(props.DepartureDate), -1), 'dd/MM', { locale: vi }),
-                dateStandar: format(addDays(new Date(props.DepartureDate), -1), "MM/dd/yyyy", { locale: vi }),
-            },
-            {
-                dayOfWeek: format(addDays(new Date(props.DepartureDate), 0), 'EEEE', { locale: vi }),
-                date: format(addDays(new Date(props.DepartureDate), 0), 'dd/MM', { locale: vi }),
-                dateStandar: format(addDays(new Date(props.DepartureDate), 0), "MM/dd/yyyy", { locale: vi }),
-            },
-            {
-                dayOfWeek: format(addDays(new Date(props.DepartureDate), 1), 'EEEE', { locale: vi }),
-                date: format(addDays(new Date(props.DepartureDate), 1), 'dd/MM', { locale: vi }),
-                dateStandar: format(addDays(new Date(props.DepartureDate), 2), "MM/dd/yyyy", { locale: vi }),
-            },
-            {
-                dayOfWeek: format(addDays(new Date(props.DepartureDate), 3), 'EEEE', { locale: vi }),
-                date: format(addDays(new Date(props.DepartureDate), 3), 'dd/MM', { locale: vi }),
-                dateStandar: format(addDays(new Date(props.DepartureDate), 3), "MM/dd/yyyy", { locale: vi }),
-            },
-            {
-                dayOfWeek: format(addDays(new Date(props.DepartureDate), 4), 'EEEE', { locale: vi }),
-                date: format(addDays(new Date(props.DepartureDate), 4), 'dd/MM', { locale: vi }),
-                dateStandar: format(addDays(new Date(props.DepartureDate), 4), "MM/dd/yyyy", { locale: vi }),
-            },
-        ]
-    const searchInDateDepart = function (e: any) {
-        // console.log(e.target.getAttribute('data-datestandar'));
-        const dateChoose = e.target.getAttribute('data-datestandar')
-        // router.push('/airline-tickets?a=DOMSearchFlights&t=' + typeOfTicket + '&sp=' + selectedDepartAirport + '&ep=' + selectedReturnAirport + '&dp=' + dateChoose + '&rd=' + format(addDays(new Date(dateChoose), 1), 'MM/dd/yyyy', { locale: vi }) + '&ad=' + Adult + '&ch=' + Children + '&ba=' + Infant)
-    }
     const findFrom: any = airportOptions.find(({ value }) => value === props.StartPoint)
     console.log('findFrom', findFrom);
     const findTo: any = airportOptions.find(({ value }) => value === props.EndPoint)
@@ -557,12 +479,12 @@ export default function SearchResponse(props: any) {
                 ?
                 <>
                     <TopSearch
-
                         action={props.action}
                         ItineraryType={props.ItineraryType}
                         StartPoint={props.StartPoint}
                         EndPoint={props.EndPoint}
                         DepartureDate={props.DepartureDate}
+                        ReturnDate={props.ReturnDate}
                         Adult={props.Adult}
                         Children={props.Children}
                         Infant={props.Infant}
@@ -665,32 +587,16 @@ export default function SearchResponse(props: any) {
                                             <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
                                             <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(props.DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                                         </div>
-                                        <ul className="flex flex-row justify-between ...">
-                                            {weekChooseDepart.map((e: any, i: number) => {
-                                                // console.log('here ...', format(new Date(props.DepartureDate), "dd/MM", { locale: vi }), format(new Date(e.dateStandar), "dd/MM", { locale: vi }))
-                                                return (
-                                                    <>
-                                                        {
-                                                            format(new Date(props.DepartureDate), "dd/MM", { locale: vi }) == e.date
-                                                                ?
-                                                                <li key={'weekChooseDepart' + i} className="mx-auto border-b-2 border-red-600">
-                                                                    <button data-datestandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg text-red-600">
-                                                                        {e.dayOfWeek} <br />
-                                                                        {e.date}</button>
-                                                                </li>
-                                                                :
-                                                                <li key={'weekChooseDepart' + i} className="mx-auto border-b-2 border-red-100">
-                                                                    <button data-datestandar={e.dateStandar} onClick={(e) => searchInDateDepart(e)} className="inline-block p-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">
-                                                                        {e.dayOfWeek} <br />
-                                                                        {e.date}</button>
-                                                                </li>
-                                                        }
-                                                    </>
-                                                )
-                                            })}
-
-
-                                        </ul>
+                                        <WeekCalendarDepart
+                                            DepartureDate={props.DepartureDate}
+                                            
+                                            typeOfTicket={typeOfTicket}
+                                            StartPoint={props.StartPoint}
+                                            EndPoint={props.EndPoint}
+                                            Adult={Adult}
+                                            Children={Children}
+                                            Infant={Infant}
+                                        ></WeekCalendarDepart>
                                     </div>
 
                                     <div className="flex flex-col space-y-5 mt-5">
@@ -768,14 +674,211 @@ export default function SearchResponse(props: any) {
                                             })
                                             :
                                             <p className="text-center">Không có chuyến nào, vui lòng tìm lại với điều kiện khác</p>
-                                            
                                         }
-
                                     </div>
                                 </div>
                             }
 
+                            {
+                                typeOfTicket == 2 &&
+                                <>
+                                    <div className="h-full">
+                                        <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                                            <div className=" text-start pt-2 bg-red-100">
+                                                <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
+                                                <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(props.DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+                                            </div>
+                                            <WeekCalendarDepart
+                                                DepartureDate={props.DepartureDate}
+                                                typeOfTicket={typeOfTicket}
+                                                StartPoint={props.StartPoint}
+                                                EndPoint={props.EndPoint}
+                                                Adult={Adult}
+                                                Children={Children}
+                                                Infant={Infant}
+                                            ></WeekCalendarDepart>
+                                        </div>
 
+                                        <div className="flex flex-col space-y-5 mt-5">
+                                            {departData.length != 0
+                                                ?
+                                                departData.map((e: any, i: number) => {
+                                                    console.log('departData....', e);
+                                                    return (
+                                                        <>
+                                                            <div key={'departData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                                                                <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                                                                    <div className="flex items-center gap-4">
+                                                                        {e.AirlineCode == 'VJ' &&
+                                                                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                                                        }
+                                                                        {e.AirlineCode == 'VN' &&
+                                                                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                                                        }
+                                                                        {e.AirlineCode == 'QH' &&
+                                                                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                                                        }
+                                                                        {e.AirlineCode == 'VU' &&
+                                                                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                                                        }
+                                                                        <div className="font-medium dark:text-white">
+                                                                            <div>{e.AirlineCode}</div>
+                                                                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                                                                <p>{e.FlightNumber}</p>
+                                                                                <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                                            </div>
+                                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                                                                    <div className=" col-span-6 xl:col-span-1 px-3">
+                                                                        <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
+                                                                    </div>
+                                                                    <div className="col-span-6 xl:col-span-4">
+                                                                        <div className="flex flex-row space-x-3">
+                                                                            <FaPlaneDeparture className="w-4 my-auto" />
+                                                                            <div className="flex flex-col w-full space-y-2">
+                                                                                <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                                                                                <div className="border-dashed border-b-2 ..."></div>
+                                                                                {e.Stops == 0 &&
+                                                                                    <p className="text-center text-xs">Bay thẳng</p>
+                                                                                }
+                                                                            </div>
+                                                                            <FaPlaneArrival className="w-4 my-auto" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className=" col-span-6 xl:col-span-1 px-3">
+                                                                        <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div className="grid col-span-4 xl:col-span-3">
+                                                                    <div className="flex flex-col px-5 space-y-1">
+                                                                        {priceTax == true
+                                                                            ?
+                                                                            <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}<span className=" text-xs">vnđ</span></h4>
+                                                                            :
+                                                                            <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
+
+                                                                        }
+                                                                        <button onClick={(e) => chooseFlightDepartFn(e)} data-departureflightsession={e.FlightSession} type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </>
+                                                    );
+                                                })
+                                                :
+                                                <p className="text-center">Không có chuyến nào, vui lòng tìm lại với điều kiện khác</p>
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div className="h-full mt-5">
+                                        <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                                            <div className=" text-start pt-2 bg-blue-200">
+                                                <h1 className="text-black mx-3 text-xl font-bold">{trip.to} - {trip.from}</h1>
+                                                <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(props.DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+                                            </div>
+                                            <WeekCalendarReturn
+                                                DepartureDate={props.DepartureDate}
+                                                ReturnDate={props.ReturnDate}
+                                                typeOfTicket={typeOfTicket}
+                                                StartPoint={props.StartPoint}
+                                                EndPoint={props.EndPoint}
+                                                Adult={Adult}
+                                                Children={Children}
+                                                Infant={Infant}
+                                            ></WeekCalendarReturn>
+                                        </div>
+
+                                        <div className="flex flex-col space-y-5 mt-5">
+
+                                            {returnData.length != 0
+                                                ?
+                                                returnData.map((e: any, i: number) => {
+                                                    console.log('returnData....', e);
+                                                    return (
+                                                        <>
+                                                            <div key={'returnData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                                                                <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                                                                    <div className="flex items-center gap-4">
+                                                                        {e.AirlineCode == 'VJ' &&
+                                                                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                                                        }
+                                                                        {e.AirlineCode == 'VN' &&
+                                                                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                                                        }
+                                                                        {e.AirlineCode == 'QH' &&
+                                                                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                                                        }
+                                                                        {e.AirlineCode == 'VU' &&
+                                                                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                                                        }
+                                                                        <div className="font-medium dark:text-white">
+                                                                            <div>{e.AirlineCode}</div>
+                                                                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                                                                <p>{e.FlightNumber}</p>
+                                                                                <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                                            </div>
+                                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                                                                    <div className=" col-span-6 xl:col-span-1 px-3">
+                                                                        <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
+                                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
+                                                                    </div>
+                                                                    <div className="col-span-6 xl:col-span-4">
+                                                                        <div className="flex flex-row space-x-3">
+                                                                            <FaPlaneDeparture className="w-4 my-auto" />
+                                                                            <div className="flex flex-col w-full space-y-2">
+                                                                                <p className="text-center text-xs">{e.Duration + ' phút'}</p>
+                                                                                <div className="border-dashed border-b-2 ..."></div>
+                                                                                {e.Stops == 0 &&
+                                                                                    <p className="text-center text-xs">Bay thẳng</p>
+                                                                                }
+                                                                            </div>
+                                                                            <FaPlaneArrival className="w-4 my-auto" />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className=" col-span-6 xl:col-span-1 px-3">
+                                                                        <p className="text-center">{format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
+                                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.EndPoint}</p>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div className="grid col-span-4 xl:col-span-3">
+                                                                    <div className="flex flex-col px-5 space-y-1">
+                                                                        {priceTax == true
+                                                                            ?
+                                                                            <h4 className="text-red-600 text-lg font-bold text-center">{e.TotalPrice.toLocaleString()}<span className=" text-xs">vnđ</span></h4>
+                                                                            :
+                                                                            <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
+
+                                                                        }
+                                                                        {/* <button onClick={(e) => chooseFlightDepartFn(e)} data-departureflightsession={e.FlightSession} type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button> */}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </>
+                                                    );
+                                                })
+                                                :
+                                                <p className="text-center">Không có chuyến nào, vui lòng tìm lại với điều kiện khác</p>
+                                            }
+
+                                        </div>
+                                    </div>
+                                </>
+
+                            }
 
                             {checkOutStep == true &&
                                 <div className="shadow-md ... rounded-xl hover:bg-stone-100 p-3 my-10 max-h-32">
@@ -805,8 +908,6 @@ export default function SearchResponse(props: any) {
                             }
 
                         </div>
-
-
                     </div>
                 </>
 
@@ -1058,7 +1159,6 @@ export default function SearchResponse(props: any) {
                                         {completeData.Data.DepartureCode}
                                     </p>
                                 </>
-
                             }
                             <p>
                                 Quý khách vui lòng thanh toán số tiền là: <strong className="text-red-600 font-bold">{completeData.current_price_cart_row.toLocaleString()}</strong>  vnd

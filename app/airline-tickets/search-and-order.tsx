@@ -26,6 +26,7 @@ export default function SearchAndOrder(props: any) {
                     StartPoint={props.StartPoint}
                     EndPoint={props.EndPoint}
                     DepartureDate={props.DepartureDate}
+                    ReturnDate={props.ReturnDate}
                     Adult={props.Adult}
                     Children={props.Children}
                     Infant={props.Infant}

@@ -17,57 +17,7 @@ import { format, addDays } from "date-fns";
 import { useState, useEffect } from 'react';
 import { da, vi } from 'date-fns/locale';
 import { useRouter } from 'next/navigation'
-
-const airportOptions = [
-    { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' },
-    { value: 'HPH', label: 'Hải Phòng', type: 'Miền Bắc' },
-    { value: 'DIN', label: 'Điện Biên Phủ', type: 'Miền Bắc' },
-    { value: 'VDO', label: 'Vân Đồn', type: 'Miền Bắc' },
-    { value: 'SGN', label: 'Hồ Chí Minh', type: 'Miền Nam' },
-    { value: 'PQC', label: 'Phú Quốc', type: 'Miền Nam' },
-    { value: 'VCA', label: 'Cần Thơ', type: 'Miền Nam' },
-    { value: 'VCS', label: 'Côn Đảo', type: 'Miền Nam' },
-    { value: 'VKG', label: 'Kiên Giang', type: 'Miền Nam' },
-    { value: 'DAD', label: 'Đà Nẵng', type: 'Miền Trung' },
-    { value: 'CXR', label: 'Nha Trang', type: 'Miền Trung' },
-    { value: 'DLI', label: 'Đà Lạt', type: 'Miền Trung' },
-    { value: 'HUI', label: 'Huế', type: 'Miền Trung' },
-    { value: 'BMV', label: 'Ban Mê Thuột', type: 'Miền Trung' },
-    { value: 'PXU', label: 'PleiKu', type: 'Miền Trung' },
-    { value: 'TBB', label: 'Phú Yên', type: 'Miền Trung' },
-    { value: 'THD', label: 'Thanh Hóa', type: 'Miền Trung' },
-    { value: 'UIH', label: 'Qui Nhơn', type: 'Miền Trung' },
-    { value: 'VCL', label: 'Chu Lai', type: 'Miền Trung' },
-    { value: 'VDH', label: 'Quảng Bình', type: 'Miền Trung' },
-    { value: 'VII', label: 'Vinh', type: 'Miền Trung' },
-    { value: 'BKK', label: 'Băng Cốc', type: 'Châu Á' },
-    { value: 'CAN', label: 'Quảng Châu', type: 'Châu Á' },
-    { value: 'HKG', label: 'Hồng Kông', type: 'Châu Á' },
-    { value: 'KUL', label: 'Kuala Lumpur', type: 'Châu Á' },
-    { value: 'ICN', label: 'Seoul, Incheon', type: 'Châu Á' },
-    { value: 'SHA', label: 'Thượng Hải', type: 'Châu Á' },
-    { value: 'SIN', label: 'Singapore', type: 'Châu Á' },
-    { value: 'TPE', label: 'Đài Bắc', type: 'Châu Á' },
-    { value: 'TYO', label: 'Tokyo', type: 'Châu Á' },
-    { value: 'KOS', label: 'Campuchia', type: 'Châu Á' },
-    { value: 'AMS', label: 'Amsterdam', type: 'Châu Âu' },
-    { value: 'CPH', label: 'Cô-pen-ha-gen', type: 'Châu Âu' },
-    { value: 'FRA', label: 'Frankfurt', type: 'Châu Âu' },
-    { value: 'LON', label: 'London', type: 'Châu Âu' },
-    { value: 'PAR', label: 'Paris', type: 'Châu Âu' },
-    { value: 'PRG', label: 'Praha', type: 'Châu Âu' },
-    { value: 'STO', label: 'Stockholm', type: 'Châu Âu' },
-    { value: 'ZRH', label: 'Zurich', type: 'Châu Âu' },
-    { value: 'DFW', label: 'Dallas', type: 'Châu Úc' },
-    { value: 'HOU', label: 'Houston', type: 'Châu Úc' },
-    { value: 'LAX', label: 'Los Angeles', type: 'Châu Úc' },
-    { value: 'MEL', label: 'Men-bơn', type: 'Châu Úc' },
-    { value: 'NYC', label: 'New York', type: 'Châu Úc' },
-    { value: 'SFO', label: 'San Francisco', type: 'Châu Úc' },
-    { value: 'SYD', label: 'Sydney', type: 'Châu Úc' },
-    { value: 'YTO', label: 'Toronto', type: 'Châu Úc' },
-    { value: 'YVR', label: 'Vancouver', type: 'Châu Úc' },
-]
+import airportOptions from '../_helper/airport-options';
 
 const defaultDepart = { value: 'HAN', label: 'Hà Nội', type: 'Miền Bắc' }
 const defaultReturn = { value: 'SGN', label: 'Hồ Chí Minh', type: 'Miền Nam' }
@@ -284,21 +234,25 @@ export default function Search() {
                                 min={minDate}
                                 max={maxDate} />
                         </div>
-                        <div className=" flex flex-col space-y-1 w-full">
-                            <div className=' flex flex-row'>
-                                <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 opacity-70" />
-                                <label htmlFor="toDate" className="block text-sm font-medium text-gray-900 dark:text-white">Ngày đến</label>
+                        {
+                            typeOfTicket == 2 &&
+                            <div className=" flex flex-col space-y-1 w-full">
+                                <div className=' flex flex-row'>
+                                    <FaRegCalendarCheck className="mr-1 w-3 mt-0.5 opacity-70" />
+                                    <label htmlFor="toDate" className="block text-sm font-medium text-gray-900 dark:text-white">Ngày đến</label>
+                                </div>
+                                <input
+                                    onChange={(e: any) => { setReturnTime(e.currentTarget.value) }}
+                                    id="toDate"
+                                    className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
+                                    type="date"
+                                    name="trip-start"
+                                    value={returnTime}
+                                    min={minDate}
+                                    max={maxDate} />
                             </div>
-                            <input
-                                onChange={(e: any) => { setReturnTime(e.currentTarget.value) }}
-                                id="toDate"
-                                className="g-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400"
-                                type="date"
-                                name="trip-start"
-                                value={returnTime}
-                                min={minDate}
-                                max={maxDate} />
-                        </div>
+                        }
+
                     </div>
 
                     <div className=' flex flex-col space-y-2 lg:space-y-0 lg:flex-row my-5 justify-between ...'>

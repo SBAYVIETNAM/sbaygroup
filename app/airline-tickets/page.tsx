@@ -18,22 +18,23 @@ async function getDepart(
 ) {
 
   const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
-  let rawData = `{\r\n    \"action\": \"`
-    + action + `\",\r\n    \"ItineraryType\": `
-    + ItineraryType + `,\r\n    \"StartPoint\": \"`
-    + StartPoint + `\",\r\n    \"EndPoint\": \"`
-    + EndPoint + `\",\r\n    \"DepartureDate\": \"`
-    + format(new Date(DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi }) + `\",\r\n    \"ReturnDate\": \"` + '' + `\",\r\n    \"Adult\": `
-    + Adult + `,\r\n    \"Children\": `
-    + Children + `,\r\n    \"Infant\": `
-    + Infant + `\r\n}`
-  console.log('rawData', rawData);
+  const dataPost = {
+    "action": action,
+    "ItineraryType": ItineraryType,
+    "StartPoint": StartPoint,
+    "EndPoint": EndPoint,
+    "DepartureDate": format(new Date(DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi }),
+    "ReturnDate": "",
+    "Adult": Adult,
+    "Children": Children,
+    "Infant": Infant
+  }
   const res = await fetch(url, {
     method: "POST",
     headers: {
-      "Content-Type": "text/plain",
+      "Content-Type": "application/json",
     },
-    body: rawData,
+    body: JSON.stringify(dataPost),
   });
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
@@ -42,49 +43,59 @@ async function getDepart(
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
+  // console.log("data: ", res);
   const data = await res.json();
-  // console.log("data: ", data);
 
-  // console.log("DOMSearchFlights", data.DOMSearchFlights);
-  // if (data.Data) {
-  //   let departData = []
-  //   for (const key in data.Data.DepartureFlights) {
-  //     // console.log('key', key, ReturnFlights[key]);
-  //     departData.push(data.Data.DepartureFlights[key])
-  //   }
-  //   return departData;
-  // }
   return data
 }
 
-async function getDepartAndReturn() {
+async function getDepartAndReturn(
+  action: string,
+  ItineraryType: number,
+  StartPoint: string,
+  EndPoint: string,
+  DepartureDate: string,
+  ReturnDate: string,
+  Adult: number,
+  Children: number,
+  Infant: number
+) {
 
-  // const url = 'aaaa'
-  // const res = await fetch(url, {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization: "Bearer " + token,
-  //     // 'Content-Type': 'application/x-www-form-urlencoded',
-  //   },
-  //   redirect: "follow",
-  //   cache: 'force-cache'
-  // });
-  // // The return value is *not* serialized
-  // // You can return Date, Map, Set, etc.
+  const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
+  const dataPost = {
+    "action": action,
+    "ItineraryType": ItineraryType,
+    "StartPoint": StartPoint,
+    "EndPoint": EndPoint,
+    "DepartureDate": format(new Date(DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi }),
+    "ReturnDate": format(new Date(ReturnDate || Date.now()), "dd/MM/yyyy", { locale: vi }),
+    "Adult": Adult,
+    "Children": Children,
+    "Infant": Infant
+  }
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataPost),
+  });
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
 
-  // if (!res.ok) {
-  //   // This will activate the closest `error.js` Error Boundary
-  //   throw new Error("Failed to fetch data");
-  // }
-  // // console.log("data: ",await res.json());
-  // return await res.json();
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+  
+  const data = await res.json();
+  return data
 
 }
 
 type Props = {
   params: {};
-  searchParams: { [key: string]: string};
+  searchParams: { [key: string]: string };
 };
 
 export default async function AirLineTicket(props: Props) {
@@ -98,23 +109,40 @@ export default async function AirLineTicket(props: Props) {
   const StartPoint = searchParams.sp
   const EndPoint = searchParams.ep
   const DepartureDate = searchParams.dp
-  
+  const ReturnDate = searchParams.rd
+
   const Adult = parseInt(searchParams.ad)
   const Children = parseInt(searchParams.ch)
   const Infant = parseInt(searchParams.ba)
 
-  const searchData = await getDepart(
-    action,
-    ItineraryType,
-    StartPoint,
-    EndPoint,
-    DepartureDate,
-    Adult,
-    Children,
-    Infant
-  )
 
-  console.log('searchData', searchData);
+  let searchData
+  if (ItineraryType == 1) {
+    searchData = await getDepart(
+      action,
+      ItineraryType,
+      StartPoint,
+      EndPoint,
+      DepartureDate,
+      Adult,
+      Children,
+      Infant
+    )
+  } else {
+    searchData = await getDepartAndReturn(
+      action,
+      ItineraryType,
+      StartPoint,
+      EndPoint,
+      DepartureDate,
+      ReturnDate,
+      Adult,
+      Children,
+      Infant
+    )
+  }
+
+  // console.log('searchData', searchData);
 
   return (
     <SearchAndOrder
@@ -124,6 +152,7 @@ export default async function AirLineTicket(props: Props) {
       StartPoint={StartPoint}
       EndPoint={EndPoint}
       DepartureDate={DepartureDate}
+      ReturnDate={ReturnDate}
       Adult={Adult}
       Children={Children}
       Infant={Infant}
