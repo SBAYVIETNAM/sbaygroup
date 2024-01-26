@@ -40,6 +40,7 @@ export default function Search() {
 
 
     const [airPort, setAirPort] = useState([])
+
     //arrUser
     useEffect(() => {
         var listAirPort: any = []
@@ -83,8 +84,9 @@ export default function Search() {
     const [Children, setChildren] = useState(0)
     const [Infant, setInfant] = useState(0)
 
-
+    const [btnStatus, setBtnStatus] = useState('Tìm kiếm')
     const openLink = async () => {
+        setBtnStatus('Đang tìm kiếm ...')
         if (typeOfTicket == 1) {
             const data = {
                 action: 'DOMSearchFlights',
@@ -323,7 +325,7 @@ export default function Search() {
 
                     <div className="flex flex-row ...">
                         <button onClick={openLink} className=' w-full'>
-                            <button type="button" className="text-white bg-red-500 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Tìm kiếm</button>
+                            <button type="button" className="text-white bg-red-500 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">{btnStatus}</button>
                         </button>
                     </div>
                 </div>

@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <>
       <section className="bg-white dark:bg-gray-900" style={{ backgroundImage: "url('/img/bg-02.jpg')" }}>
-        <div className=" lg: my-20 max-w-screen-xl grid grid-cols-1 lg:grid-cols-2 lg:gap-4 mx-auto p-5 lg:py-24">
+        <div className=" lg:my-20 max-w-screen-xl grid grid-cols-1 lg:grid-cols-2 lg:gap-4 mx-auto p-5 lg:py-24">
           <Search></Search>
           <div className="my-auto mx-auto invisible lg:visible">
             <Image

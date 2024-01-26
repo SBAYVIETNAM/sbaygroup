@@ -296,7 +296,44 @@ export default function SearchResponse(props: any) {
         }
         getBaggage()
     }
+    const chooseFlightReturnFn = (e: any) => {
+        const getFlightReturntId = e.target.getAttribute('data-returnFlightSession')
+        console.log(getFlightReturntId);
+        setChooseFlightReturn(getFlightReturntId)
+        // console.log('departData', departData);
+        const returnChoose = _.filter(returnData, { 'FlightSession': getFlightReturntId });
+        console.log('returnChoose', returnChoose);
 
+        setCheckOutStep(true)
+        setReturnData(returnChoose)
+        /* Call get Api */
+        const url = "https://flight.sbaygroup.com/inc/api-datcho-private.php";
+        const dataFight = {
+            action: "DOMGetBaggages",
+            dataSession: DataSession,
+            departureFlightSession: chooseFlightDepartId,
+            returnFlightSession: getFlightReturntId
+        }
+        console.log('chooseFlightReturnFn', dataFight);
+        const getBaggage = async () => {
+            const res = await fetch(url, {
+                method: "POST", // or 'PUT'
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(dataFight),
+            });
+            if (!res.ok) {
+                // This will activate the closest `error.js` Error Boundary
+                throw new Error("Failed to fetch data");
+            } else {
+                const data = await res.json();
+                console.log("return getBaggage ...", data);
+                setReturnBaggages(data.Data.ReturnBaggages)
+            }
+        }
+        getBaggage()
+    }
     /* Order */
     /* Passengers choose */
     const [Adult, setAdult] = useState(parseInt(props.Adult))
@@ -589,7 +626,6 @@ export default function SearchResponse(props: any) {
                                         </div>
                                         <WeekCalendarDepart
                                             DepartureDate={props.DepartureDate}
-                                            
                                             typeOfTicket={typeOfTicket}
                                             StartPoint={props.StartPoint}
                                             EndPoint={props.EndPoint}
@@ -778,6 +814,7 @@ export default function SearchResponse(props: any) {
 
                                         </div>
                                     </div>
+
                                     <div className="h-full mt-5">
                                         <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                                             <div className=" text-start pt-2 bg-blue-200">
@@ -863,7 +900,11 @@ export default function SearchResponse(props: any) {
                                                                             <h4 className="text-red-600 text-lg font-bold text-center">{(e.TotalPrice - e.TaxAdult - e.TaxChild - e.TaxInfant - e.FeeAdult - e.FeeChild - e.FeeInfant).toLocaleString()} <span className=" text-xs">vnđ</span></h4>
 
                                                                         }
-                                                                        {/* <button onClick={(e) => chooseFlightDepartFn(e)} data-departureflightsession={e.FlightSession} type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button> */}
+                                                                        <button
+                                                                            onClick={(e) => chooseFlightReturnFn(e)}
+                                                                            data-returnFlightSession={e.FlightSession}
+                                                                            type="button" className="text-white bg-red-600 min-w-full max-w-sm hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-xs h-8 my-auto"> Chọn</button>
+
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -892,17 +933,17 @@ export default function SearchResponse(props: any) {
                                                 className=" text-white bg-amber-600 min-w-full max-w-sm hover:bg-amber-200 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-base h-12 my-auto">Điền thông tin đặt vé</button>
                                         </>
                                     }
-                                    {/* {
-                            typeOfTicket == 2 &&
-                            <>
-                                <p className=" text-end">Giá chiều đi: <strong className="text-red-600 text-lg font-bold text-center">{departData[0].TotalPrice.toLocaleString()}</strong><span className=" text-xs text-red-600">vnđ</span></p>
-                                <p className=" text-end">Giá chiều về: <strong className="text-red-600 text-lg font-bold text-center">{returnData[0].TotalPrice.toLocaleString()}</strong><span className=" text-xs text-red-600">vnđ</span></p>
-                                <button
-                                    onClick={() => setOrderStep(true)}
-                                    type="button"
-                                    className=" text-white bg-amber-600 min-w-full max-w-sm hover:bg-amber-200 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-base h-12 my-auto">Điền thông tin đặt vé</button>
-                            </>
-                        } */}
+                                    {
+                                        typeOfTicket == 2 &&
+                                        <>
+                                            <p className=" text-end">Giá chiều đi: <strong className="text-red-600 text-lg font-bold text-center">{departData[0].TotalPrice.toLocaleString()}</strong><span className=" text-xs text-red-600">vnđ</span></p>
+                                            <p className=" text-end">Giá chiều về: <strong className="text-red-600 text-lg font-bold text-center">{returnData[0].TotalPrice.toLocaleString()}</strong><span className=" text-xs text-red-600">vnđ</span></p>
+                                            <button
+                                                onClick={() => setOrderStep(true)}
+                                                type="button"
+                                                className=" text-white bg-amber-600 min-w-full max-w-sm hover:bg-amber-200 focus:ring-4 focus:ring-amber-300 font-medium rounded-lg text-base h-12 my-auto">Điền thông tin đặt vé</button>
+                                        </>
+                                    }
 
                                 </div>
                             }
@@ -1022,11 +1063,12 @@ export default function SearchResponse(props: any) {
                             }
 
                         </div>
-                        <div className=" fixed top-24 right-5 bg-white grid col-span-12 xl:col-span-4 shadow-xl ... rounded-xl">
+                        <div className=" hidden  fixed top-24 right-5 bg-white xl:grid col-span-12 xl:col-span-4 shadow-xl ... rounded-xl">
                             <div className=" flex flex-col space-y-5 p-5">
                                 <div className="flex flex-col space-y-3">
                                     <h3>Thông tin đặt chỗ</h3>
-                                    {typeOfTicket == 1 &&
+                                    {typeOfTicket == 1
+                                        ?
                                         <div className="flex flex-col tems-center shadow-lg p-2 rounded-lg">
                                             <p className=" text-xs text-end mb-2">Chiều đi</p>
 
@@ -1080,12 +1122,117 @@ export default function SearchResponse(props: any) {
 
                                             </div>
                                         </div>
+                                        :
+                                        <div className="flex flex-col tems-center shadow-lg p-2 rounded-lg">
+                                            <div>
+                                                <p className=" text-xs text-end mb-2">Chiều đi</p>
+                                                <div className="px-3">
+                                                    <div className="flex items-center gap-4">
+                                                        {departData[0].AirlineCode == 'VJ' &&
+                                                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                                        }
+                                                        {departData[0].AirlineCode == 'VN' &&
+                                                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                                        }
+                                                        {departData[0].AirlineCode == 'QH' &&
+                                                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                                        }
+                                                        {departData[0].AirlineCode == 'VU' &&
+                                                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                                        }
+                                                        <div className="font-medium dark:text-white">
+                                                            <div>{departData[0].AirlineCode}</div>
+                                                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                                                <p>{departData[0].FlightNumber}</p>
+                                                                <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                            </div>
+                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}, đến: {departData[0].EndDate}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className=" grid grid-cols-6 py-5">
+                                                    <div className=" col-span-6 xl:col-span-1 px-3">
+                                                        <p className="text-center">{format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}</p>
+                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].StartPoint}</p>
+                                                    </div>
+                                                    <div className="col-span-6 xl:col-span-4">
+                                                        <div className="flex flex-row space-x-3">
+                                                            <FaPlaneDeparture className="w-4 my-auto" />
+                                                            <div className="flex flex-col w-full space-y-2">
+                                                                <p className="text-center text-xs">{departData[0].Duration + ' phút'}</p>
+                                                                <div className="border-dashed border-b-2 ..."></div>
+                                                                {departData[0].Stops == 0 &&
+                                                                    <p className="text-center text-xs">Bay thẳng</p>
+                                                                }
+                                                            </div>
+                                                            <FaPlaneArrival className="w-4 my-auto" />
+                                                        </div>
+                                                    </div>
+                                                    <div className=" col-span-6 xl:col-span-1 px-3">
+                                                        <p className="text-center">{format(new Date(departData[0].EndDate), "HH:mm", { locale: vi })}</p>
+                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].EndPoint}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <p className=" text-xs text-end mb-2">Chiều về</p>
+                                                <div className="px-3">
+                                                    <div className="flex items-center gap-4">
+                                                        {returnData[0].AirlineCode == 'VJ' &&
+                                                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                                        }
+                                                        {returnData[0].AirlineCode == 'VN' &&
+                                                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                                        }
+                                                        {returnData[0].AirlineCode == 'QH' &&
+                                                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                                        }
+                                                        {returnData[0].AirlineCode == 'VU' &&
+                                                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                                        }
+                                                        <div className="font-medium dark:text-white">
+                                                            <div>{returnData[0].AirlineCode}</div>
+                                                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                                                <p>{returnData[0].FlightNumber}</p>
+                                                                <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                            </div>
+                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(returnData[0].StartDate), "HH:mm", { locale: vi })}, đến: {returnData[0].EndDate}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className=" grid grid-cols-6 py-5">
+                                                    <div className=" col-span-6 xl:col-span-1 px-3">
+                                                        <p className="text-center">{format(new Date(returnData[0].StartDate), "HH:mm", { locale: vi })}</p>
+                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{returnData[0].StartPoint}</p>
+                                                    </div>
+                                                    <div className="col-span-6 xl:col-span-4">
+                                                        <div className="flex flex-row space-x-3">
+                                                            <FaPlaneDeparture className="w-4 my-auto" />
+                                                            <div className="flex flex-col w-full space-y-2">
+                                                                <p className="text-center text-xs">{returnData[0].Duration + ' phút'}</p>
+                                                                <div className="border-dashed border-b-2 ..."></div>
+                                                                {returnData[0].Stops == 0 &&
+                                                                    <p className="text-center text-xs">Bay thẳng</p>
+                                                                }
+                                                            </div>
+                                                            <FaPlaneArrival className="w-4 my-auto" />
+                                                        </div>
+                                                    </div>
+                                                    <div className=" col-span-6 xl:col-span-1 px-3">
+                                                        <p className="text-center">{format(new Date(returnData[0].EndDate), "HH:mm", { locale: vi })}</p>
+                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{returnData[0].EndPoint}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     }
 
 
                                     <div className="flex flex-col space-y-2 text-sm">
                                         <p className=" text-xs text-end">Thông tin thanh toán</p>
-                                        {typeOfTicket == 1 &&
+                                        {typeOfTicket == 1
+                                            ?
                                             <>
                                                 <div className="flex flex-col space-y-2 text-sm">
                                                     <p className=" text-xs text-start">Chiều đi:</p>
@@ -1122,11 +1269,109 @@ export default function SearchResponse(props: any) {
                                                         </p>
                                                     </div>
                                                     <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Tổng cộng
+                                                        <p className="font-bold">
+                                                            Tổng chiều đi
                                                         </p>
                                                         <p className=" font-bold">
                                                             {departData[0].TotalPrice.toLocaleString()} VNĐ
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                            </>
+                                            :
+                                            <>
+                                                <div className="flex flex-col space-y-2 text-sm">
+                                                    <p className=" text-xs text-start">Chiều đi:</p>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p>
+                                                            Người lớn
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            ({(departData[0].FeeAdult + departData[0].PriceAdult + departData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p>
+                                                            Trẻ em
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            ({(departData[0].FeeChild + departData[0].PriceChild + departData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p>
+                                                            Em bé
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            ({(departData[0].FeeInfant + departData[0].PriceInfant + departData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p>
+                                                            Hành lí bổ sung
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            0 VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p className="font-bold">
+                                                            Tổng chiều đi
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            {departData[0].TotalPrice.toLocaleString()} VNĐ
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div className="flex flex-col space-y-2 text-sm">
+                                                    <p className=" text-xs text-start">Chiều về:</p>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p>
+                                                            Người lớn
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            ({(returnData[0].FeeAdult + returnData[0].PriceAdult + returnData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p>
+                                                            Trẻ em
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            ({(returnData[0].FeeChild + returnData[0].PriceChild + returnData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p>
+                                                            Em bé
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            ({(returnData[0].FeeInfant + returnData[0].PriceInfant + returnData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p>
+                                                            Hành lí bổ sung
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            0 VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p className="font-bold">
+                                                            Tổng chiều về
+                                                        </p>
+                                                        <p className=" font-bold">
+                                                            {returnData[0].TotalPrice.toLocaleString()} VNĐ
+                                                        </p>
+                                                    </div>
+                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <p className="font-black text-red-700">
+                                                            Tổng cộng hai chiều
+                                                        </p>
+                                                        <p className=" font-black text-red-700">
+                                                            {(returnData[0].TotalPrice + departData[0].TotalPrice).toLocaleString()} VNĐ
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1150,22 +1395,37 @@ export default function SearchResponse(props: any) {
                     :
                     <div className=" mt-28 bg-white mx-auto rounded-3xl p-5">
                         <div className=" flex flex-col max-w-7xl mx-auto py-2">
-                            <p className="text-red-600 my-5">Chúc mừng quý khách đặt chỗ thành công!</p>
-                            <p>Mã đặt chỗ của quý khách</p>
-                            {completeData.Data.DepartureCode != "" &&
+
+                            {completeData.Data.DepartureCode != ""
+                                &&
+                                completeData.Data.DepartureCode != null
+                                ?
                                 <>
-                                    <p className=" text-sm mt-2 font-bold">Chiều đi</p>
+                                    <p className="text-red-600 my-5">Chúc mừng quý khách đặt chỗ thành công!</p>
+                                    <p>Mã đặt chỗ của quý khách</p>
                                     <p className="text-4xl my-10">
                                         {completeData.Data.DepartureCode}
                                     </p>
                                 </>
+                                :
+                                <>
+                                    <p className="text-red-600 my-16">Có lỗi khi đặt chỗ tới nhà cung cấp vui lòng thử lại !</p>
+                                </>
                             }
-                            <p>
-                                Quý khách vui lòng thanh toán số tiền là: <strong className="text-red-600 font-bold">{completeData.current_price_cart_row.toLocaleString()}</strong>  vnd
-                            </p>
-                            <p>
-                                {`Đặt chỗ sẽ hết hạn nếu quý khách không thanh toán trước thời gian:` + completeData.exp_date}
-                            </p>
+
+                            {completeData.Data.DepartureCode != "" &&
+                                completeData.Data.DepartureCode != null
+                                &&
+                                <>
+                                    <p>
+                                        Quý khách vui lòng thanh toán số tiền là: <strong className="text-red-600 font-bold">{completeData.current_price_cart_row.toLocaleString()}</strong>  vnd
+                                    </p>
+                                    <p>
+                                        {`Đặt chỗ sẽ hết hạn nếu quý khách không thanh toán trước thời gian:` + completeData.exp_date}
+                                    </p>
+                                </>
+                            }
+
                         </div>
 
                     </div>

@@ -87,7 +87,7 @@ export default function TopSearch(props: any) {
     }
 
     return (
-        <div className=" mt-32 flex bg-amber-500 rounded-xl min-h-max flex-col max-w-7xl mx-auto justify-between">
+        <div className=" md:mt-24 flex bg-amber-500 rounded-xl min-h-max flex-col max-w-7xl mx-auto justify-between">
             <div className=" flex flex-row space-x-2 p-3">
                 <div className="flex items-center">
                     <input
@@ -154,7 +154,7 @@ export default function TopSearch(props: any) {
                             onChange={onChangeReturn}
                             className="w-full whitespace-nowrap" />
                     </div>
-                    <div className=" col-span-12 xl:col-span-4 px-3 flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:space-x-5 justify-between ...">
+                    <div className=" col-span-12 xl:col-span-4 md:px-3 flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:space-x-5 justify-between ...">
 
 
 

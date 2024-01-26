@@ -116,20 +116,20 @@ export default function DepartureBaggagesInfomation(
                     // alert(JSON.stringify(values, null, 2));
                     // console.log(values.adultbaggages);
                     // console.log('onSubmit');
-                    const childbaggages:any[] = values.childbaggages
-                    const newChildbaggages:any = []
-                    childbaggages.forEach(e=>{
+                    const childbaggages: any[] = values.childbaggages
+                    const newChildbaggages: any = []
+                    childbaggages.forEach(e => {
                         const newob = Object.assign({}, e, {
-                            Birthday:format(new Date(e.Birthday), "dd/MM/yyyy", { locale: vi })
+                            Birthday: format(new Date(e.Birthday), "dd/MM/yyyy", { locale: vi })
                         })
                         newChildbaggages.push(newob)
                     })
 
-                    const infanbaggages:any[] = values.infanbaggages
-                    const newInfanbaggages:any = []
-                    infanbaggages.forEach(e=>{
+                    const infanbaggages: any[] = values.infanbaggages
+                    const newInfanbaggages: any = []
+                    infanbaggages.forEach(e => {
                         const newob = Object.assign({}, e, {
-                            Birthday:format(new Date(e.Birthday), "dd/MM/yyyy", { locale: vi })
+                            Birthday: format(new Date(e.Birthday), "dd/MM/yyyy", { locale: vi })
                         })
                         newInfanbaggages.push(newob)
                     })
@@ -193,9 +193,9 @@ export default function DepartureBaggagesInfomation(
                                                             />
                                                         </div>
                                                     </div>
-                                                    {typeOfTicket == 1 &&
+                                                    {typeOfTicket == 1
+                                                        ?
                                                         <div className=" flex flex-col px-3 py-5">
-
                                                             <Field
                                                                 as="select"
                                                                 name={`adultbaggages.${index}.departureBaggages`}
@@ -208,6 +208,36 @@ export default function DepartureBaggagesInfomation(
                                                                 })}
                                                             </Field>
                                                         </div>
+                                                        :
+                                                        <>
+                                                            <div className=" flex flex-col px-3 py-5">
+                                                                <Field
+                                                                    as="select"
+                                                                    name={`adultbaggages.${index}.departureBaggages`}
+                                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                                    <option selected={true} value="0">Không thêm hành lý chiều đi</option>
+                                                                    {departureBaggages.map((e: any, i: number) => {
+                                                                        return (
+                                                                            <option key={'departureBaggages' + i} value={e.Code}>Mua {e.Code} kg hành lý ({e.Price.toLocaleString()} VND)</option>
+                                                                        )
+                                                                    })}
+                                                                </Field>
+                                                            </div>
+                                                            <div className=" flex flex-col px-3 py-5">
+                                                                <Field
+                                                                    as="select"
+                                                                    name={`adultbaggages.${index}.departureBaggages`}
+                                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                                    <option selected={true} value="0">Không thêm hành lý chiều đi</option>
+                                                                    {departureBaggages.map((e: any, i: number) => {
+                                                                        return (
+                                                                            <option key={'departureBaggages' + i} value={e.Code}>Mua {e.Code} kg hành lý ({e.Price.toLocaleString()} VND)</option>
+                                                                        )
+                                                                    })}
+                                                                </Field>
+                                                            </div>
+
+                                                        </>
                                                     }
 
 
