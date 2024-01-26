@@ -15,6 +15,8 @@ import { IoMdHome } from "react-icons/io";
 import { FaUserTie } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { IoLogInSharp } from "react-icons/io5";
+import { format, addDays } from "date-fns";
+import { da, vi } from 'date-fns/locale';
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +66,7 @@ export default function Nav() {
                 Hợp tác đại lý
               </Link>
               <Link
-                href={"/airline-tickets"}
+                href={"/airline-tickets?a=DOMSearchFlights&t=1&sp=HAN&ep=SGN&dp="+format(new Date(), "MM/dd/yyyy", { locale: vi })+"&rd=&ad=1&ch=0&ba=0"}
                 className=" hover:text-gray-200 flex flex-row"
               >
                 <MdAirplanemodeActive className="mr-1 w-4 mt-0.5" />
