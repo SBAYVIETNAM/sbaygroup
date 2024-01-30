@@ -5,6 +5,7 @@ import Notfound from "./notfound";
 import Searching from "./search";
 var _ = require('lodash');
 import SearchAndOrder from "./search-and-order";
+import TopSearch from "./top-search";
 
 async function getDepart(
   action: string,
@@ -87,7 +88,7 @@ async function getDepartAndReturn(
     // This will activate the closest `error.js` Error Boundary
     throw new Error("Failed to fetch data");
   }
-  
+
   const data = await res.json();
   return data
 
@@ -128,7 +129,7 @@ export default async function AirLineTicket(props: Props) {
       Children,
       Infant
     )
-  } else {
+  } else if (ItineraryType == 1) {
     searchData = await getDepartAndReturn(
       action,
       ItineraryType,
@@ -139,6 +140,23 @@ export default async function AirLineTicket(props: Props) {
       Adult,
       Children,
       Infant
+    )
+  } else {
+    return (
+      <div className=" bg-white mx-auto rounded-3xl p-5">
+        <TopSearch
+          action={"DOMSearchFlights"}
+          ItineraryType={"1"}
+          StartPoint={"HAN"}
+          EndPoint={"SGN"}
+          DepartureDate={"01/30/2024"}
+          ReturnDate={""}
+          Adult={1}
+          Children={0}
+          Infant={0}
+        ></TopSearch>
+      </div>
+
     )
   }
 

@@ -66,7 +66,7 @@ export default function Nav() {
                 Hợp tác đại lý
               </Link>
               <Link
-                href={"/airline-tickets?a=DOMSearchFlights&t=1&sp=HAN&ep=SGN&dp="+format(new Date(), "MM/dd/yyyy", { locale: vi })+"&rd=&ad=1&ch=0&ba=0"}
+                href={"/airline-tickets"}
                 className=" hover:text-gray-200 flex flex-row"
               >
                 <MdAirplanemodeActive className="mr-1 w-4 mt-0.5" />
@@ -99,7 +99,7 @@ export default function Nav() {
 
       </nav>
 
-      <nav className="bg-white border-gray-200 dark:bg-gray-900">
+      <nav className="bg-white border-gray-200 dark:bg-gray-900 drop-shadow-xl sticky top-0 z-50">
         <div className=" md:hidden max-w-screen-xl flex flex-row items-center justify-between mx-auto p-2">
           <Link href={'/'}>
             <Image
@@ -121,8 +121,8 @@ export default function Nav() {
           </div>
         </div>
         {isOpen == true &&
-          <div className=" sticky top-0 left-0 w-full md:block md:w-auto">
-            <ul className="font-medium px-5 flex flex-col space-y-3 p-2 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <div className=" sticky top-0 left-0 w-full block md:hidden md:w-auto">
+            <ul className="font-medium px-5 flex flex-col space-y-3 p-2 md:p-0 border border-gray-100 bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
                 <Link
                   href={"/agents-airfare"}
