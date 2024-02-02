@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { FaPlaneDeparture, FaPlaneArrival, FaRegCalendar, FaRegCalendarCheck, FaBullseye } from "react-icons/fa";
 import Select from 'react-select'
 import { format, addDays } from "date-fns";
@@ -15,6 +15,10 @@ import ContactAndTaxInfomation from "./contact-tax-Infomation";
 import WeekCalendarDepart from "./week-calendar-depart";
 import WeekCalendarReturn from "./week-calendar-return";
 import airportOptions from "../_helper/airport-options";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+// import { useScreenshot } from 'use-react-screenshot';
+import { toPng } from 'html-to-image';
+
 
 export default function SearchResponse(props: any) {
     console.log('searchDataxxxxx', props.searchData);
@@ -22,6 +26,7 @@ export default function SearchResponse(props: any) {
 
     const [departData, setDepartData] = useState<any[]>([])
     const [returnData, setReturnData] = useState<any[]>([])
+    const [copyValue, setCopyValue] = useState()
 
     useEffect(() => {
         let x: any = []
@@ -509,6 +514,30 @@ export default function SearchResponse(props: any) {
         orderfn()
     }
 
+    let newArr:any= [];
+    newArr.push(trip.from + "  " + trip.to + "   " + format(new Date(props.DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi }) + "\n");
+    for (const item of departData) {
+        newArr.push("      " + item.FlightNumber + "                   " + format(new Date(item.StartDate), "HH:mm", { locale: vi }) + "-" + format(new Date(item.EndDate), "HH:mm", { locale: vi }) + "                " + (priceTax == true ? item.TotalPrice.toLocaleString() : (item.TotalPrice - item.TaxAdult - item.TaxChild - item.TaxInfant - item.FeeAdult - item.FeeChild - item.FeeInfant).toLocaleString()) + "\n")
+    }
+
+    const ref = useRef(null)
+    // const [image, takeScreenshot] = useScreenshot()
+    const onButtonClick = useCallback(() => {
+        if (ref.current === null) {
+          return
+        }
+    
+        toPng(ref.current, { backgroundColor: 'white' })
+          .then((dataUrl) => {
+            const link = document.createElement('a')
+            link.download = 'vemaybay.png'
+            link.href = dataUrl
+            link.click()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }, [ref])
 
     return (
         <>
@@ -606,8 +635,11 @@ export default function SearchResponse(props: any) {
                                         <label htmlFor="VietTravelCheckbox" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Vietravel Airlines</label>
                                     </div>
                                     <div className="flex flex-col space-y-3">
-                                        <button type="button" className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Copy text</button>
-                                        <button type="button" className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Chụp ảnh</button>
+                                        <CopyToClipboard text={newArr.join("")}
+                                            onCopy={() => alert('Copy thành công')}>
+                                            <button className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Copy text</button>
+                                        </CopyToClipboard>
+                                        <button type="button" onClick={onButtonClick} className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Chụp ảnh</button>
                                         <button type="button" className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Xóa bộ lọc</button>
                                     </div>
                                 </div>
@@ -615,7 +647,7 @@ export default function SearchResponse(props: any) {
                         </div>
                         {/* <button type="button" onClick={orderfn} className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">order</button> */}
 
-                        <div className="grid col-span-12 xl:col-span-9 content-start">
+                        <div ref={ref} className="grid col-span-12 xl:col-span-9 content-start">
                             {
                                 typeOfTicket == 1 &&
                                 <div className="h-full">
