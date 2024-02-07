@@ -149,12 +149,12 @@ export default function Search() {
                                     Vé Bà Nà
                                 </a>
                             </li>
-                            <li>
+                            {/* <li>
                                 <a href="/tour" className="inline-flex items-center justify-center p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group">
                                     <SiYourtraveldottv className="mr-1 w-3 mt-0.5" />
                                     Tour du lịch
                                 </a>
-                            </li>
+                            </li> */}
 
                         </ul>
                     </div>

@@ -58,13 +58,13 @@ export default function Nav() {
         <div className=" hidden md:block w-screen px-5 bg-red-600 text-white">
           <div className="flex flex-row max-w-7xl mx-auto justify-between py-2">
             <div className=" flex flex-row space-x-5 text-sm my-auto">
-              <Link
+              {/* <Link
                 href={"/agents-airfare"}
                 className=" hover:text-gray-200 flex flex-row"
               >
                 <FaHandsHelping className="mr-1 w-4 mt-0.5" />
                 Hợp tác đại lý
-              </Link>
+              </Link> */}
               <Link
                 href={"/airline-tickets"}
                 className=" hover:text-gray-200 flex flex-row"
@@ -76,18 +76,18 @@ export default function Nav() {
                 <MdHotel className="mr-1 w-4 mt-0.5" />
                 Khách sạn
               </Link>
-              <Link href={"/car"} className=" hover:text-gray-200 flex flex-row">
+              <Link href={"https://datxe.sbayvietnam.com"} className=" hover:text-gray-200 flex flex-row">
                 <FaCar className="mr-1 w-4 mt-0.5" />
                 Đặt xe
               </Link>
-              <Link href={"/banahill"} className=" hover:text-gray-200 flex flex-row">
+              <Link href={"https://www.datve.sbayvietnam.com"} className=" hover:text-gray-200 flex flex-row">
                 <ImLocation className="mr-1 w-4 mt-0.5" />
                 Vé Bà Nà
               </Link>
-              <Link href={"/tour"} className=" hover:text-gray-200 flex flex-row">
+              {/* <Link href={"/tour"} className=" hover:text-gray-200 flex flex-row">
                 <SiYourtraveldottv className="mr-1 w-4 mt-0.5" />
                 Tour du lịch
-              </Link>
+              </Link> */}
               <Link href={"/tool"} className=" hidden hover:text-gray-200 lg:flex flex-row">
                 <PiMegaphoneFill className="mr-1 w-4 mt-0.5" />
                 Tool marketing
@@ -124,13 +124,13 @@ export default function Nav() {
           <div className=" sticky top-0 left-0 w-full block md:hidden md:w-auto">
             <ul className="font-medium px-5 flex flex-col space-y-3 p-2 md:p-0 border border-gray-100 bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
               <li>
-                <Link
+                {/* <Link
                   href={"/agents-airfare"}
                   className=" hover:text-gray-200 flex flex-row "
                 >
                   <FaHandsHelping className="mr-2 w-4 mt-1" />
                   Hợp tác đại lý
-                </Link>
+                </Link> */}
               </li>
               <li>
                 <Link
@@ -142,13 +142,13 @@ export default function Nav() {
                 </Link>
               </li>
               <li>
-                <Link href={"https://datxe.sbayvietnam.com"} className=" hover:text-gray-200 flex flex-row">
+                <Link href={"/hotel"} className=" hover:text-gray-200 flex flex-row">
                   <MdHotel className="mr-2 w-4 mt-1" />
                   Khách sạn
                 </Link>
               </li>
               <li>
-                <Link href={"/car"} className=" hover:text-gray-200 flex flex-row">
+                <Link href={"https://datxe.sbayvietnam.com"} className=" hover:text-gray-200 flex flex-row">
                   <FaCar className="mr-2 w-4 mt-1" />
                   Đặt xe
                 </Link>
@@ -159,12 +159,12 @@ export default function Nav() {
                   Vé Bà Nà
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href={"/tour"} className=" hover:text-gray-200 flex flex-row">
                   <SiYourtraveldottv className="mr-2 w-4 mt-1" />
                   Tour du lịch
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link href={"/tool"} className=" hidden hover:text-gray-200 lg:flex flex-row">
                   <PiMegaphoneFill className="mr-2 w-4 mt-1" />
