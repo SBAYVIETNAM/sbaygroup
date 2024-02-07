@@ -1,210 +1,322 @@
-'use client';
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react';
-import * as Icon from 'react-feather';
-import Footer from './_components/footer';
-import Link from 'next/link';
+"use client";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import * as Icon from "react-feather";
+import Link from "next/link";
 import Popup from "./modal";
+import Slider from "./_components/slider";
+import { MdAirplanemodeActive } from "react-icons/md";
+import { MdHotel } from "react-icons/md";
+import { FaCar } from "react-icons/fa";
+import { SiYourtraveldottv } from "react-icons/si";
+import { PiMegaphoneFill } from "react-icons/pi";
+import { ImLocation } from "react-icons/im";
+import { FaHandsHelping } from "react-icons/fa";
+import { IoMdHome } from "react-icons/io";
+import Select from 'react-select'
+import Search from "./_components/search";
+import { format, addDays } from "date-fns";
 
 export default function Home() {
-  const [showModal, setShowModal] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setShowModal(true);
-    }, 500);
-  }, [])
 
-  const handleClose = () => {
-    setShowModal(false)
-  }
+
+
+
+  const popularPack = [
+    {
+      img: 'm-3.jpg',
+      name: "Gói M3"
+    },
+    {
+      img: 'm-12.jpg',
+      name: "Gói M12"
+    },
+    {
+      img: 'm-36.jpg',
+      name: "Gói M36"
+    },
+    {
+      img: 'm-doc-quyen.jpg',
+      name: "Gói độc quyền"
+    }]
+  const popularRoom = [{
+    tilte: "Standard Double",
+    description: "1 Giường đôi",
+    price: "600.000",
+    img: "/img/phong-1.jpg"
+  },
+  {
+    tilte: "Superior Double",
+    description: "1 Giường đôi cỡ lớn.",
+    price: "800,000",
+    img: "/img/phong-2.jpg"
+
+  },
+  {
+    tilte: "Superior Twin",
+    description: "2 Giường đơn.",
+    price: "1,000,000",
+    img: "/img/phong-3.jpg"
+
+  },
+  {
+    tilte: "Superior Triple",
+    description: "2 Giường đơn. 1 Giường đôi.",
+    price: "1,100,000",
+    img: "/img/phong-4.jpg"
+
+  }]
+
+  const popularCar = [{
+    tilte: "Xe 5 chỗ",
+    description: "Phù hợp bạn bè, gia đình nhỏ",
+    price: "12,000",
+    img: "/img/xe-5-cho.png"
+  },
+  {
+    tilte: "Xe 7 chỗ",
+    description: "Phù hợp nhóm bạn bè, gia đình nhiều thế hệ",
+    price: "15,000",
+    img: "/img/xe-7-cho.png"
+
+  },
+  {
+    tilte: "Xe 16 chỗ",
+    description: "Phù hợp hội nhóm, công ty",
+    price: "20,000",
+    img: "/img/xe-16-cho.png"
+
+  },
+  ]
+  const popularBana = [{
+    tilte: "Cáp treo người lớn",
+    description: "Cao hơn 1.4m",
+    price: "900,000",
+    img: "/img/ve-ba-na-1.jpg"
+
+  },
+  {
+    tilte: "Cáp treo trẻ em",
+    description: "Cao từ 1.0m - 1.4m",
+    price: "750,000",
+    img: "/img/ve-ba-na-2.jpg"
+
+  },
+  {
+    tilte: "Combo cáp treo và buffet người lớn",
+    description: "Cao hơn 1.4m",
+    price: "1,250,000",
+    img: "/img/ve-ba-na-3.jpg"
+
+  },
+  {
+    tilte: "Combo cáp treo và buffet trẻ em",
+    description: "Cao hơn 1.4m",
+    price: "960,000",
+    img: "/img/ve-ba-na-4.jpg"
+
+  },]
+  const popularTool = [
+    {
+      tilte: "Facebook tool",
+      description: "Tiếp cận tự động người dùng facebook",
+      img: "/img/facebook.png"
+
+    },
+    {
+      tilte: "Zalo tool",
+      description: "Tiếp cận tự động người dùng zalo",
+      img: "/img/zalo.png"
+
+    },
+    {
+      tilte: "Tiktok",
+      description: "Tiếp cận tự động người dùng tiktok",
+      img: "/img/tiktok.png"
+
+    },]
+
+
   return (
     <>
-      {showModal && <Popup handleClose={handleClose} />}
-      <div className='sticky shadow-sm top-0 z-10 text-white px-5 py-3'>
-        <div className=' grid grid-cols-12'>
-          <div className=' col-span-8'>
-            <Image src={'/img/sbay-w-r.png'} width={50} height={30} alt={'Sbay group logo'} className=' rounded-full'></Image>
+      <section className="bg-white dark:bg-gray-900" style={{ backgroundImage: "url('/img/bg-02.jpg')" }}>
+        <div className=" lg:my-20 max-w-screen-xl grid grid-cols-1 lg:grid-cols-2 lg:gap-4 mx-auto p-5 lg:py-24">
+          <Search></Search>
+          <div className="my-auto mx-auto invisible lg:visible">
+            <Image
+              src={"/img/air-plan.png"}
+              alt={"Vietnam airline logo"}
+              width={500}
+              height={500}
+            />
           </div>
-          <Link href={`tel:02363616616`} className=' col-span-4 justify-end flex flex-row'>
-            <Icon.PhoneCall className='w-4 h-4 mr-2 mt-1' /> Hotline
-            <div className='text-sm text-end mt-1 hidden lg:block'><strong className='ml-2'>0967 041 900</strong></div>
-          </Link>
+
         </div>
-      </div>
-      <div className=' flex flex-col'>
-        <div className="hero max-h-screen bg-cyan-50">
-          <div className="hero-content text-center flex flex-col">
-            <div className="video-docker absolute top-0 left-0 w-full h-screen overflow-hidden z-0">
-              <video className="min-w-full min-h-full absolute object-cover" src="/img/bg-video.mp4" autoPlay muted loop></video>
-            </div>
-            <div className='z-10'>
-              <div className="max-w-md z-10">
-                <h1 className="text-5xl font-bold text-cyan-50 mb-0">Sbay Việt Nam</h1>
-                <p className="py-3 text-cyan-50">Kiến tạo sự nghiệp.</p>
-              </div>
-              <div className='grid grid-cols-2 gap-2 w-72 mx-auto'>
-
-                <Link href={'https://flight.sbaygroup.com'} target="_blank">
-                  <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
-                    <div>
-                      <div className="avatar">
-                        <div className="w-16 mask mask-squircle">
-                          <Image width={256} height={256} src="/img/air.png" alt='ve-may-bay' style={{ 'objectFit': 'contain' }} />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <h2 className='  font-bold text-cyan-50'>Vé máy bay</h2>
-                    </div>
-                  </div>
-                </Link>
-                <Link href={'https://www.sbayhoteldanang.com/'} target="_blank">
-                  <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
-                    <div>
-                      <div className="avatar">
-                        <div className="w-16 mask mask-squircle">
-                          <Image width={256} height={256} alt='Phòng khách sạn Đà Nẵng' src="/img/hotel.png" />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <h2 className='  font-bold text-cyan-50'>Khách sạn</h2>
-                    </div>
-                  </div>
-                </Link>
-
-                <Link href={'https://datxe.sbayvietnam.com/'} target="_blank">
-                  <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
-                    <div>
-                      <div className="avatar">
-                        <div className="w-16 mask mask-squircle">
-                          <Image width={256} height={256} alt='xe cho thuê' src="/img/thue-xe.png" />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <h2 className='  font-bold text-cyan-50'>Xe cho thuê</h2>
-
-                    </div>
-                  </div>
-                </Link>
-                <Link href={'https://datve.sbayvietnam.com/'} target="_blank">
-                  <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
-                    <div>
-                      <div className="avatar">
-                        <div className="w-16 mask mask-squircle">
-                          <Image width={256} height={256} alt='vé Bà Nà' src="/img/ticket.png" />
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <h2 className='  font-bold text-cyan-50'>Vé Bà Nà</h2>
-
-                    </div>
-                  </div>
-                </Link>
-
-
-                {/* <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
-              <div>
-                <div className="avatar">
-                  <div className="w-16 mask mask-squircle">
-                    <Image width={256} height={256} alt='tour du lịch' src="/img/du-lich.png" />
-                  </div>
+      </section>
+      <div className=" -mt-16 bg-white mx-auto rounded-3xl p-5">
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-sm font-bold text-center"> Đối tác tin cậy</h2>
+          <div className="  max-w-7xl grid grid-cols-2 lg:grid-cols-4 mx-auto">
+            <Image
+              src={"/img/vietnam-airline.png"}
+              width={512}
+              height={288}
+              alt={"Vietnam airline logo"}
+              className=" w-36 rounded-full"
+            />
+            <Image
+              src={"/img/vietjet.png"}
+              width={512}
+              height={288}
+              alt={"Vietjet logo"}
+              className=" w-32 rounded-full"
+            />
+            <Image
+              src={"/img/Bamboo_Airways.png"}
+              width={512}
+              height={288}
+              alt={"Bamboo logo"}
+              className=" w-32 rounded-full"
+            />
+            <Image
+              src={"/img/Pacific_Airlines.png"}
+              width={512}
+              height={288}
+              alt={"Sbay group logo"}
+              className=" w-32 rounded-full"
+            />
+          </div>
+        </div>
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center mt-14"> Hợp tác đại lý</h2>
+          <div className="grid grid-cols-2 xl:grid-cols-4  justify-center ...">
+            {popularPack.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-red-100 rounded-lg p-5 drop-shadow-md ...">
+                  <Image
+                    src={"/img/" + e.img}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className=" w-32 h-32 m-5 rounded-md mx-auto"
+                  />
+                  <h3 className="text-center font-bold">{e.name}</h3>
+                  <p className="text-center text-sm">Cung cấp hệ thống đặt vé của 5 hãng hàng không Nội địa</p>
+                  <button onClick={e => window.open('tel:0968141400')} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Liên hệ tư vấn</button>
                 </div>
-              </div>
-              <div>
-                <h2 className='  font-bold text-cyan-50'>Tour Du lịch</h2>
+              )
+            })}
 
-              </div>
-            </div>
-            <div className='flex flex-col hover:animate-pulse hover:outline outline-1 rounded-xl outline-indigo-200 p-2'>
-              <div>
-                <div className="avatar">
-                  <div className="w-16 mask mask-squircle">
-                    <Image width={256} height={256} alt='vé xe khách' src="/img/xe-khach.png" />
-                  </div>
-                </div>
-              </div>
-              <div>
-                <h2 className='  font-bold text-cyan-50'>Xe khách</h2>
-
-              </div>
-            </div> */}
-              </div>
-              <div className="max-w-md z-10">
-              <p className="text-cyan-50 mt-2">Ứng dụng Sbay hiện có sẵn trên cửa hàng ứng dụng, hãy cài đặt để trải ngiệm</p>
-            </div>
-            <div className=" grid grid-cols-2 max-w-md z-10 mx-auto my-5">
-
-              <Link href={'https://apps.apple.com/vn/app/sbaygroup/id64462563480?l=vi'}>
-                <Image src={'/img/ios.png'} width={120} height={30} alt={'Sbay iso'} className=' rounded-sm mr-2 mx-auto'></Image>
-              </Link>
-              <Link href={'https://play.google.com/store/apps/details?id=com.sbgroup.booking_android&hl=vi-VN'}>
-                <Image src={'/img/gg-play.png'} width={120} height={30} alt={'Sbay iso'} className=' rounded-sm ml-2 mx-auto'></Image>
-              </Link>
-
-            </div>
-
-              <div className='grid grid-cols-2 gap-5'>
-                <Link href={'https://sbay.com.vn/gioi-thieu'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
-                  Giới thiệu về Sbay<Icon.ExternalLink className='w-4 h-4 ml-2' />
-                </Link>
-                <Link href={'https://sbay.com.vn/tin-tuc/chinh-sach-hop-tac-dai-ly-doi-tac/chuong-trinh-hop-tac-dai-ly-ve-may-bay-sbay-viet-nam-n4136'} target="_blank" className='text-white text-sm flex flex-row justify-start'>
-                  Chương trinh hợp tác <Icon.ExternalLink className='w-4 h-4 ml-2' />
-                </Link>
-                <Link href={'https://flight.sbaygroup.com/?dang-nhap=1'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
-                  Trang Thành viên <Icon.ExternalLink className='w-4 h-4 ml-2' />
-                </Link>
-                <Link href={'https://work.sbayvietnam.com'} target="_blank" className='text-white text-sm flex flex-row justify-start'>
-                  Trang WorkPlace <Icon.ExternalLink className='w-4 h-4 ml-2' />
-                </Link>
-                {/* <Link href={'https://meet.google.com/coo-epfp-fnz'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
-                  Meet hàng ngày <Icon.ExternalLink className='w-4 h-4 ml-2' />
-                </Link> */}
-                <Link href={'/tool-marketing'} target="_blank" className='text-white text-sm flex flex-row justify-end'>
-                  Tool Marketing <Icon.ExternalLink className='w-4 h-4 ml-2' />
-                </Link>
-                <Link href={'https://docs.google.com/forms/d/1tOdLDHozf8vuLNTWHJV5cNVt1vXHFFtunl_Uy7FGFOA'} target="_blank" className='text-white text-sm flex flex-row justify-start'>
-                  Hội thảo thứ 7 <Icon.ExternalLink className='w-4 h-4 ml-2' />
-                </Link>
-              </div>
-              <div className='z-10'>
-                {/* The button to open modal */}
-                <label htmlFor="my_modal_6" className=" link text-white text-sm">Hơn nữa</label>
-
-                {/* Put this part before </body> tag */}
-                <input type="checkbox" id="my_modal_6" className="modal-toggle" />
-                <div className="modal">
-                  <div className="modal-box bg-sky-800 opacity-90">
-                    <h2 className='text-xl mb-10 text-white font-black'>Link khác</h2>
-                    <div className='grid grid-cols-2 gap-5 z-10'>
-                      <Link href={'https://drive.google.com/drive/folders/1iqikemTZTth-Lrg1C4yq-7ujmjqwTyUT'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
-                        Kho video <Icon.ExternalLink className='w-4 h-4 ml-2' />
-                      </Link>
-                      <Link href={'https://drive.google.com/drive/folders/18lFUsC76o11mxfAuAQ9PFkZAS0z-a4J9'} target="_blank" className='text-white text-sm flex flex-row justify-center'>
-                        Kho hình ảnh <Icon.ExternalLink className='w-4 h-4 ml-2' />
-                      </Link>
-                      {/* <Link href={'https://docs.google.com/forms/d/1tOdLDHozf8vuLNTWHJV5cNVt1vXHFFtunl_Uy7FGFOA'} className='text-white text-sm flex flex-row justify-center'>
-                    Đăng kí hội thảo <br /> kết nối kinh doanh Sbay<Icon.ExternalLink className='w-4 h-4 ml-2' />
-                  </Link> */}
-                    </div>
-                    <div className="modal-action">
-                      <label htmlFor="my_modal_6" className="btn bg-blue-300">Đóng</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
           </div>
-          <a href='https://cskh.sbayvietnam.com' className=" fixed bottom-5 right-5 btn rounded-full bg-red-500 text-white mx-auto my-5"><Icon.MessageCircle className='w-4 h-4 animate-bounce' />CSKH</a>
         </div>
-        {/* <Footer></Footer> */}
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Phòng khách sạn</h2>
+          <div className="grid grid-cols-2 xl:grid-cols-4  justify-center ...">
+            {popularRoom.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-yellow-100 rounded-lg p-5 drop-shadow-md ...">
+                  <Image
+                    src={e.img}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className=" w-full rounded-lg mx-auto"
+                  />
+                  <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-red-500 text-end">{e.price+" "} VND*</p>
+                  <h3 className="text-start font-bold">{e.tilte}</h3>
+                  <p className="text-start text-sm">{e.description}</p>
+                  <Link href={"https://booking.getbestbooking.com/?ht=5542&lang=vi-VN&curency=VND"} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5 text-center">Đặt phòng ngay</Link>
+                </div>
+              )
+            })}
+
+
+          </div>
+        </div>
+
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Dịch vụ xe</h2>
+          <div className="grid grid-cols-1 xl:grid-cols-3  justify-center ...">
+            {popularCar.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-yellow-100 rounded-lg p-5 drop-shadow-md ...">
+                  <Image
+                    src={e.img}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className=" w-full rounded-lg mx-auto"
+                  />
+                  <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-red-500 text-end">{e.price + " "}vnd</p>
+                  <p className=" text-sm text-end">km</p>
+                  <h3 className="text-start font-bold">{e.tilte} </h3>
+                  <p className="text-start text-sm">{e.description}</p>
+                  <button onClick={e => window.open('tel:0968141400')} className=" mt-10 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt xe ngay</button>
+                </div>
+              )
+            })}
+
+
+          </div>
+        </div>
+
+        <div className="flex flex-col max-w-7xl mx-auto justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Dịch vụ vé Bà Nà</h2>
+          <div className="grid grid-cols-2 xl:grid-cols-4 justify-center ...">
+            {popularBana.map((e, i) => {
+              return (
+                <div key={i} className=" hover:bg-blue-100 rounded-lg p-5 drop-shadow-md ...">
+                  <Image
+                    src={e.img}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className="m-5 w-32 h-32 rounded-full mx-auto"
+                  />
+                  <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-red-500 text-end">{e.price + " "} VND*</p>
+                  <p className=" text-sm text-end">Vé</p>
+                  <h3 className="text-start font-bold">{e.tilte} </h3>
+                  <p className="text-start text-sm">{e.description} </p>
+                  <button onClick={e => window.open('tel:0967041900')} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt vé ngay</button>
+                </div>
+              )
+            })}
+
+
+          </div>
+        </div>
+
+        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
+          <h2 className=" text-xl font-bold text-center my-10"> Tool marketing</h2>
+          <div className="grid grid-cols-1 xl:grid-cols-3  justify-center ...">
+            {popularTool.map((e, i) => {
+              return (
+                <div key={i} className="  hover:bg-blue-100 rounded-lg p-5 drop-shadow-md ...">
+                  <Image
+                    src={e.img}
+                    width={512}
+                    height={288}
+                    alt={"Vietnam airline logo"}
+                    className="m-10 w-36 h-36 rounded-full mx-auto"
+                  />
+                  {/* <p className=" text-xs text-end">Từ </p>
+                  <p className=" font-light text-xl text-green-500 text-end">550.000VND*</p>
+                  <p className=" text-sm text-end">Vé</p> */}
+                  <h3 className="text-center font-bold">{e.tilte}</h3>
+                  <p className="text-center text-sm">{e.description}</p>
+                  <Link href={"/tool"} type="button" className="text-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Dùng thử ngay</Link>
+                </div>
+              )
+            })}
+          </div>
+        </div>
       </div>
 
 
     </>
-
-  )
+  );
 }
