@@ -10,6 +10,7 @@ import { SiCakephp } from "react-icons/si";
 import { FaMotorcycle, FaBed } from "react-icons/fa";
 import { BiFridge } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 interface dataRoomProps {
   id: string;
   name: string;
@@ -160,14 +161,14 @@ export default function Hotel() {
     <div className="z-20 bg-[#f8fafc]">
       <div className="hero relative min-h-screen  bg-[url('/img/dananghotel.gif')]">
         <div className="absolute inset-0 bg-black opacity-20 z-1"></div>
-        <div
+        <Link href={'https://booking.getbestbooking.com/?ht=5542&lang=vi-VN&curency=VND'}
           style={{
             borderWidth: 1.5,
           }}
           className="text-lg z-20 transition ease-in-out cursor-pointer hover:-translate-y-1 hover:scale-110 font-semibold text-white border-white rounded-md px-4 py-2"
         >
           ĐẶT PHÒNG
-        </div>
+        </Link>
       </div>
       <div className="container mx-auto">
         <div className="w-full py-10 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -216,9 +217,9 @@ export default function Hotel() {
                   className=" rounded px-6 py-5 shadow overflow-hidden group bg-red-500 relative hover:bg-gradient-to-r hover:from-red-500 hover:to-red-400 text-white hover:ring-2 hover:ring-offset-2 hover:ring-red-400 transition-all ease-out duration-300"
                 >
                   <span className="absolute right-0 w-8 h-32 -mt-12 transition-all duration-1000 transform translate-x-12 bg-white opacity-10 rotate-12 group-hover:-translate-x-40 ease"></span>
-                  <span className="relative text-xl font-semibold">
+                  <Link href={'https://booking.getbestbooking.com/?ht=5542&lang=vi-VN&curency=VND'} className="relative text-xl font-semibold">
                     ĐẶT PHÒNG
-                  </span>
+                  </Link>
                 </a>
               </button>
             </div>
@@ -246,9 +247,9 @@ export default function Hotel() {
                   >
                     <span className="absolute inset-0 w-full h-full transition duration-200 ease-out transform translate-x-1 translate-y-1 bg-black group-hover:-translate-x-0 group-hover:-translate-y-0"></span>
                     <span className="absolute inset-0 w-full h-full bg-white border-2 border-black group-hover:bg-black"></span>
-                    <span className="relative text-black group-hover:text-white">
+                    <Link href={'https://booking.getbestbooking.com/?ht=5542&lang=vi-VN&curency=VND'} className="relative text-black group-hover:text-white">
                       Đặt phòng
-                    </span>
+                    </Link>
                   </a>
                 </div>
                 {item.Image}

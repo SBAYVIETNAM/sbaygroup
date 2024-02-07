@@ -24,22 +24,117 @@ export default function Home() {
 
   const popularPack = [
     {
-      img: 'm-3.jpg'
+      img: 'm-3.jpg',
+      name: "Gói M3"
     },
     {
-      img: 'm-12.jpg'
+      img: 'm-12.jpg',
+      name: "Gói M12"
     },
     {
-      img: 'm-36.jpg'
+      img: 'm-36.jpg',
+      name: "Gói M36"
     },
     {
-      img: 'm-doc-quyen.jpg'
+      img: 'm-doc-quyen.jpg',
+      name: "Gói độc quyền"
     }]
-  const popularFly = [1, 2, 3, 4]
-  const popularRoom = [1, 2, 3, 4]
-  const popularCar = [1, 2, 3]
-  const popularBana = [1, 2, 3, 4]
-  const popularTool = [1, 2, 3]
+  const popularRoom = [{
+    tilte: "Standard Double",
+    description: "1 Giường đôi",
+    price: "600.000",
+    img: "/img/phong-1.jpg"
+  },
+  {
+    tilte: "Superior Double",
+    description: "1 Giường đôi cỡ lớn.",
+    price: "800,000",
+    img: "/img/phong-2.jpg"
+
+  },
+  {
+    tilte: "Superior Twin",
+    description: "2 Giường đơn.",
+    price: "1,000,000",
+    img: "/img/phong-3.jpg"
+
+  },
+  {
+    tilte: "Superior Triple",
+    description: "2 Giường đơn. 1 Giường đôi.",
+    price: "1,100,000",
+    img: "/img/phong-4.jpg"
+
+  }]
+
+  const popularCar = [{
+    tilte: "Xe 5 chỗ",
+    description: "Phù hợp bạn bè, gia đình nhỏ",
+    price: "12,000",
+    img: "/img/xe-5-cho.png"
+  },
+  {
+    tilte: "Xe 7 chỗ",
+    description: "Phù hợp nhóm bạn bè, gia đình nhiều thế hệ",
+    price: "15,000",
+    img: "/img/xe-7-cho.png"
+
+  },
+  {
+    tilte: "Xe 16 chỗ",
+    description: "Phù hợp hội nhóm, công ty",
+    price: "20,000",
+    img: "/img/xe-16-cho.png"
+
+  },
+  ]
+  const popularBana = [{
+    tilte: "Cáp treo người lớn",
+    description: "Cao hơn 1.4m",
+    price: "900,000",
+    img: "/img/ve-ba-na-1.jpg"
+
+  },
+  {
+    tilte: "Cáp treo trẻ em",
+    description: "Cao từ 1.0m - 1.4m",
+    price: "750,000",
+    img: "/img/ve-ba-na-2.jpg"
+
+  },
+  {
+    tilte: "Combo cáp treo và buffet người lớn",
+    description: "Cao hơn 1.4m",
+    price: "1,250,000",
+    img: "/img/ve-ba-na-3.jpg"
+
+  },
+  {
+    tilte: "Combo cáp treo và buffet trẻ em",
+    description: "Cao hơn 1.4m",
+    price: "960,000",
+    img: "/img/ve-ba-na-4.jpg"
+
+  },]
+  const popularTool = [
+    {
+      tilte: "Facebook tool",
+      description: "Tiếp cận tự động người dùng facebook",
+      img: "/img/facebook.png"
+
+    },
+    {
+      tilte: "Zalo tool",
+      description: "Tiếp cận tự động người dùng zalo",
+      img: "/img/zalo.png"
+
+    },
+    {
+      tilte: "Tiktok",
+      description: "Tiếp cận tự động người dùng tiktok",
+      img: "/img/tiktok.png"
+
+    },]
 
 
   return (
@@ -53,7 +148,6 @@ export default function Home() {
               alt={"Vietnam airline logo"}
               width={500}
               height={500}
-
             />
           </div>
 
@@ -106,35 +200,9 @@ export default function Home() {
                     alt={"Vietnam airline logo"}
                     className=" w-32 h-32 m-5 rounded-md mx-auto"
                   />
-                  <h3 className="text-center font-bold">Gói M3</h3>
-                  <p className="text-center text-sm">Cung cấp VÉ MÁY BAY của 5 hãng hàng không Nội địa</p>
-                  <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Liên hệ tư vấn</button>
-                </div>
-              )
-            })}
-
-
-          </div>
-        </div>
-        <div className="flex flex-col max-w-7xl mx-auto  justify-between py-2">
-          <h2 className=" text-xl font-bold text-center my-10"> Các chuyến bay thông dụng</h2>
-          <div className="grid grid-cols-2 xl:grid-cols-4 justify-center ...">
-            {popularFly.map((e, i) => {
-              return (
-                <div key={i} className="  hover:bg-red-100 rounded-lg p-5 drop-shadow-md ...">
-                  <Image
-                    src={"/img/mangjet.jpg"}
-                    width={512}
-                    height={288}
-                    alt={"Vietnam airline logo"}
-                    className=" w-36 rounded-full mx-auto"
-                  />
-                  <p className=" text-xs text-end">Từ </p>
-                  <p className=" font-light text-xl text-red-500 text-end">720.000VND*</p>
-                  <p className=" text-sm text-end">Một chiều/Phổ thông</p>
-                  <h3 className="text-start font-bold">Hà Nội (HAN) đến TP. Hồ Chí Minh (SGN)</h3>
-                  <p className="text-start text-sm">Cung cấp VÉ MÁY BAY của 5 hãng hàng không Nội địa</p>
-                  <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt vé ngay</button>
+                  <h3 className="text-center font-bold">{e.name}</h3>
+                  <p className="text-center text-sm">Cung cấp hệ thống đặt vé của 5 hãng hàng không Nội địa</p>
+                  <button onClick={e => window.open('tel:0968141400')} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Liên hệ tư vấn</button>
                 </div>
               )
             })}
@@ -149,18 +217,17 @@ export default function Home() {
               return (
                 <div key={i} className="  hover:bg-yellow-100 rounded-lg p-5 drop-shadow-md ...">
                   <Image
-                    src={"/img/standard-douple.webp"}
+                    src={e.img}
                     width={512}
                     height={288}
                     alt={"Vietnam airline logo"}
                     className=" w-full rounded-lg mx-auto"
                   />
                   <p className=" text-xs text-end">Từ </p>
-                  <p className=" font-light text-xl text-red-500 text-end">150.000VND*</p>
-                  <p className=" text-sm text-end">Một giường đôi</p>
-                  <h3 className="text-start font-bold">Standard Double</h3>
-                  <p className="text-start text-sm">Phù hợp với nghỉ đêm một mình</p>
-                  <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt phòng ngay</button>
+                  <p className=" font-light text-xl text-red-500 text-end">{e.price+" "} VND*</p>
+                  <h3 className="text-start font-bold">{e.tilte}</h3>
+                  <p className="text-start text-sm">{e.description}</p>
+                  <Link href={"https://booking.getbestbooking.com/?ht=5542&lang=vi-VN&curency=VND"} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5 text-center">Đặt phòng ngay</Link>
                 </div>
               )
             })}
@@ -176,18 +243,18 @@ export default function Home() {
               return (
                 <div key={i} className="  hover:bg-yellow-100 rounded-lg p-5 drop-shadow-md ...">
                   <Image
-                    src={"/img/xe-5-cho.png"}
+                    src={e.img}
                     width={512}
                     height={288}
                     alt={"Vietnam airline logo"}
                     className=" w-full rounded-lg mx-auto"
                   />
                   <p className=" text-xs text-end">Từ </p>
-                  <p className=" font-light text-xl text-red-500 text-end">12.000VND*</p>
+                  <p className=" font-light text-xl text-red-500 text-end">{e.price + " "}vnd</p>
                   <p className=" text-sm text-end">km</p>
-                  <h3 className="text-start font-bold">Xe 7 chỗ</h3>
-                  <p className="text-start text-sm">Phù hợp với gia đình có con nhỏ</p>
-                  <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt xe ngay</button>
+                  <h3 className="text-start font-bold">{e.tilte} </h3>
+                  <p className="text-start text-sm">{e.description}</p>
+                  <button onClick={e => window.open('tel:0968141400')} className=" mt-10 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt xe ngay</button>
                 </div>
               )
             })}
@@ -201,20 +268,20 @@ export default function Home() {
           <div className="grid grid-cols-2 xl:grid-cols-4 justify-center ...">
             {popularBana.map((e, i) => {
               return (
-                <div key={i} className="  hover:bg-blue-100 rounded-lg p-5 drop-shadow-md ...">
+                <div key={i} className=" hover:bg-blue-100 rounded-lg p-5 drop-shadow-md ...">
                   <Image
-                    src={"/img/cap-treo-bana.jpg"}
+                    src={e.img}
                     width={512}
                     height={288}
                     alt={"Vietnam airline logo"}
                     className="m-5 w-32 h-32 rounded-full mx-auto"
                   />
                   <p className=" text-xs text-end">Từ </p>
-                  <p className=" font-light text-xl text-red-500 text-end">550.000VND*</p>
+                  <p className=" font-light text-xl text-red-500 text-end">{e.price + " "} VND*</p>
                   <p className=" text-sm text-end">Vé</p>
-                  <h3 className="text-start font-bold">Cáp treo Bà Nà</h3>
-                  <p className="text-start text-sm">Phù hợp với gia đình có con nhỏ</p>
-                  <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt vé ngay</button>
+                  <h3 className="text-start font-bold">{e.tilte} </h3>
+                  <p className="text-start text-sm">{e.description} </p>
+                  <button onClick={e => window.open('tel:0967041900')} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt vé ngay</button>
                 </div>
               )
             })}
@@ -230,18 +297,18 @@ export default function Home() {
               return (
                 <div key={i} className="  hover:bg-blue-100 rounded-lg p-5 drop-shadow-md ...">
                   <Image
-                    src={"/img/facebook.png"}
+                    src={e.img}
                     width={512}
                     height={288}
                     alt={"Vietnam airline logo"}
                     className="m-10 w-36 h-36 rounded-full mx-auto"
                   />
-                  <p className=" text-xs text-end">Từ </p>
+                  {/* <p className=" text-xs text-end">Từ </p>
                   <p className=" font-light text-xl text-green-500 text-end">550.000VND*</p>
-                  <p className=" text-sm text-end">Vé</p>
-                  <h3 className="text-start font-bold">Facebook Marketing</h3>
-                  <p className="text-start text-sm">Tiếp cận người dùng trong nhóm</p>
-                  <button type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Dùng thử ngay</button>
+                  <p className=" text-sm text-end">Vé</p> */}
+                  <h3 className="text-center font-bold">{e.tilte}</h3>
+                  <p className="text-center text-sm">{e.description}</p>
+                  <Link href={"/tool"} type="button" className="text-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Dùng thử ngay</Link>
                 </div>
               )
             })}

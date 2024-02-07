@@ -7,6 +7,7 @@ import { MdFamilyRestroom } from "react-icons/md";
 import { RiFunctionLine } from "react-icons/ri";
 import { GrBusinessService } from "react-icons/gr";
 import Image from "next/image";
+import Link from "next/link";
 export default function Hotel({ params }: { params: { slug: string } }) {
   return (
     <>
@@ -26,9 +27,9 @@ export default function Hotel({ params }: { params: { slug: string } }) {
                 Liên hệ
               </p>
               <div>
-                <button className="py-2 px-3 font-medium bg-[#fcb900] hover:bg-[#f9d77a] text-2xl rounded-[100px] text-blue-800">
+                <Link href={'https://booking.getbestbooking.com/?ht=5542&lang=vi-VN&curency=VND'} className="py-2 px-3 font-medium bg-[#fcb900] hover:bg-[#f9d77a] text-2xl rounded-[100px] text-blue-800">
                   Đặt phòng ngay
-                </button>
+                </Link>
               </div>
             </div>
             <div className="w-[50%]">

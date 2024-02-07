@@ -142,7 +142,7 @@ export default function Nav() {
                 </Link>
               </li>
               <li>
-                <Link href={"/hotel"} className=" hover:text-gray-200 flex flex-row">
+                <Link href={"https://datxe.sbayvietnam.com"} className=" hover:text-gray-200 flex flex-row">
                   <MdHotel className="mr-2 w-4 mt-1" />
                   Khách sạn
                 </Link>
@@ -154,7 +154,7 @@ export default function Nav() {
                 </Link>
               </li>
               <li>
-                <Link href={"/banahill"} className=" hover:text-gray-200 flex flex-row">
+                <Link href={"https://www.datve.sbayvietnam.com"} className=" hover:text-gray-200 flex flex-row">
                   <ImLocation className="mr-2 w-4 mt-1" />
                   Vé Bà Nà
                 </Link>
