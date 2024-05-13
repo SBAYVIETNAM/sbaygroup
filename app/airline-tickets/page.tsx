@@ -74,6 +74,7 @@ async function getDepartAndReturn(
     "Children": Children,
     "Infant": Infant
   }
+  // console.log('dataPost', dataPost);
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -129,7 +130,7 @@ export default async function AirLineTicket(props: Props) {
       Children,
       Infant
     )
-  } else if (ItineraryType == 1) {
+  } else if (ItineraryType == 2) {
     searchData = await getDepartAndReturn(
       action,
       ItineraryType,
