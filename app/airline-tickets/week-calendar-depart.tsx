@@ -47,7 +47,7 @@ export default function WeekCalendarDepart(props: any) {
     const searchInDateDepart = function (e: any) {
         // console.log(e.target.getAttribute('data-datestandar'));
         const dateChoose = e.target.getAttribute('data-datestandar')
-        router.push('/airline-tickets?a=DOMSearchFlights&t=' + props.typeOfTicket + '&sp=' + props.StartPoint + '&ep=' + props.EndPoint + '&dp=' + dateChoose + '&rd=' + format(addDays(new Date(dateChoose), 1), 'MM/dd/yyyy', { locale: vi }) + '&ad=' + props.Adult + '&ch=' + props.Children + '&ba=' + props.Infant)
+        router.push('/airline-tickets?a=DOMSearchFlights&t=' + props.typeOfTicket + '&sp=' + props.StartPoint + '&ep=' + props.EndPoint + '&dp=' + dateChoose + '&rd=' + format(addDays(new Date(dateChoose), 0), 'MM/dd/yyyy', { locale: vi }) + '&ad=' + props.Adult + '&ch=' + props.Children + '&ba=' + props.Infant)
     }
 
     return (

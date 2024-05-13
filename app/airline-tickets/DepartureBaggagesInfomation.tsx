@@ -210,7 +210,8 @@ export default function DepartureBaggagesInfomation(
                                                         </div>
                                                         :
                                                         <>
-                                                            <div className=" flex flex-col px-3 py-5">
+                                                            <div className=" flex flex-col px-3 py-3">
+                                                                <label htmlFor={`adultbaggages.${index}.departureBaggages`} className="block mb-2 text-xs font-medium text-start">Chọn hành lý chiều đi</label>
                                                                 <Field
                                                                     as="select"
                                                                     name={`adultbaggages.${index}.departureBaggages`}
@@ -223,7 +224,8 @@ export default function DepartureBaggagesInfomation(
                                                                     })}
                                                                 </Field>
                                                             </div>
-                                                            <div className=" flex flex-col px-3 py-5">
+                                                            <div className=" flex flex-col px-3 py-3">
+                                                            <label htmlFor={`adultbaggages.${index}.departureBaggages`} className="block mb-2 text-xs font-medium text-start">Chọn hành lý chiều về</label>
                                                                 <Field
                                                                     as="select"
                                                                     name={`adultbaggages.${index}.departureBaggages`}
@@ -251,8 +253,8 @@ export default function DepartureBaggagesInfomation(
 
                                         values.childbaggages.map((e: any, index: number) => (
                                             <>
-                                                <div className=" flex flex-col justify-start ...">
-                                                    <p className=" text-start px-3 text-md my-3 text-red-600 font-bold">Trẻ em {index + 1}</p>
+                                                <div className=" mt-10 flex flex-col justify-start ...">
+                                                    <p className=" text-start px-3 text-md my-3 text-red-600 font-bold">Trẻ em (Từ 2 - 12 tuổi) {index + 1}</p>
                                                     <div className=" grid grid-cols-6 gap-4 px-3">
                                                         <div className="col-span-1">
                                                             <label htmlFor={`childbaggages.${index}.gender`} className="block mb-2 text-xs font-medium text-start">Giới tính</label>
@@ -299,6 +301,7 @@ export default function DepartureBaggagesInfomation(
                                                             <Field
                                                                 name={`childbaggages.${index}.Birthday`}
                                                                 placeholder="Van Nam"
+                                                                max={format(new Date(), 'yyyy-MM-dd', { locale: vi })}
                                                                 type="date"
                                                                 className="bg-gray-50 border uppercase border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                             />
@@ -337,8 +340,8 @@ export default function DepartureBaggagesInfomation(
 
                                         values.infanbaggages.map((e: any, index: number) => (
                                             <>
-                                                <div className=" flex flex-col justify-start ...">
-                                                    <p className=" text-start px-3 text-md my-3 text-red-600 font-bold">Em bé {index + 1}</p>
+                                                <div className=" mt-10 flex flex-col justify-start ...">
+                                                    <p className=" text-start px-3 text-md my-3 text-red-600 font-bold">Em bé ( dưới 2 tuổi) {index + 1}</p>
                                                     <div className=" grid grid-cols-6 gap-4 px-3">
                                                         <div className="col-span-1">
                                                             <label htmlFor={`infanbaggages.${index}.gender`} className="block mb-2 text-xs font-medium text-start">Giới tính</label>
@@ -423,7 +426,7 @@ export default function DepartureBaggagesInfomation(
                         </FieldArray>
                         <button
                             type="submit"
-                            className=" mr-5 text-white bg-red-600 w-full hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-sm text-base h-12 my-auto"
+                            className=" mr-5 mt-5 text-white bg-red-600 w-full hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-sm text-base h-12"
                         >Tiếp tục</button>
                     </Form>
                 )}

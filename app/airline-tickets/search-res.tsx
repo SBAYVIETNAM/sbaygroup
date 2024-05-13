@@ -15,7 +15,7 @@ import ContactAndTaxInfomation from "./contact-tax-Infomation";
 import WeekCalendarDepart from "./week-calendar-depart";
 import WeekCalendarReturn from "./week-calendar-return";
 import airportOptions from "../_helper/airport-options";
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 // import { useScreenshot } from 'use-react-screenshot';
 import { toPng } from 'html-to-image';
 
@@ -30,15 +30,15 @@ export default function SearchResponse(props: any) {
 
     useEffect(() => {
         let x: any = []
-        for (const key in props.searchData.Data.DepartureFlights) {
+        for (const key in props.searchData?.Data.DepartureFlights) {
             // console.log('key', key, ReturnFlights[key]);
-            x.push(props.searchData.Data.DepartureFlights[key])
+            x.push(props.searchData?.Data.DepartureFlights[key])
         }
         setDepartData(x)
 
         let y: any = []
-        for (const key in props.searchData.Data.ReturnFlights) {
-            y.push(props.searchData.Data.ReturnFlights[key])
+        for (const key in props.searchData?.Data.ReturnFlights) {
+            y.push(props.searchData?.Data.ReturnFlights[key])
         }
         setReturnData(y)
 
@@ -48,8 +48,8 @@ export default function SearchResponse(props: any) {
         })
     }, [props.searchData])
 
-    const DataSession = props.searchData.Data.DataSession
-    const DOMSearchFlights = props.searchData.DOMSearchFlights
+    const DataSession = props.searchData?.Data.DataSession
+    const DOMSearchFlights = props.searchData?.DOMSearchFlights
     console.log({
         'departData': departData,
         'DataSession': DataSession,
@@ -514,7 +514,7 @@ export default function SearchResponse(props: any) {
         orderfn()
     }
 
-    let newArr:any= [];
+    let newArr: any = [];
     newArr.push(trip.from + "  " + trip.to + "   " + format(new Date(props.DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi }) + "\n");
     for (const item of departData) {
         newArr.push("      " + item.FlightNumber + "                   " + format(new Date(item.StartDate), "HH:mm", { locale: vi }) + "-" + format(new Date(item.EndDate), "HH:mm", { locale: vi }) + "                " + (priceTax == true ? item.TotalPrice.toLocaleString() : (item.TotalPrice - item.TaxAdult - item.TaxChild - item.TaxInfant - item.FeeAdult - item.FeeChild - item.FeeInfant).toLocaleString()) + "\n")
@@ -524,21 +524,25 @@ export default function SearchResponse(props: any) {
     // const [image, takeScreenshot] = useScreenshot()
     const onButtonClick = useCallback(() => {
         if (ref.current === null) {
-          return
+            return
         }
-    
-        toPng(ref.current, { backgroundColor: 'white' })
-          .then((dataUrl) => {
-            const link = document.createElement('a')
-            link.download = 'vemaybay.png'
-            link.href = dataUrl
-            link.click()
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }, [ref])
 
+        toPng(ref.current, { backgroundColor: 'white' })
+            .then((dataUrl) => {
+                const link = document.createElement('a')
+                link.download = 'vemaybay.png'
+                link.href = dataUrl
+                link.click()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }, [ref])
+
+    // Search
+    // const search = ()=>{
+    //     console.log('search...');
+    // }
     return (
         <>
             {orderStep == false
@@ -551,9 +555,9 @@ export default function SearchResponse(props: any) {
                         EndPoint={props.EndPoint}
                         DepartureDate={props.DepartureDate}
                         ReturnDate={props.ReturnDate}
-                        Adult={props.Adult}
-                        Children={props.Children}
-                        Infant={props.Infant}
+                        adult={Adult}
+                        treEm={Children}
+                        infant={Infant}
                     ></TopSearch>
                     <div className=" grid grid-cols-12 gap-4 max-w-7xl mx-auto py-2">
                         <div className="xl:grid hidden xl:visible xl:col-span-3 shadow-xl ... rounded-xl">
@@ -671,7 +675,7 @@ export default function SearchResponse(props: any) {
                                         {departData.length != 0
                                             ?
                                             departData.map((e: any, i: number) => {
-                                                console.log('departData....', e);
+                                                // console.log('departData....', e);
                                                 return (
                                                     <>
                                                         <div key={'departData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
@@ -752,7 +756,8 @@ export default function SearchResponse(props: any) {
                                 <>
                                     <div className="h-full">
                                         <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-                                            <div className=" text-start pt-2 bg-red-100">
+                                            <div className=" text-start py-2 bg-red-100">
+                                                <p className="mx-3  text-xs italic">Chiều đi</p>
                                                 <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
                                                 <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(props.DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                                             </div>
@@ -771,7 +776,7 @@ export default function SearchResponse(props: any) {
                                             {departData.length != 0
                                                 ?
                                                 departData.map((e: any, i: number) => {
-                                                    console.log('departData....', e);
+                                                    // console.log('departData....', e);
                                                     return (
                                                         <>
                                                             <div key={'departData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
@@ -849,13 +854,14 @@ export default function SearchResponse(props: any) {
 
                                     <div className="h-full mt-5">
                                         <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-                                            <div className=" text-start pt-2 bg-blue-200">
+                                            <div className=" text-start py-2 bg-blue-200">
+                                                <p className="mx-3  text-xs italic">Chiều về</p>
                                                 <h1 className="text-black mx-3 text-xl font-bold">{trip.to} - {trip.from}</h1>
-                                                <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(props.DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
+                                                <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - về ngày {format(new Date(props.ReturnDate || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
                                             </div>
                                             <WeekCalendarReturn
                                                 DepartureDate={props.DepartureDate}
-                                                ReturnDate={props.ReturnDate}
+                                                ReturnDate={props.ReturnDate || format(new Date(Date.now()), "MM/dd/yyyy", { locale: vi })}
                                                 typeOfTicket={typeOfTicket}
                                                 StartPoint={props.StartPoint}
                                                 EndPoint={props.EndPoint}
@@ -990,7 +996,7 @@ export default function SearchResponse(props: any) {
                     <div className=" md:mt-24 bg-white mx-auto rounded-3xl p-5">
                         <div className=" grid grid-cols-12 gap-4 max-w-7xl mx-auto py-2">
                             {checkoutStep == 1 &&
-                                <div className="grid col-span-12 xl:col-span-8">
+                                <div className="grid col-span-12 xl:col-span-8 my-16">
                                     <div className=" text-sm shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                                         <div className=" text-start bg-red-500 py-3 rounded-sm">
                                             <h1 className="text-white mx-3 text-xl font-bold">Thông tin khách hàng</h1>
@@ -1011,7 +1017,7 @@ export default function SearchResponse(props: any) {
                             {checkoutStep == 2 &&
                                 <>
 
-                                    <div className="grid col-span-12 xl:col-span-8">
+                                    <div className="grid col-span-12 xl:col-span-8 my-16">
                                         <div className=" text-sm shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                                             <div className=" text-start bg-red-100 py-3">
                                                 <h1 className="text-black mx-3 text-xl font-bold">Thông tin liên hệ, hóa đơn</h1>
@@ -1019,74 +1025,6 @@ export default function SearchResponse(props: any) {
                                             <ContactAndTaxInfomation
                                                 getContactAndTax={getContactAndTax}
                                             ></ContactAndTaxInfomation>
-                                            {/* <div className=" flex flex-col justify-start ...">
-                                                <div className=" grid grid-cols-6 gap-4 px-3">
-                                                    <div className="col-span-2">
-                                                        <label htmlFor="contactGender" className="block my-2 text-sm font-medium text-start">Giới tính</label>
-                                                        <select id="contactGender" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                            <option value="male">Nam</option>
-                                                            <option value="female">Nữ</option>
-                                                        </select>
-                                                    </div>
-                                                    <div className=' col-span-4'>
-                                                        <label htmlFor="contactName" className="block my-2 text-sm font-medium text-start">Họ và tên</label>
-                                                        <input placeholder="Hoàng Văn Hải" type="text" id="contactNamefirst_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                    </div>
-                                                </div>
-                                                <div className=" grid grid-cols-6 gap-4 px-3">
-                                                    <div className=' col-span-3'>
-                                                        <label htmlFor="contactPhone" className="block my-2 text-sm font-medium text-start">Số điện thoại</label>
-                                                        <input placeholder="0912123123" type="text" id="contactPhone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                    </div>
-                                                    <div className=' col-span-3'>
-                                                        <label htmlFor="contactEmail" className="block my-2 text-sm font-medium text-start">Email</label>
-                                                        <input placeholder="vanhai@gmail.com" type="text" id="contactEmail" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="flex items-center p-3">
-                                                <input
-                                                    onClick={(e) => showVat(e, 4)}
-                                                    checked={showVatInfo == true}
-                                                    id="checkedVAT" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                                <label htmlFor="checkedVAT" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Xuất hóa đơn</label>
-                                            </div> */}
-                                            {/* {showVatInfo == true &&
-                                                <div className=" flex flex-col justify-start ...">
-                                                    <div className=" grid grid-cols-6 gap-4 px-3">
-                                                        <div className=' col-span-3'>
-                                                            <label htmlFor="companyName" className="block my-2 text-sm font-medium text-start">Tên công ty</label>
-                                                            <input placeholder="Công ty TNHH MTV Hoàng Hải" type="text" id="companyName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                        </div>
-                                                        <div className=' col-span-3'>
-                                                            <label htmlFor="companyTAX" className="block my-2 text-sm font-medium text-start">Mã số thuế</label>
-                                                            <input placeholder="8858191965" type="text" id="companyTAX" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                        </div>
-                                                    </div>
-                                                    <div className=" grid grid-cols-6 gap-4 px-3">
-                                                        <div className=' col-span-6'>
-                                                            <label htmlFor="companyAddress" className="block my-2 text-sm font-medium text-start">Địa chỉ</label>
-                                                            <input placeholder="44 Lê Thái Tổ, phường Hàng Trống, Hoàn Kiếm, Hà Nội" type="text" id="companyAddress" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                        </div>
-
-                                                    </div>
-                                                    <div className=" grid grid-cols-6 gap-4 px-3 mb-5">
-                                                        <div className=' col-span-2'>
-                                                            <label htmlFor="first_name" className="block my-2 text-sm font-medium text-start">Người nhận hóa đơn</label>
-                                                            <input placeholder="Hoàng Văn Hải" type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                        </div>
-                                                        <div className=' col-span-2'>
-                                                            <label htmlFor="first_name" className="block my-2 text-sm font-medium text-start">Số điện thoại</label>
-                                                            <input placeholder="09123123123" type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                        </div>
-                                                        <div className=' col-span-2'>
-                                                            <label htmlFor="first_name" className="block my-2 text-sm font-medium text-start">Email nhận hóa đơn</label>
-                                                            <input placeholder="hoanghai@gmail.com" type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            } */}
 
                                         </div>
                                     </div>
@@ -1399,10 +1337,10 @@ export default function SearchResponse(props: any) {
                                                         </p>
                                                     </div>
                                                     <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p className="font-black text-red-700">
+                                                        <p className="font-black text-xl text-red-700">
                                                             Tổng cộng hai chiều
                                                         </p>
-                                                        <p className=" font-black text-red-700">
+                                                        <p className=" font-black text-xl text-red-700">
                                                             {(returnData[0].TotalPrice + departData[0].TotalPrice).toLocaleString()} VNĐ
                                                         </p>
                                                     </div>
@@ -1456,66 +1394,12 @@ export default function SearchResponse(props: any) {
                                         {`Đặt chỗ sẽ hết hạn nếu quý khách không thanh toán trước thời gian:` + completeData.exp_date}
                                     </p>
                                     <div className="flex flex-col space-y-3">
-                                    <h3 className="mt-10 font-bold">2. Chi tiết đặt chỗ</h3>
-                                    {typeOfTicket == 1
-                                        ?
-                                        <div className="flex flex-col tems-center shadow-lg p-2 rounded-lg">
-                                            <p className=" text-xs text-end mb-2">Chiều đi</p>
-
-                                            <div className="px-3">
-                                                <div className="flex items-center gap-4">
-                                                    {departData[0].AirlineCode == 'VJ' &&
-                                                        <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
-                                                    }
-                                                    {departData[0].AirlineCode == 'VN' &&
-                                                        <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
-                                                    }
-                                                    {departData[0].AirlineCode == 'QH' &&
-                                                        <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
-                                                    }
-                                                    {departData[0].AirlineCode == 'VU' &&
-                                                        <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
-                                                    }
-                                                    <div className="font-medium dark:text-white">
-                                                        <div>{departData[0].AirlineCode}</div>
-                                                        <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                                                            <p>{departData[0].FlightNumber}</p>
-                                                            <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
-                                                        </div>
-                                                        <p className=" block xl:hidden text-xs">Từ: {format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}, đến: {departData[0].EndDate}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className=" grid grid-cols-6 py-5">
-                                                <div className=" col-span-6 xl:col-span-1 px-3">
-                                                    <p className="text-center">{format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}</p>
-                                                    <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].StartPoint}</p>
-                                                </div>
-                                                <div className="col-span-6 xl:col-span-4">
-                                                    <div className="flex flex-row space-x-3">
-                                                        <FaPlaneDeparture className="w-4 my-auto" />
-                                                        <div className="flex flex-col w-full space-y-2">
-                                                            <p className="text-center text-xs">{departData[0].Duration + ' phút'}</p>
-                                                            <div className="border-dashed border-b-2 ..."></div>
-                                                            {departData[0].Stops == 0 &&
-                                                                <p className="text-center text-xs">Bay thẳng</p>
-                                                            }
-                                                        </div>
-                                                        <FaPlaneArrival className="w-4 my-auto" />
-                                                    </div>
-                                                </div>
-                                                <div className=" col-span-6 xl:col-span-1 px-3">
-                                                    <p className="text-center">{format(new Date(departData[0].EndDate), "HH:mm", { locale: vi })}</p>
-                                                    <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].EndPoint}</p>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        :
-                                        <div className="flex flex-col tems-center shadow-lg p-2 rounded-lg">
-                                            <div>
+                                        <h3 className="mt-10 font-bold">2. Chi tiết đặt chỗ</h3>
+                                        {typeOfTicket == 1
+                                            ?
+                                            <div className="flex flex-col tems-center shadow-lg p-2 rounded-lg">
                                                 <p className=" text-xs text-end mb-2">Chiều đi</p>
+
                                                 <div className="px-3">
                                                     <div className="flex items-center gap-4">
                                                         {departData[0].AirlineCode == 'VJ' &&
@@ -1562,223 +1446,277 @@ export default function SearchResponse(props: any) {
                                                         <p className="text-center">{format(new Date(departData[0].EndDate), "HH:mm", { locale: vi })}</p>
                                                         <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].EndPoint}</p>
                                                     </div>
+
+
                                                 </div>
                                             </div>
-                                            <div>
-                                                <p className=" text-xs text-end mb-2">Chiều về</p>
-                                                <div className="px-3">
-                                                    <div className="flex items-center gap-4">
-                                                        {returnData[0].AirlineCode == 'VJ' &&
-                                                            <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
-                                                        }
-                                                        {returnData[0].AirlineCode == 'VN' &&
-                                                            <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
-                                                        }
-                                                        {returnData[0].AirlineCode == 'QH' &&
-                                                            <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
-                                                        }
-                                                        {returnData[0].AirlineCode == 'VU' &&
-                                                            <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
-                                                        }
-                                                        <div className="font-medium dark:text-white">
-                                                            <div>{returnData[0].AirlineCode}</div>
-                                                            <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
-                                                                <p>{returnData[0].FlightNumber}</p>
-                                                                <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
-                                                            </div>
-                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(returnData[0].StartDate), "HH:mm", { locale: vi })}, đến: {returnData[0].EndDate}</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className=" grid grid-cols-6 py-5">
-                                                    <div className=" col-span-6 xl:col-span-1 px-3">
-                                                        <p className="text-center">{format(new Date(returnData[0].StartDate), "HH:mm", { locale: vi })}</p>
-                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{returnData[0].StartPoint}</p>
-                                                    </div>
-                                                    <div className="col-span-6 xl:col-span-4">
-                                                        <div className="flex flex-row space-x-3">
-                                                            <FaPlaneDeparture className="w-4 my-auto" />
-                                                            <div className="flex flex-col w-full space-y-2">
-                                                                <p className="text-center text-xs">{returnData[0].Duration + ' phút'}</p>
-                                                                <div className="border-dashed border-b-2 ..."></div>
-                                                                {returnData[0].Stops == 0 &&
-                                                                    <p className="text-center text-xs">Bay thẳng</p>
-                                                                }
-                                                            </div>
-                                                            <FaPlaneArrival className="w-4 my-auto" />
-                                                        </div>
-                                                    </div>
-                                                    <div className=" col-span-6 xl:col-span-1 px-3">
-                                                        <p className="text-center">{format(new Date(returnData[0].EndDate), "HH:mm", { locale: vi })}</p>
-                                                        <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{returnData[0].EndPoint}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    }
-
-
-                                    <div className="flex flex-col space-y-2 text-sm">
-                                        <p className=" text-xs text-end">Thông tin thanh toán</p>
-                                        {typeOfTicket == 1
-                                            ?
-                                            <>
-                                                <div className="flex flex-col space-y-2 text-sm">
-                                                    <p className=" text-xs text-start">Chiều đi:</p>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Người lớn
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(departData[0].FeeAdult + departData[0].PriceAdult + departData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Trẻ em
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(departData[0].FeeChild + departData[0].PriceChild + departData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Em bé
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(departData[0].FeeInfant + departData[0].PriceInfant + departData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Hành lí bổ sung
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            0 VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p className="font-bold">
-                                                            Tổng chiều đi
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            {departData[0].TotalPrice.toLocaleString()} VNĐ
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                            </>
                                             :
-                                            <>
-                                                <div className="flex flex-col space-y-2 text-sm">
-                                                    <p className=" text-xs text-start">Chiều đi:</p>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Người lớn
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(departData[0].FeeAdult + departData[0].PriceAdult + departData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
-                                                        </p>
+                                            <div className="flex flex-col tems-center shadow-lg p-2 rounded-lg">
+                                                <div>
+                                                    <p className=" text-xs text-end mb-2">Chiều đi</p>
+                                                    <div className="px-3">
+                                                        <div className="flex items-center gap-4">
+                                                            {departData[0].AirlineCode == 'VJ' &&
+                                                                <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                                            }
+                                                            {departData[0].AirlineCode == 'VN' &&
+                                                                <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                                            }
+                                                            {departData[0].AirlineCode == 'QH' &&
+                                                                <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                                            }
+                                                            {departData[0].AirlineCode == 'VU' &&
+                                                                <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                                            }
+                                                            <div className="font-medium dark:text-white">
+                                                                <div>{departData[0].AirlineCode}</div>
+                                                                <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                                                    <p>{departData[0].FlightNumber}</p>
+                                                                    <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                                </div>
+                                                                <p className=" block xl:hidden text-xs">Từ: {format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}, đến: {departData[0].EndDate}</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Trẻ em
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(departData[0].FeeChild + departData[0].PriceChild + departData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Em bé
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(departData[0].FeeInfant + departData[0].PriceInfant + departData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Hành lí bổ sung
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            0 VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p className="font-bold">
-                                                            Tổng chiều đi
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            {departData[0].TotalPrice.toLocaleString()} VNĐ
-                                                        </p>
+                                                    <div className=" grid grid-cols-6 py-5">
+                                                        <div className=" col-span-6 xl:col-span-1 px-3">
+                                                            <p className="text-center">{format(new Date(departData[0].StartDate), "HH:mm", { locale: vi })}</p>
+                                                            <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].StartPoint}</p>
+                                                        </div>
+                                                        <div className="col-span-6 xl:col-span-4">
+                                                            <div className="flex flex-row space-x-3">
+                                                                <FaPlaneDeparture className="w-4 my-auto" />
+                                                                <div className="flex flex-col w-full space-y-2">
+                                                                    <p className="text-center text-xs">{departData[0].Duration + ' phút'}</p>
+                                                                    <div className="border-dashed border-b-2 ..."></div>
+                                                                    {departData[0].Stops == 0 &&
+                                                                        <p className="text-center text-xs">Bay thẳng</p>
+                                                                    }
+                                                                </div>
+                                                                <FaPlaneArrival className="w-4 my-auto" />
+                                                            </div>
+                                                        </div>
+                                                        <div className=" col-span-6 xl:col-span-1 px-3">
+                                                            <p className="text-center">{format(new Date(departData[0].EndDate), "HH:mm", { locale: vi })}</p>
+                                                            <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{departData[0].EndPoint}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="flex flex-col space-y-2 text-sm">
-                                                    <p className=" text-xs text-start">Chiều về:</p>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Người lớn
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(returnData[0].FeeAdult + returnData[0].PriceAdult + returnData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
-                                                        </p>
+                                                <div>
+                                                    <p className=" text-xs text-end mb-2">Chiều về</p>
+                                                    <div className="px-3">
+                                                        <div className="flex items-center gap-4">
+                                                            {returnData[0].AirlineCode == 'VJ' &&
+                                                                <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
+                                                            }
+                                                            {returnData[0].AirlineCode == 'VN' &&
+                                                                <img className="w-10 h-10 rounded-full" src="/img/vn.png" alt="vietjet" />
+                                                            }
+                                                            {returnData[0].AirlineCode == 'QH' &&
+                                                                <img className="w-10 h-10 rounded-full" src="/img/qh.png" alt="vietjet" />
+                                                            }
+                                                            {returnData[0].AirlineCode == 'VU' &&
+                                                                <img className="w-10 h-10 rounded-full" src="/img/vu.png" alt="vietjet" />
+                                                            }
+                                                            <div className="font-medium dark:text-white">
+                                                                <div>{returnData[0].AirlineCode}</div>
+                                                                <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                                                    <p>{returnData[0].FlightNumber}</p>
+                                                                    <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                                </div>
+                                                                <p className=" block xl:hidden text-xs">Từ: {format(new Date(returnData[0].StartDate), "HH:mm", { locale: vi })}, đến: {returnData[0].EndDate}</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Trẻ em
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(returnData[0].FeeChild + returnData[0].PriceChild + returnData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Em bé
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            ({(returnData[0].FeeInfant + returnData[0].PriceInfant + returnData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p>
-                                                            Hành lí bổ sung
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            0 VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p className="font-bold">
-                                                            Tổng chiều về
-                                                        </p>
-                                                        <p className=" font-bold">
-                                                            {returnData[0].TotalPrice.toLocaleString()} VNĐ
-                                                        </p>
-                                                    </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
-                                                        <p className="font-black text-red-700">
-                                                            Tổng cộng hai chiều
-                                                        </p>
-                                                        <p className=" font-black text-red-700">
-                                                            {(returnData[0].TotalPrice + departData[0].TotalPrice).toLocaleString()} VNĐ
-                                                        </p>
+                                                    <div className=" grid grid-cols-6 py-5">
+                                                        <div className=" col-span-6 xl:col-span-1 px-3">
+                                                            <p className="text-center">{format(new Date(returnData[0].StartDate), "HH:mm", { locale: vi })}</p>
+                                                            <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{returnData[0].StartPoint}</p>
+                                                        </div>
+                                                        <div className="col-span-6 xl:col-span-4">
+                                                            <div className="flex flex-row space-x-3">
+                                                                <FaPlaneDeparture className="w-4 my-auto" />
+                                                                <div className="flex flex-col w-full space-y-2">
+                                                                    <p className="text-center text-xs">{returnData[0].Duration + ' phút'}</p>
+                                                                    <div className="border-dashed border-b-2 ..."></div>
+                                                                    {returnData[0].Stops == 0 &&
+                                                                        <p className="text-center text-xs">Bay thẳng</p>
+                                                                    }
+                                                                </div>
+                                                                <FaPlaneArrival className="w-4 my-auto" />
+                                                            </div>
+                                                        </div>
+                                                        <div className=" col-span-6 xl:col-span-1 px-3">
+                                                            <p className="text-center">{format(new Date(returnData[0].EndDate), "HH:mm", { locale: vi })}</p>
+                                                            <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{returnData[0].EndPoint}</p>
+                                                        </div>
                                                     </div>
                                                 </div>
 
-                                            </>
+                                            </div>
                                         }
 
 
-                                    </div>
+                                        <div className="flex flex-col space-y-2 text-sm">
+                                            <p className=" text-xs text-end">Thông tin thanh toán</p>
+                                            {typeOfTicket == 1
+                                                ?
+                                                <>
+                                                    <div className="flex flex-col space-y-2 text-sm">
+                                                        <p className=" text-xs text-start">Chiều đi:</p>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Người lớn
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(departData[0].FeeAdult + departData[0].PriceAdult + departData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Trẻ em
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(departData[0].FeeChild + departData[0].PriceChild + departData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Em bé
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(departData[0].FeeInfant + departData[0].PriceInfant + departData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Hành lí bổ sung
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                0 VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p className="font-bold">
+                                                                Tổng chiều đi
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                {departData[0].TotalPrice.toLocaleString()} VNĐ
+                                                            </p>
+                                                        </div>
+                                                    </div>
 
-                                    {/* <div className="flex flex-col">
+                                                </>
+                                                :
+                                                <>
+                                                    <div className="flex flex-col space-y-2 text-sm">
+                                                        <p className=" text-xs text-start">Chiều đi:</p>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Người lớn
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(departData[0].FeeAdult + departData[0].PriceAdult + departData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Trẻ em
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(departData[0].FeeChild + departData[0].PriceChild + departData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Em bé
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(departData[0].FeeInfant + departData[0].PriceInfant + departData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Hành lí bổ sung
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                0 VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p className="font-bold">
+                                                                Tổng chiều đi
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                {departData[0].TotalPrice.toLocaleString()} VNĐ
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex flex-col space-y-2 text-sm">
+                                                        <p className=" text-xs text-start">Chiều về:</p>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Người lớn
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(returnData[0].FeeAdult + returnData[0].PriceAdult + returnData[0].TaxAdult).toLocaleString()} x {Adult}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Trẻ em
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(returnData[0].FeeChild + returnData[0].PriceChild + returnData[0].TaxChild).toLocaleString()} x {Children}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Em bé
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                ({(returnData[0].FeeInfant + returnData[0].PriceInfant + returnData[0].TaxInfant).toLocaleString()} x {Infant}) VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p>
+                                                                Hành lí bổ sung
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                0 VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p className="font-bold">
+                                                                Tổng chiều về
+                                                            </p>
+                                                            <p className=" font-bold">
+                                                                {returnData[0].TotalPrice.toLocaleString()} VNĐ
+                                                            </p>
+                                                        </div>
+                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                            <p className="font-black text-red-700">
+                                                                Tổng cộng hai chiều
+                                                            </p>
+                                                            <p className=" font-black text-red-700">
+                                                                {(returnData[0].TotalPrice + departData[0].TotalPrice).toLocaleString()} VNĐ
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                </>
+                                            }
+
+
+                                        </div>
+
+                                        {/* <div className="flex flex-col">
                                         <button
                                             onClick={orderfn}
                                             type="button"
                                             className="text-white bg-green-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10 my-auto">Đặt vé</button>
                                     </div> */}
-                                </div>
+                                    </div>
                                 </>
                             }
 

@@ -338,7 +338,7 @@ export default function ContactAndTaxInfomation(
                         </FieldArray>
                         <button
                             type="submit"
-                            className=" mr-5 text-white bg-red-600 w-full hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-sm text-base h-12 my-auto"
+                            className=" mr-5 text-white bg-red-600 w-full hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-sm text-base h-12 mt-10"
                         >Đặt vé</button>
                     </Form>
                 )}
