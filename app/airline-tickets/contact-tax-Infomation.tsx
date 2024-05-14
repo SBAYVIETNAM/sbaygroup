@@ -151,8 +151,8 @@ export default function ContactAndTaxInfomation(
                                         values.ContactInfo.map((e: any, index: number) => (
                                             <>
                                                 <div className=" flex flex-col justify-start ...">
-                                                    <div className=" grid grid-cols-6 gap-4 px-3">
-                                                        <div className="col-span-2">
+                                                    <div className=" grid grid-cols-1 md:grid-cols-6 gap-4 px-3">
+                                                        <div className="col-span-1 md:col-span-2">
                                                             <label htmlFor={`ContactInfo.${index}.gender`} className="block mb-2 text-sm font-medium text-start">Giới tính</label>
                                                             <Field as="select" name={`ContactInfo.${index}.gender`} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option value="1">Nam</option>
@@ -164,7 +164,7 @@ export default function ContactAndTaxInfomation(
                                                                 className="field-error text-start text-red-600"
                                                             />
                                                         </div>
-                                                        <div className=' col-span-4'>
+                                                        <div className=' col-span-1 md:col-span-4'>
                                                             <label htmlFor={`ContactInfo.${index}.FirstName`} className="block mb-2 text-sm font-medium text-start">Họ và tên</label>
                                                             <Field
                                                                 name={`ContactInfo.${index}.FirstName`}
@@ -179,8 +179,8 @@ export default function ContactAndTaxInfomation(
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div className=" grid grid-cols-6 gap-4 px-3">
-                                                        <div className=' col-span-3'>
+                                                    <div className=" grid grid-cols-1 md:grid-cols-6 gap-4 px-3">
+                                                        <div className=' col-span-1 md:col-span-3'>
                                                             <label htmlFor={`ContactInfo.${index}.Phone`} className="block mb-2 text-sm font-medium text-start">Số điện thoại</label>
                                                             <Field
                                                                 name={`ContactInfo.${index}.Phone`}
@@ -194,7 +194,7 @@ export default function ContactAndTaxInfomation(
                                                                 className="field-error text-start text-red-600"
                                                             />
                                                         </div>
-                                                        <div className=' col-span-3'>
+                                                        <div className=' col-span-1 md:col-span-3'>
                                                             <label htmlFor={`ContactInfo.${index}.Email`} className="block mb-2 text-sm font-medium text-start">Email</label>
                                                             <Field
                                                                 name={`ContactInfo.${index}.Email`}
@@ -227,8 +227,8 @@ export default function ContactAndTaxInfomation(
                                         values.InvoiceInfo.map((e: any, index: number) => (
                                             <>
                                                 <div className=" flex flex-col justify-start ...">
-                                                    <div className=" grid grid-cols-6 gap-4 px-3">
-                                                        <div className=' col-span-3'>
+                                                    <div className=" grid grid-cols-1 md:grid-cols-6 gap-4 px-3">
+                                                        <div className=' col-span-1 md:col-span-3'>
                                                             <label htmlFor={`InvoiceInfo.${index}.company`} className="block mb-2 text-sm font-medium text-start">Tên công ty</label>
                                                             <Field
                                                                 name={`InvoiceInfo.${index}.company`}
@@ -242,7 +242,7 @@ export default function ContactAndTaxInfomation(
                                                                 className="field-error text-start text-red-600"
                                                             />
                                                         </div>
-                                                        <div className=' col-span-3'>
+                                                        <div className=' col-span-1 md:col-span-3'>
                                                             <label htmlFor={`InvoiceInfo.${index}.mst`} className="block mb-2 text-sm font-medium text-start">Mã số thuế</label>
                                                             <Field
                                                                 name={`InvoiceInfo.${index}.mst`}
@@ -257,8 +257,8 @@ export default function ContactAndTaxInfomation(
                                                             />
                                                         </div>
                                                     </div>
-                                                    <div className=" grid grid-cols-6 gap-4 px-3">
-                                                        <div className=' col-span-6'>
+                                                    <div className=" grid grid-cols-1 md:grid-cols-6 gap-4 px-3">
+                                                        <div className=' col-span-1 md:col-span-6'>
                                                             <label htmlFor={`InvoiceInfo.${index}.address`} className="block mb-2 text-sm font-medium text-start">Địa chỉ</label>
                                                             <Field
                                                                 name={`InvoiceInfo.${index}.address`}
@@ -276,8 +276,8 @@ export default function ContactAndTaxInfomation(
                                                         </div>
 
                                                     </div>
-                                                    <div className=" grid grid-cols-6 gap-4 px-3 mb-5">
-                                                        <div className=' col-span-2'>
+                                                    <div className=" grid grid-cols-1 md:grid-cols-6 gap-4 px-3 mb-5">
+                                                        <div className=' col-span-1 md:col-span-2'>
                                                             <label htmlFor={`InvoiceInfo.${index}.receiver`} className="block mb-2 text-sm font-medium text-start">Người nhận hóa đơn</label>
                                                             <Field
                                                                 name={`InvoiceInfo.${index}.receiver`}
@@ -293,7 +293,7 @@ export default function ContactAndTaxInfomation(
                                                             {/* <label htmlFor="first_name" className="block my-2 text-sm font-medium text-start">Người nhận hóa đơn</label>
                                                             <input placeholder="Hoàng Văn Hải" type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required /> */}
                                                         </div>
-                                                        <div className=' col-span-2'>
+                                                        <div className=' col-span-1 md:col-span-2'>
                                                             <label htmlFor={`InvoiceInfo.${index}.city`} className="block mb-2 text-sm font-medium text-start">Thành Phố</label>
                                                             <Field
                                                                 name={`InvoiceInfo.${index}.city`}
@@ -309,7 +309,7 @@ export default function ContactAndTaxInfomation(
                                                             {/* <label htmlFor="first_name" className="block my-2 text-sm font-medium text-start">Số điện thoại</label>
                                                             <input placeholder="09123123123" type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required /> */}
                                                         </div>
-                                                        <div className=' col-span-2'>
+                                                        <div className=' col-span-1 md:col-span-2'>
                                                             <label htmlFor={`InvoiceInfo.${index}.email`} className="block mb-2 text-sm font-medium text-start">Email</label>
                                                             <Field
                                                                 name={`InvoiceInfo.${index}.email`}
@@ -338,7 +338,7 @@ export default function ContactAndTaxInfomation(
                         </FieldArray>
                         <button
                             type="submit"
-                            className=" mr-5 text-white bg-red-600 w-full hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-sm text-base h-12 mt-10"
+                            className=" mr-5 text-white bg-red-600 w-full hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-sm text-base h-12 md:mt-10"
                         >Đặt vé</button>
                     </Form>
                 )}

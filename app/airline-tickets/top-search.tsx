@@ -286,7 +286,7 @@ export default function TopSearch(
                     <button
                         onClick={search}
                         type="button"
-                        className="text-white mb-5 bg-blue-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10">Tìm kiếm</button>
+                        className="mt-1 md:mt-0 text-white mb-5 bg-blue-600 min-w-full max-w-sm hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm h-10">Tìm kiếm</button>
                 </div>
             </div>
         </div>

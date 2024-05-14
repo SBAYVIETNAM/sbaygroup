@@ -12,7 +12,7 @@ export default function Footer() {
                 CÔNG TY CỔ PHẦN SBAY VIỆT NAM
               </p>
             </div>
-            <div className=" grid grid-cols-2 gap-3">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="flex flex-col md:flex-row text-sm">
                 <div className="flex flex-col my-2">
                   <p className="mb-3 text-white uppercase font-bold">Trụ sở chính (miền Trung)</p>
@@ -55,7 +55,7 @@ export default function Footer() {
               </div>
             </div>
             <p className=" text-white uppercase mt-10 font-bold">Khu vực miền Nam</p>
-            <div className=" grid grid-cols-2 gap-3 mb-10">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-3 mb-10">
               <div>
                 <p className="my-3 text-white">Phòng vé Trương Gia</p>
                 <div className=" col-span-1">
@@ -99,7 +99,7 @@ export default function Footer() {
             </div>
             <div className="my-5">
 
-              <div className="grid grid-cols-2 gap-5 ml-2 md:ml-0">
+              <div className="grid grid-cols-2 gap-3 md:gap-5">
                 <Link
                   href={"https://sbay.com.vn/gioi-thieu"}
                   target="_blank"
@@ -115,7 +115,7 @@ export default function Footer() {
                   target="_blank"
                   className=" text-sm flex flex-row justify-start text-white"
                 >
-                  Chương trinh hợp tác{" "}
+                  Chương trình hợp tác{" "}
                   <Icon.ExternalLink className="w-4 h-4 ml-2" />
                 </Link>
                 <Link

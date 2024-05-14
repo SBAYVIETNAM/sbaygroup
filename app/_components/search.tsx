@@ -123,7 +123,7 @@ export default function Search() {
         <>
             <div>
                 <div className="mx-auto bg-white p-5 rounded-lg drop-shadow-xl" >
-                    <div className="border-b border-gray-200 shadow-xl dark:border-red-700 rounded-md mb-5">
+                    <div className=" hidden md:block border-b border-gray-200 shadow-xl dark:border-red-700 rounded-md mb-5">
                         <ul className="flex flex-wrap -mb-px text-sm font-medium text-center bg-white rounded-lg dark:text-gray-400">
                             <li>
                                 <a href="/airline-tickets" className="inline-flex items-center justify-center p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500 group" aria-current="page">
@@ -160,7 +160,7 @@ export default function Search() {
                     </div>
 
                     <div className=" flex flex-col lg:flex-row justify-between mb-5 ...">
-                        <p>Tìm kiếm chuyến bay</p>
+                        <p className=' font-bold mb-3'>Tìm kiếm chuyến bay</p>
                         <div className=" flex flex-row space-x-2">
                             <div className="flex items-center">
                                 <input id="typeOfTicket-radio-1" onChange={() => { setTypeOfTicket(1) }} type="radio" defaultChecked={typeOfTicket === 1} name="typeOfTicket-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -258,9 +258,9 @@ export default function Search() {
                     </div>
 
                     <div className=' flex flex-col space-y-2 lg:space-y-0 lg:flex-row my-5 justify-between ...'>
-                        <form className="max-w-xs">
+                        <form className=" max-w-xs">
                             <label htmlFor="aldult-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Người lớn (từ 12 tuổi):</label>
-                            <div className="relative flex items-center max-w-[10rem]">
+                            <div className="relative flex items-center max-w-full md:max-w-[10rem]">
                                 <button onClick={() => { Adult > 1 && setAdult(Adult - 1) }} type="button" id="decrement-button" data-input-counter-decrement="aldult-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                                     <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
@@ -282,7 +282,7 @@ export default function Search() {
                         </form>
                         <form className="max-w-xs">
                             <label htmlFor="child-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Trẻ em (từ 2-12 tuổi):</label>
-                            <div className="relative flex items-center max-w-[10rem]">
+                            <div className="relative flex items-center max-w-full md:max-w-[10rem]">
                                 <button onClick={() => { Children >= 1 && setChildren(Children - 1) }} type="button" id="decrement-button" data-input-counter-decrement="child-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                                     <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
@@ -304,7 +304,7 @@ export default function Search() {
                         </form>
                         <form className="max-w-xs">
                             <label htmlFor="baby-input" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Em bé (dưới 2 tuổi):</label>
-                            <div className="relative flex items-center max-w-[10rem]">
+                            <div className="relative flex items-center max-w-full md:max-w-[10rem]">
                                 <button onClick={() => { Infant >= 1 && setInfant(Infant - 1) }} type="button" id="decrement-button" data-input-counter-decrement="baby-input" className="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-10 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
                                     <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
                                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />

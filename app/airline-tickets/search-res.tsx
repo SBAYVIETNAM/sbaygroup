@@ -655,7 +655,7 @@ export default function SearchResponse(props: any) {
                             {
                                 typeOfTicket == 1 &&
                                 <div className="h-full">
-                                    <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                                    <div className=" text-sm max-h-52 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                                         <div className=" text-start pt-2 bg-red-100">
                                             <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
                                             <p className=" mx-3">{passenger.Adult + ' (người lớn), ' + passenger.Children + ' (trẻ em),' + passenger.Infant + ' (em bé)'} - đi ngày {format(new Date(props.DepartureDate || Date.now()), "dd/MM/yyyy", { locale: vi })}</p>
@@ -678,8 +678,8 @@ export default function SearchResponse(props: any) {
                                                 // console.log('departData....', e);
                                                 return (
                                                     <>
-                                                        <div key={'departData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
-                                                            <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
+                                                        <div key={'departData' + i} className=" flex flex-row w-full h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                                                            <div className="grid col-span-2 xl:col-span-2 border-r-2 px-3">
                                                                 <div className="flex items-center gap-4">
                                                                     {e.AirlineCode == 'VJ' &&
                                                                         <img className="w-10 h-10 rounded-full" src="/img/vj.png" alt="vietjet" />
@@ -695,16 +695,15 @@ export default function SearchResponse(props: any) {
                                                                     }
                                                                     <div className="font-medium dark:text-white">
                                                                         <div>{e.AirlineCode}</div>
-                                                                        <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
+                                                                        <div className=" flex flex-row xl:flex-col text-xs">
                                                                             <p>{e.FlightNumber}</p>
-                                                                            <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                                            <p className=" block xl:hidden">- 02h 10m</p>
                                                                         </div>
-                                                                        <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
-
+                                                                        <p className=" block xl:hidden text-xs opacity-70">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                                                            <div className=" hidden xl:grid grid-cols-6 grow border-r-2 p-3">
                                                                 <div className=" col-span-6 xl:col-span-1 px-3">
                                                                     <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
                                                                     <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
@@ -755,7 +754,7 @@ export default function SearchResponse(props: any) {
                                 typeOfTicket == 2 &&
                                 <>
                                     <div className="h-full">
-                                        <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                                        <div className=" text-sm max-h-52 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                                             <div className=" text-start py-2 bg-red-100">
                                                 <p className="mx-3  text-xs italic">Chiều đi</p>
                                                 <h1 className="text-black mx-3 text-xl font-bold">{trip.from} - {trip.to}</h1>
@@ -779,7 +778,7 @@ export default function SearchResponse(props: any) {
                                                     // console.log('departData....', e);
                                                     return (
                                                         <>
-                                                            <div key={'departData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                                                            <div key={'departData' + i} className=" flex flex-row w-full h-20 shadow-md ... rounded-xl hover:bg-stone-100">
                                                                 <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
                                                                     <div className="flex items-center gap-4">
                                                                         {e.AirlineCode == 'VJ' &&
@@ -798,14 +797,14 @@ export default function SearchResponse(props: any) {
                                                                             <div>{e.AirlineCode}</div>
                                                                             <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
                                                                                 <p>{e.FlightNumber}</p>
-                                                                                <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                                                <p className=" block xl:hidden">- 02h 10m</p>
                                                                             </div>
-                                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+                                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
 
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                                                                <div className=" hidden xl:grid grid-cols-6 grow xl:col-span-7 border-r-2 p-3">
                                                                     <div className=" col-span-6 xl:col-span-1 px-3">
                                                                         <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
                                                                         <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
@@ -853,7 +852,7 @@ export default function SearchResponse(props: any) {
                                     </div>
 
                                     <div className="h-full mt-5">
-                                        <div className=" text-sm max-h-36 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                                        <div className=" text-sm max-h-56 shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                                             <div className=" text-start py-2 bg-blue-200">
                                                 <p className="mx-3  text-xs italic">Chiều về</p>
                                                 <h1 className="text-black mx-3 text-xl font-bold">{trip.to} - {trip.from}</h1>
@@ -879,7 +878,7 @@ export default function SearchResponse(props: any) {
                                                     console.log('returnData....', e);
                                                     return (
                                                         <>
-                                                            <div key={'returnData' + i} className=" grid grid-cols-12 h-20 shadow-md ... rounded-xl hover:bg-stone-100">
+                                                            <div key={'returnData' + i} className=" flex flex-row w-full h-20 shadow-md ... rounded-xl hover:bg-stone-100">
                                                                 <div className="grid col-span-8 xl:col-span-2 border-r-2 px-3">
                                                                     <div className="flex items-center gap-4">
                                                                         {e.AirlineCode == 'VJ' &&
@@ -898,14 +897,14 @@ export default function SearchResponse(props: any) {
                                                                             <div>{e.AirlineCode}</div>
                                                                             <div className=" flex flex-row xl:flex-col text-xs text-gray-500 dark:text-gray-400">
                                                                                 <p>{e.FlightNumber}</p>
-                                                                                <p className=" block xl:hidden">- 02h 10m - Bay thẳng</p>
+                                                                                <p className=" block xl:hidden">- 02h 10m</p>
                                                                             </div>
-                                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {e.EndDate}</p>
+                                                                            <p className=" block xl:hidden text-xs">Từ: {format(new Date(e.StartDate), "HH:mm", { locale: vi })}, đến: {format(new Date(e.EndDate), "HH:mm", { locale: vi })}</p>
 
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div className=" hidden xl:grid grid-cols-6 col-span-4 xl:col-span-7 border-r-2 p-3">
+                                                                <div className=" hidden xl:grid grid-cols-6 grow xl:col-span-7 border-r-2 p-3">
                                                                     <div className=" col-span-6 xl:col-span-1 px-3">
                                                                         <p className="text-center">{format(new Date(e.StartDate), "HH:mm", { locale: vi })}</p>
                                                                         <p className="text-center bg-gray-100 text-gray-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-300">{e.StartPoint}</p>
@@ -993,10 +992,10 @@ export default function SearchResponse(props: any) {
                 :
                 complete == false
                     ?
-                    <div className=" md:mt-24 bg-white mx-auto rounded-3xl p-5">
-                        <div className=" grid grid-cols-12 gap-4 max-w-7xl mx-auto py-2">
+                    <div className=" md:mt-24 bg-white mx-auto rounded-3xl md:p-5">
+                        <div className=" grid grid-cols-12 gap-4 max-w-7xl mx-auto md:py-2">
                             {checkoutStep == 1 &&
-                                <div className="grid col-span-12 xl:col-span-8 my-16">
+                                <div className="grid col-span-12 xl:col-span-8 md:my-16">
                                     <div className=" text-sm shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                                         <div className=" text-start bg-red-500 py-3 rounded-sm">
                                             <h1 className="text-white mx-3 text-xl font-bold">Thông tin khách hàng</h1>
@@ -1017,7 +1016,7 @@ export default function SearchResponse(props: any) {
                             {checkoutStep == 2 &&
                                 <>
 
-                                    <div className="grid col-span-12 xl:col-span-8 my-16">
+                                    <div className="grid col-span-12 xl:col-span-8 md:my-16">
                                         <div className=" text-sm shadow-xl ... rounded-xl font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                                             <div className=" text-start bg-red-100 py-3">
                                                 <h1 className="text-black mx-3 text-xl font-bold">Thông tin liên hệ, hóa đơn</h1>

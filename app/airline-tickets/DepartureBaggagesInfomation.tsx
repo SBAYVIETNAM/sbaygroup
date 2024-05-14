@@ -151,8 +151,8 @@ export default function DepartureBaggagesInfomation(
                                             <>
                                                 <div className=" flex flex-col justify-start ...">
                                                     <p className=" text-start px-3 text-md my-3 text-red-600 font-bold">Người lớn {index + 1}</p>
-                                                    <div className=" grid grid-cols-6 gap-4 px-3">
-                                                        <div className="col-span-2">
+                                                    <div className=" grid grid-cols-1 md:grid-cols-6 gap-4 px-3">
+                                                        <div className=" col-span-1 md:col-span-2">
                                                             <label htmlFor={`adultbaggages.${index}.gender`} className="block mb-2 text-xs font-medium text-start">Giới tính</label>
                                                             <Field as="select" name={`adultbaggages.${index}.gender`} className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                                                 <option value="1">Nam</option>
@@ -164,7 +164,7 @@ export default function DepartureBaggagesInfomation(
                                                                 className="field-error text-start text-red-600"
                                                             />
                                                         </div>
-                                                        <div className=' col-span-2'>
+                                                        <div className=' col-span-1 md:col-span-2'>
                                                             <label htmlFor={`adultbaggages.${index}.FirstName`} className="block mb-2 text-xs font-medium text-start">Họ</label>
                                                             <Field
                                                                 name={`adultbaggages.${index}.FirstName`}
@@ -178,7 +178,7 @@ export default function DepartureBaggagesInfomation(
                                                                 className="field-error text-start text-red-600"
                                                             />
                                                         </div>
-                                                        <div className=' col-span-2'>
+                                                        <div className=' col-span-1 md:col-span-2'>
                                                             <label htmlFor={`adultbaggages.${index}.LastName`} className="block mb-2 text-xs font-medium text-start">Tên đệm và chính</label>
                                                             <Field
                                                                 name={`adultbaggages.${index}.LastName`}
@@ -389,6 +389,7 @@ export default function DepartureBaggagesInfomation(
                                                                 name={`infanbaggages.${index}.Birthday`}
                                                                 placeholder="Van Nam"
                                                                 type="date"
+                                                                max={format(new Date(), 'yyyy-MM-dd', { locale: vi })}
                                                                 className="bg-gray-50 border uppercase border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                                             />
                                                             <ErrorMessage
