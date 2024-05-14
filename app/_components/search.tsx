@@ -77,8 +77,8 @@ export default function Search() {
         setSelectedReturnAirport(e.value)
     }
     /* Time choose */
-    const [departTime, setDepartTime] = useState(format(new Date(), 'yyyy-MM-dd', { locale: vi }))
-    const [returnTime, setReturnTime] = useState(format(addDays(new Date(), 2), 'yyyy-MM-dd', { locale: vi }))
+    const [departTime, setDepartTime] = useState(format(addDays(new Date(), 2), 'yyyy-MM-dd', { locale: vi }))
+    const [returnTime, setReturnTime] = useState(format(addDays(new Date(), 4), 'yyyy-MM-dd', { locale: vi }))
     /* Passengers choose */
     const [Adult, setAdult] = useState(1)
     const [Children, setChildren] = useState(0)

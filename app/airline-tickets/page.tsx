@@ -21,7 +21,7 @@ export default function AirLineTicket() {
   const ItineraryType = searchParams.get('t') || 1 || 2
   const StartPoint = searchParams.get('sp') || "HAN"
   const EndPoint = searchParams.get('ep') || "SGN"
-  const DepartureDate = searchParams.get('dp') || format(new Date(Date.now()), "MM/dd/yyyy", { locale: vi })
+  const DepartureDate = searchParams.get('dp') || format(new Date(addDays(new Date(), 2)), "MM/dd/yyyy", { locale: vi })
   const ReturnDate = searchParams.get('rd') || ""
   const Adult = parseInt(searchParams.get('ad') || '1')
   const Children = parseInt(searchParams.get('ch') || '0')

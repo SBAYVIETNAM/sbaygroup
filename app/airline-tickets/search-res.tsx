@@ -1327,7 +1327,7 @@ export default function SearchResponse(props: any) {
                                                             0 VNĐ
                                                         </p>
                                                     </div>
-                                                    <div className=" ml-5 flex flex-row justify-between ...">
+                                                    <div className=" text-xl ml-5 flex flex-row justify-between ...">
                                                         <p className="font-bold">
                                                             Tổng chiều về
                                                         </p>
@@ -1362,7 +1362,7 @@ export default function SearchResponse(props: any) {
                         </div>
                     </div>
                     :
-                    <div className=" md:mt-24 bg-white mx-auto rounded-3xl p-5">
+                    <div className=" md:mt-24 bg-white mx-auto rounded-3xl md:p-5">
                         <div className=" flex flex-col max-w-7xl mx-auto py-2">
 
                             {completeData.Data.DepartureCode != ""
@@ -1370,7 +1370,7 @@ export default function SearchResponse(props: any) {
                                 completeData.Data.DepartureCode != null
                                 ?
                                 <>
-                                    <p className="text-red-600 my-5 text-xl">Chúc mừng quý khách đặt chỗ thành công!</p>
+                                    <p className="text-red-600 md:my-5 text-xl">Chúc mừng quý khách đặt chỗ thành công!</p>
                                     <p className="font-bold">1. Mã đặt chỗ của quý khách</p>
                                     <p className="text-4xl my-10">
                                         {completeData.Data.DepartureCode}
@@ -1595,7 +1595,7 @@ export default function SearchResponse(props: any) {
                                                                 0 VNĐ
                                                             </p>
                                                         </div>
-                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <div className=" text-xl ml-5 flex flex-row justify-between ...">
                                                             <p className="font-bold">
                                                                 Tổng chiều đi
                                                             </p>
@@ -1642,7 +1642,7 @@ export default function SearchResponse(props: any) {
                                                                 0 VNĐ
                                                             </p>
                                                         </div>
-                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <div className=" text-xl ml-5 flex flex-row justify-between ...">
                                                             <p className="font-bold">
                                                                 Tổng chiều đi
                                                             </p>
@@ -1685,7 +1685,7 @@ export default function SearchResponse(props: any) {
                                                                 0 VNĐ
                                                             </p>
                                                         </div>
-                                                        <div className=" ml-5 flex flex-row justify-between ...">
+                                                        <div className=" text-xl ml-5 flex flex-row justify-between ...">
                                                             <p className="font-bold">
                                                                 Tổng chiều về
                                                             </p>
