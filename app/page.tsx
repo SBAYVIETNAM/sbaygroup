@@ -1,21 +1,61 @@
-"use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import * as Icon from "react-feather";
+import React from "react";
 import Link from "next/link";
-import Popup from "./modal";
-import Slider from "./_components/slider";
-import { MdAirplanemodeActive } from "react-icons/md";
-import { MdHotel } from "react-icons/md";
-import { FaCar } from "react-icons/fa";
-import { SiYourtraveldottv } from "react-icons/si";
-import { PiMegaphoneFill } from "react-icons/pi";
-import { ImLocation } from "react-icons/im";
-import { FaHandsHelping } from "react-icons/fa";
-import { IoMdHome } from "react-icons/io";
-import Select from 'react-select'
 import Search from "./_components/search";
-import { format, addDays } from "date-fns";
+import { Metadata } from "next";
+
+/* Seo */
+export const metadata: Metadata = {
+  title: "SbayGroup - Vé máy bay giá rẻ hàng đầu Việt Nam",
+  description: "Sbay Việt Nam cung cấp vé máy bay giá rẻ toàn quốc, khách sạn đà nẵng và nhiều dịch vụ tiện ích khác",
+  metadataBase: new URL('https://sbaygroup.com'),
+  openGraph: {
+    title: 'SbayGroup - Vé máy bay giá rẻ hàng đầu Việt Nam',
+    description: 'Sbay Việt Nam cung cấp vé máy bay giá rẻ toàn quốc, khách sạn đà nẵng và nhiều dịch vụ tiện ích khác',
+    url: 'https://sbaygroup.com',
+    siteName: 'Quản lý công việc',
+    images: [
+      {
+        url: 'https://sbaygroup.com/img/sbay-w-r.png', // Must be an absolute URL
+        width: 1200,
+        height: 630,
+        alt: 'Thiết kế kiến trúc & Xây dựng',
+      },
+    ],
+    locale: 'vi_VN',
+    type: 'website',
+  },
+  icons: {
+    icon: [
+      { url: '/img/sbay-w-r.png' },
+      new URL('/img/sbay-w-r.png', 'https://sbaygroup.com'),
+      { url: '/icon-dark.png', media: '(prefers-color-scheme: dark)' },
+    ],
+    shortcut: ['/shortcut-adesign.png'],
+    apple: [
+      { url: '/favicon/apple-touch-adesign.png' },
+      { url: '/favicon/apple-touch-adesign.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      {
+        rel: 'apple-touch-icon-precomposed',
+        url: '/apple-touch-icon-precomposed.png',
+      },
+    ],
+  },
+  manifest: 'https://sbaygroup.com/manifest.json',
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SbayGroup - Vé máy bay giá rẻ hàng đầu Việt Nam',
+    description: 'Sbay Việt Nam cung cấp vé máy bay giá rẻ toàn quốc, khách sạn đà nẵng và nhiều dịch vụ tiện ích khác',
+    siteId: '1467726470533754880',
+    creator: '@nextjs',
+    creatorId: '1467726470533754880',
+    images: ['https://sbaygroup.com/img/sbay-w-r.png'], // Must be an absolute URL
+  },
+  bookmarks: ['https://sbaygroup.com'],
+  category: 'technology',
+};
 
 export default function Home() {
 
@@ -202,7 +242,7 @@ export default function Home() {
                   />
                   <h3 className="text-center font-bold">{e.name}</h3>
                   <p className="text-center text-sm">Cung cấp hệ thống đặt vé của 5 hãng hàng không Nội địa</p>
-                  <button onClick={e => window.open('tel:0968141400')} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Liên hệ tư vấn</button>
+                  <a href="tel:0968141400"  type="button" className=" text-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Liên hệ tư vấn</a>
                 </div>
               )
             })}
@@ -254,7 +294,7 @@ export default function Home() {
                   <p className=" text-sm text-end">km</p>
                   <h3 className="text-start font-bold">{e.tilte} </h3>
                   <p className="text-start text-sm">{e.description}</p>
-                  <button onClick={e => window.open('tel:0968141400')} className=" mt-10 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt xe ngay</button>
+                  <a href="tel:0968141400" type="button" className=" text-center mt-10 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt xe ngay</a>
                 </div>
               )
             })}
@@ -281,7 +321,7 @@ export default function Home() {
                   <p className=" text-sm text-end">Vé</p>
                   <h3 className="text-start font-bold">{e.tilte} </h3>
                   <p className="text-start text-sm">{e.description} </p>
-                  <button onClick={e => window.open('tel:0967041900')} type="button" className="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt vé ngay</button>
+                  <a href="tel:0967041900"  type="button" className=" text-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Đặt vé ngay</a>
                 </div>
               )
             })}
@@ -308,7 +348,7 @@ export default function Home() {
                   <p className=" text-sm text-end">Vé</p> */}
                   <h3 className="text-center font-bold">{e.tilte}</h3>
                   <p className="text-center text-sm">{e.description}</p>
-                  <Link href={"/tool"} type="button" className="text-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Dùng thử ngay</Link>
+                  <Link href={"/tool"}  type="button" className=" text-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 w-full max-w-sm my-5">Dùng thử ngay</Link>
                 </div>
               )
             })}

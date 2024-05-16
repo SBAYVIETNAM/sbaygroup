@@ -160,6 +160,7 @@ export default function Hotel() {
   const router = useRouter();
   return (
     <div>
+      <title>Khách sạn Đà Nẵng</title>
       <div className="container mx-auto md:mt-36">
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="px-5 py-10 md:text-black">

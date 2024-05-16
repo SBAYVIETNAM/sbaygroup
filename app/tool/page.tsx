@@ -19,8 +19,9 @@ export default function Home() {
   return (
     <>
 
-      
+
       <div className=' flex flex-col'>
+        <title>Công cụ Marketing</title>
         <div className=" w-full text-center flex flex-col mb-10 max-w-7xl mx-auto">
           <div className=' grid grid-cols-1 lg:grid-cols-2'>
             <div className='md:mt-24 '>
@@ -77,7 +78,7 @@ export default function Home() {
           <div className=' grid max-w-7xl mx-auto py-5'>
 
             <Link href={'/tool/run-facebook-group'} className='flex flex-row space-x-2 bg-blue-600 p-2 text-white rounded-xl'>
-              <Icon.Facebook className='w-4 h-4 mt-1 mr-2'/>
+              <Icon.Facebook className='w-4 h-4 mt-1 mr-2' />
               Facebook Group Marketing
             </Link>
           </div>

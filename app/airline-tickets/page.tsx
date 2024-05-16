@@ -12,7 +12,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from "react";
 import getDepart from "../_api/getDepart.api";
 import getDepartAndReturn from "../_api/getDepartAndReturn.api";
-
+import Head from "next/head";
 
 export default function AirLineTicket() {
   const searchParams = useSearchParams()
@@ -63,11 +63,13 @@ export default function AirLineTicket() {
       }
     }
     getData()
-  }, [action, ItineraryType,StartPoint, EndPoint, DepartureDate, ReturnDate, Adult, Children, Infant ])
+  }, [action, ItineraryType, StartPoint, EndPoint, DepartureDate, ReturnDate, Adult, Children, Infant])
   console.log('searchData', searchData);
 
   return (
     <div className=" bg-white mx-auto rounded-3xl p-5">
+      <title>Đặt vé máy bay</title>
+
       {
         searchData.Data?.DataSession
           ?

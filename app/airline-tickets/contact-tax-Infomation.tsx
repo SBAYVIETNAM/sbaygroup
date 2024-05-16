@@ -94,6 +94,7 @@ export default function ContactAndTaxInfomation(
             ),
         })
     }
+    const [disableBtn, setdisableBtn] = useState( false)
     return (
         <>
             <Formik
@@ -133,6 +134,7 @@ export default function ContactAndTaxInfomation(
 
                 onSubmit={async (values) => {
                     console.log('submit ...');
+                    setdisableBtn(true)
                     getContactAndTax(
                         {
                             ContactInfo: values.ContactInfo,
@@ -339,7 +341,7 @@ export default function ContactAndTaxInfomation(
                         <button
                             type="submit"
                             className=" mr-5 text-white bg-red-600 w-full hover:bg-red-200 focus:ring-4 focus:ring-red-300 font-medium rounded-sm text-base h-12 md:mt-10"
-                        >Đặt vé</button>
+                        >{!disableBtn ? 'Đặt vé':"Đang đặt vé..."  }</button>
                     </Form>
                 )}
             </Formik>
